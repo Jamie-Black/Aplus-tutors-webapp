@@ -1,0 +1,1396 @@
+/* =========================================================
+   APLUS TUTORS
+   REGISTRATION SUCCESS / PAYMENT PAGE
+   THEME: BLACK + CRIMSON + WHITE
+========================================================= */
+
+
+/* =========================================================
+   CSS VARIABLES
+========================================================= */
+
+:root {
+
+    --crimson: #dc143c;
+    --crimson-dark: #b01030;
+    --crimson-light: #fff0f3;
+
+    --black: #080808;
+    --black-soft: #111111;
+    --black-card: #181818;
+
+    --white: #ffffff;
+    --off-white: #fafafa;
+
+    --text-dark: #171717;
+    --text-light: #666666;
+
+    --border: #e8e8e8;
+
+    --shadow:
+        0 15px 45px rgba(0, 0, 0, 0.08);
+
+    --shadow-dark:
+        0 20px 50px rgba(0, 0, 0, 0.25);
+
+    --radius: 18px;
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+
+body {
+
+    font-family:
+        "Inter",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #fafafa 100%
+        );
+
+    color: var(--text-dark);
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+/* =========================================================
+   HEADER / TOPBAR
+========================================================= */
+
+.topbar {
+
+    width: 100%;
+
+    height: 75px;
+
+    background: var(--black);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        0
+        clamp(20px, 5vw, 80px);
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    border-bottom:
+        3px solid var(--crimson);
+
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    text-decoration: none;
+
+}
+
+
+.brand img {
+
+    width: 48px;
+
+    height: 48px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+    background: var(--white);
+
+    padding: 3px;
+
+}
+
+
+.brand-text {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.brand-name {
+
+    color: var(--white);
+
+    font-size: 1.1rem;
+
+    font-weight: 800;
+
+    letter-spacing: -0.4px;
+
+}
+
+
+.brand-tagline {
+
+    color: #bdbdbd;
+
+    font-size: 0.68rem;
+
+    margin-top: 2px;
+
+}
+
+
+/* =========================================================
+   LOGIN LINK
+========================================================= */
+
+.login-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--white);
+
+    text-decoration: none;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    padding:
+        10px
+        18px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.25);
+
+    border-radius: 8px;
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+
+}
+
+
+.login-link:hover {
+
+    background: var(--crimson);
+
+    border-color: var(--crimson);
+
+    transform: translateY(-2px);
+
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+
+    flex: 1;
+
+    padding:
+        70px
+        20px
+        90px;
+
+}
+
+
+.success-wrapper {
+
+    width: 100%;
+
+    max-width: 850px;
+
+    margin: auto;
+
+}
+
+
+/* =========================================================
+   SUCCESS HEADER
+========================================================= */
+
+.success-header {
+
+    text-align: center;
+
+    margin-bottom: 45px;
+
+}
+
+
+.success-icon {
+
+    width: 85px;
+
+    height: 85px;
+
+    margin:
+        0
+        auto
+        25px;
+
+    background: var(--crimson);
+
+    color: var(--white);
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 2.2rem;
+
+    box-shadow:
+        0 12px 30px
+        rgba(220, 20, 60, 0.25);
+
+    animation:
+        successPop
+        0.6s
+        ease
+        both;
+
+}
+
+
+@keyframes successPop {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(0.5);
+
+    }
+
+    70% {
+
+        transform:
+            scale(1.08);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+.success-header h1 {
+
+    color: var(--black);
+
+    font-size:
+        clamp(
+            2rem,
+            5vw,
+            3rem
+        );
+
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.success-header h1 span {
+
+    color: var(--crimson);
+
+}
+
+
+.success-header p {
+
+    max-width: 650px;
+
+    margin: auto;
+
+    color: var(--text-light);
+
+    font-size: 1rem;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   STUDENT REGISTRATION CARD
+========================================================= */
+
+.student-card {
+
+    background: var(--white);
+
+    border:
+        1px
+        solid
+        var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 30px;
+
+    margin-bottom: 25px;
+
+    box-shadow: var(--shadow);
+
+}
+
+
+.card-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--black);
+
+    font-size: 1.05rem;
+
+    font-weight: 700;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 25px;
+
+    border-bottom:
+        1px
+        solid
+        var(--border);
+
+}
+
+
+.card-title i {
+
+    color: var(--crimson);
+
+    font-size: 1.2rem;
+
+}
+
+
+.student-details {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap: 15px;
+
+}
+
+
+.detail-box {
+
+    background: #fafafa;
+
+    border:
+        1px
+        solid
+        var(--border);
+
+    border-radius: 10px;
+
+    padding: 16px;
+
+}
+
+
+.detail-label {
+
+    display: block;
+
+    color: #888;
+
+    font-size: 0.72rem;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    margin-bottom: 7px;
+
+}
+
+
+.detail-value {
+
+    display: block;
+
+    color: var(--black);
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    word-break: break-word;
+
+}
+
+
+/* =========================================================
+   PAYMENT CARD
+========================================================= */
+
+.payment-card {
+
+    background: var(--black);
+
+    color: var(--white);
+
+    border-radius: var(--radius);
+
+    padding: clamp(
+        25px,
+        5vw,
+        45px
+    );
+
+    margin-bottom: 25px;
+
+    box-shadow: var(--shadow-dark);
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+.payment-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+
+    height: 250px;
+
+    background:
+        rgba(
+            220,
+            20,
+            60,
+            0.08
+        );
+
+    border-radius: 50%;
+
+    top: -100px;
+
+    right: -100px;
+
+}
+
+
+.payment-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+
+    height: 180px;
+
+    border:
+        1px
+        solid
+        rgba(
+            220,
+            20,
+            60,
+            0.15
+        );
+
+    border-radius: 50%;
+
+    bottom: -100px;
+
+    left: -80px;
+
+}
+
+
+.payment-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 15px;
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+.payment-header i {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--crimson);
+
+    border-radius: 10px;
+
+    font-size: 1.2rem;
+
+}
+
+
+.payment-header h2 {
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+}
+
+
+.payment-intro {
+
+    color: #c9c9c9;
+
+    line-height: 1.7;
+
+    font-size: 0.9rem;
+
+    margin-bottom: 30px;
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+/* =========================================================
+   PAYMENT AMOUNT
+========================================================= */
+
+.amount-box {
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--crimson),
+            var(--crimson-dark)
+        );
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+.amount-label {
+
+    display: block;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            0.85
+        );
+
+    font-size: 0.8rem;
+
+    margin-bottom: 8px;
+
+}
+
+
+.amount {
+
+    color: var(--white);
+
+    font-size:
+        clamp(
+            2rem,
+            6vw,
+            3rem
+        );
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+
+}
+
+
+/* =========================================================
+   BANK DETAILS
+========================================================= */
+
+.bank-details {
+
+    background: var(--white);
+
+    color: var(--black);
+
+    border-radius: 12px;
+
+    padding: 10px 20px;
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+.bank-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding:
+        18px
+        5px;
+
+    border-bottom:
+        1px
+        solid
+        #eeeeee;
+
+}
+
+
+.bank-row:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.bank-label {
+
+    color: #777;
+
+    font-size: 0.85rem;
+
+}
+
+
+.bank-value {
+
+    color: var(--black);
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    text-align: right;
+
+}
+
+
+/* =========================================================
+   PAYMENT INSTRUCTION
+========================================================= */
+
+.instruction {
+
+    margin-top: 25px;
+
+    padding: 18px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.06
+        );
+
+    border-left:
+        3px
+        solid
+        var(--crimson);
+
+    border-radius:
+        0
+        8px
+        8px
+        0;
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+.instruction p {
+
+    color: #c9c9c9;
+
+    font-size: 0.82rem;
+
+    line-height: 1.7;
+
+}
+
+
+.instruction strong {
+
+    color: var(--white);
+
+}
+
+
+/* =========================================================
+   WHATSAPP SECTION
+========================================================= */
+
+.whatsapp-section {
+
+    text-align: center;
+
+    margin-top: 30px;
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+
+.whatsapp-section p {
+
+    color: #bdbdbd;
+
+    font-size: 0.85rem;
+
+    margin-bottom: 18px;
+
+    line-height: 1.6;
+
+}
+
+
+.whatsapp-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    width: 100%;
+
+    padding:
+        15px
+        20px;
+
+    background: var(--white);
+
+    color: var(--black);
+
+    text-decoration: none;
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    border-radius: 9px;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+}
+
+
+.whatsapp-btn i {
+
+    color: #25d366;
+
+    font-size: 1.25rem;
+
+}
+
+
+.whatsapp-btn:hover {
+
+    background: #25d366;
+
+    color: var(--white);
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(
+            37,
+            211,
+            102,
+            0.2
+        );
+
+}
+
+
+.whatsapp-btn:hover i {
+
+    color: var(--white);
+
+}
+
+
+/* =========================================================
+   ACCOUNT STATUS NOTICE
+========================================================= */
+
+.status-notice {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    background:
+        var(--crimson-light);
+
+    border:
+        1px
+        solid
+        rgba(
+            220,
+            20,
+            60,
+            0.15
+        );
+
+    border-left:
+        4px
+        solid
+        var(--crimson);
+
+    border-radius: 10px;
+
+    padding: 22px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.status-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    flex-shrink: 0;
+
+    background: var(--crimson);
+
+    color: var(--white);
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.status-notice h3 {
+
+    color: var(--black);
+
+    font-size: 1rem;
+
+    margin-bottom: 6px;
+
+}
+
+
+.status-notice p {
+
+    color: #555;
+
+    font-size: 0.85rem;
+
+    line-height: 1.7;
+
+}
+
+
+.status-notice strong {
+
+    color: var(--crimson);
+
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.actions {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.secondary-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    min-width: 180px;
+
+    padding:
+        13px
+        20px;
+
+    border:
+        1px
+        solid
+        var(--border);
+
+    border-radius: 8px;
+
+    background: var(--white);
+
+    color: var(--black);
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+
+    transition:
+        all 0.3s ease;
+
+}
+
+
+.secondary-btn:hover {
+
+    background: var(--black);
+
+    color: var(--white);
+
+    border-color: var(--black);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.secondary-btn i {
+
+    color: var(--crimson);
+
+}
+
+
+.secondary-btn:hover i {
+
+    color: var(--white);
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    background: var(--black);
+
+    color: #888;
+
+    text-align: center;
+
+    padding:
+        25px
+        20px;
+
+    border-top:
+        3px
+        solid
+        var(--crimson);
+
+    font-size: 0.78rem;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+
+    main {
+
+        padding:
+            50px
+            15px
+            60px;
+
+    }
+
+
+    .student-details {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .student-card {
+
+        padding: 22px;
+
+    }
+
+
+    .bank-row {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 5px;
+
+    }
+
+
+    .bank-value {
+
+        text-align: left;
+
+    }
+
+
+    .actions {
+
+        flex-direction: column;
+
+    }
+
+
+    .secondary-btn {
+
+        width: 100%;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+
+    .topbar {
+
+        height: 68px;
+
+        padding:
+            0
+            15px;
+
+    }
+
+
+    .brand img {
+
+        width: 42px;
+
+        height: 42px;
+
+    }
+
+
+    .brand-name {
+
+        font-size: 0.95rem;
+
+    }
+
+
+    .brand-tagline {
+
+        display: none;
+
+    }
+
+
+    .login-link {
+
+        padding:
+            8px
+            12px;
+
+        font-size: 0.78rem;
+
+    }
+
+
+    main {
+
+        padding:
+            40px
+            12px
+            50px;
+
+    }
+
+
+    .success-header {
+
+        margin-bottom: 35px;
+
+    }
+
+
+    .success-icon {
+
+        width: 70px;
+
+        height: 70px;
+
+        font-size: 1.8rem;
+
+    }
+
+
+    .success-header h1 {
+
+        font-size: 1.9rem;
+
+    }
+
+
+    .success-header p {
+
+        font-size: 0.85rem;
+
+        line-height: 1.7;
+
+    }
+
+
+    .student-card {
+
+        padding: 20px;
+
+        border-radius: 14px;
+
+    }
+
+
+    .payment-card {
+
+        padding: 22px 18px;
+
+        border-radius: 14px;
+
+    }
+
+
+    .payment-header h2 {
+
+        font-size: 1.2rem;
+
+    }
+
+
+    .payment-header i {
+
+        width: 40px;
+
+        height: 40px;
+
+    }
+
+
+    .amount-box {
+
+        padding: 20px 15px;
+
+    }
+
+
+    .amount {
+
+        font-size: 2.2rem;
+
+    }
+
+
+    .bank-details {
+
+        padding:
+            5px
+            15px;
+
+    }
+
+
+    .status-notice {
+
+        padding: 18px;
+
+    }
+
+
+    .status-icon {
+
+        width: 35px;
+
+        height: 35px;
+
+        font-size: 0.85rem;
+
+    }
+
+
+}
+

@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Aplus Tutors Student Dashboard - Learn, practice, test yourself and track your progress."
+    >
+
+    <meta
+        name="theme-color"
+        content="#b00020"
+    >
+
+    <title>Student CBT | Aplus Tutors</title>
+
+
+    <!-- ==================================================
+         GOOGLE FONT
+    =================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- ==================================================
+         FONT AWESOME
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+
+    <!-- ==================================================
+         BOOTSTRAP
+    =================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- ==================================================
+         STUDENT DASHBOARD CSS
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="student-dashboard.css"
+    >
+
+
+    <!-- ==================================================
+         STUDENT CBT CSS
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="student-cbt.css"
+    >
+    
+
+<!-- ==================================================
+     MATHJAX LIBRARY
+================================================== -->
+<script
+    defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+
+
+</head>
+
+
+<body data-role="student">
+
+
+    <!-- ==================================================
+         PAGE LOADER
+    =================================================== -->
+
+    <div
+        id="pageLoader"
+        class="page-loader"
+    >
+
+        <div class="loader-wrapper">
+
+            <div class="loader"></div>
+
+            <div class="loader-brand">
+                Aplus Tutors
+            </div>
+
+            <p>
+                Loading your CBT page...
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         MOBILE SIDEBAR OVERLAY
+    =================================================== -->
+
+    <div
+        id="overlay"
+        class="overlay"
+    ></div>
+
+
+
+    <!-- ==================================================
+         DASHBOARD APP
+    =================================================== -->
+
+    <div class="dashboard-app">
+
+
+        <!-- ==================================================
+             SIDEBAR
+        =================================================== -->
+
+        <aside
+            id="sidebar"
+            class="sidebar"
+        >
+
+            <!--
+                The sidebar content is generated
+                by student-dashboard.js
+            -->
+
+        </aside>
+
+
+
+        <!-- ==================================================
+             MAIN AREA
+        =================================================== -->
+
+        <div class="dashboard-main">
+
+
+            <!-- ==================================================
+                 TOP NAVIGATION
+            =================================================== -->
+
+            <header
+                id="topbar"
+                class="topbar"
+            >
+
+                <!--
+                    The topbar is generated
+                    by student-dashboard.js
+                -->
+
+            </header>
+
+
+
+            <!-- ==================================================
+                 PAGE CONTENT
+            =================================================== -->
+
+            <main class="dashboard-content">
+                
+                
+                <!--CBT content here -->
+                
+                <!-- ==================================================
+     STUDENT CBT
+================================================== -->
+
+<section class="student-cbt-page">
+
+    <!-- ==================================================
+         PAGE HEADER
+    ================================================== -->
+
+<div class="student-cbt-header student-cbt-page-heading">
+
+        <div>
+
+            <span class="student-cbt-eyebrow">
+                <i class="fa-solid fa-laptop-code"></i>
+                COMPUTER BASED TEST
+            </span>
+
+            <h1>
+                My CBT
+            </h1>
+
+            <p>
+                Configure your examination and begin your CBT.
+            </p>
+
+        </div>
+
+
+        <div class="student-cbt-header-icon">
+
+            <i class="fa-solid fa-laptop-code"></i>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         ALERT
+    ================================================== -->
+
+    <div
+        id="studentCbtAlert"
+        class="alert d-none"
+        role="alert"
+    ></div>
+
+
+
+    <!-- ==================================================
+         LOADING STATE
+    ================================================== -->
+
+    <div
+        id="studentCbtLoading"
+        class="student-cbt-loading"
+    >
+
+        <div class="spinner-border" role="status"></div>
+
+        <span>
+            Loading available CBT examinations...
+        </span>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         SETUP CONTENT
+    ================================================== -->
+
+    <div
+        id="studentCbtSetup"
+        class="d-none"
+    >
+
+
+        <!-- ==================================================
+             EXAM TYPE
+        ================================================== -->
+
+        <div class="student-cbt-card">
+
+            <div class="student-cbt-card-header">
+
+                <div>
+
+                    <span class="student-cbt-section-label">
+                        STEP 1
+                    </span>
+
+                    <h2>
+                        Choose Examination
+                    </h2>
+
+                    <p>
+                        Select the examination you want to take.
+                    </p>
+
+                </div>
+
+                <div class="student-cbt-card-icon">
+
+                    <i class="fa-solid fa-list-check"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="student-cbt-form-group">
+
+                <label
+                    for="studentCbtExamType"
+                    class="form-label"
+                >
+                    Examination Type
+                </label>
+
+                <select
+                    id="studentCbtExamType"
+                    class="form-select"
+                >
+
+                    <option value="">
+                        Select examination
+                    </option>
+
+                </select>
+
+                <small
+                    id="studentCbtExamTypeHelp"
+                    class="student-cbt-help"
+                >
+                    Only active CBT examinations are available.
+                </small>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             SUBJECT SELECTION
+        ================================================== -->
+
+        <div class="student-cbt-card">
+
+            <div class="student-cbt-card-header">
+
+                <div>
+
+                    <span class="student-cbt-section-label">
+                        STEP 2
+                    </span>
+
+                    <h2>
+                        Select Subjects
+                    </h2>
+
+                    <p id="studentCbtSubjectInstruction">
+                        Choose the subjects for this examination.
+                    </p>
+
+                </div>
+
+                <div class="student-cbt-card-icon">
+
+                    <i class="fa-solid fa-book-open"></i>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="studentCbtSubjects"
+                class="student-cbt-subjects"
+            >
+
+                <!-- Subjects generated by JavaScript -->
+
+            </div>
+
+
+            <div
+                id="studentCbtSubjectCount"
+                class="student-cbt-selection-info"
+            >
+                0 subjects selected
+            </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             EXAM SETTINGS
+        ================================================== -->
+
+        <div class="student-cbt-card">
+
+            <div class="student-cbt-card-header">
+
+                <div>
+
+                    <span class="student-cbt-section-label">
+                        STEP 3
+                    </span>
+
+                    <h2>
+                        Examination Settings
+                    </h2>
+
+                    <p>
+                        Set the number of questions and examination duration.
+                    </p>
+
+                </div>
+
+                <div class="student-cbt-card-icon">
+
+                    <i class="fa-solid fa-sliders"></i>
+
+                </div>
+
+            </div>
+
+
+            <div class="row g-3">
+
+
+                <!-- QUESTIONS -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="student-cbt-form-group">
+
+                        <label
+                            for="studentCbtQuestionCount"
+                            class="form-label"
+                        >
+                            Questions Per Subject
+                        </label>
+
+                        <input
+                            type="number"
+                            id="studentCbtQuestionCount"
+                            class="form-control"
+                            min="1"
+                            step="1"
+                        >
+
+                        <small
+                            id="studentCbtQuestionHelp"
+                            class="student-cbt-help"
+                        >
+                            Choose the number of questions to answer in each subject
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DURATION -->
+
+                <div class="col-12 col-md-6">
+
+                    <div class="student-cbt-form-group">
+
+                        <label
+                            for="studentCbtDuration"
+                            class="form-label"
+                        >
+                            Duration
+                        </label>
+
+                        <div class="input-group">
+
+                            <input
+                                type="number"
+                                id="studentCbtDuration"
+                                class="form-control"
+                                min="1"
+                                step="1"
+                            >
+
+                            <span class="input-group-text">
+                                minutes
+                            </span>
+
+                        </div>
+
+                        <small
+                            id="studentCbtDurationHelp"
+                            class="student-cbt-help"
+                        >
+                            Examination duration.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             EXAM INFORMATION
+        ================================================== -->
+
+        <div
+            id="studentCbtExamSummary"
+            class="student-cbt-summary"
+        >
+
+            <div class="student-cbt-summary-header">
+
+                <div>
+
+                    <span class="student-cbt-section-label">
+                        EXAMINATION SUMMARY
+                    </span>
+
+                    <h2>
+                        Before You Begin
+                    </h2>
+
+                </div>
+
+                <i class="fa-solid fa-circle-info"></i>
+
+            </div>
+
+
+            <div class="student-cbt-summary-grid">
+
+
+                <div class="student-cbt-summary-item">
+
+                    <span>
+                        Examination
+                    </span>
+
+                    <strong id="summaryExamType">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="student-cbt-summary-item">
+
+                    <span>
+                        Subjects
+                    </span>
+
+                    <strong id="summarySubjects">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="student-cbt-summary-item">
+
+                    <span>
+                        Questions
+                    </span>
+
+                    <strong id="summaryQuestions">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="student-cbt-summary-item">
+
+                    <span>
+                        Duration
+                    </span>
+
+                    <strong id="summaryDuration">
+                        —
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             INSTRUCTIONS
+        ================================================== -->
+
+        <div
+            id="studentCbtInstructionsCard"
+            class="student-cbt-card"
+        >
+
+            <div class="student-cbt-card-header">
+
+                <div>
+
+                    <span class="student-cbt-section-label">
+                        INSTRUCTIONS
+                    </span>
+
+                    <h2>
+                        Examination Instructions
+                    </h2>
+
+                </div>
+
+                <div class="student-cbt-card-icon">
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="studentCbtInstructions"
+                class="student-cbt-instructions"
+            >
+
+                Please select an examination to view the instructions.
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             START AREA
+        ================================================== -->
+
+        <div class="student-cbt-start-card">
+
+            <div>
+
+                <strong>
+                    Ready to begin?
+                </strong>
+
+                <span>
+                    Review your examination settings before starting.
+                </span>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="startCbtBtn"
+                class="btn student-cbt-primary-btn"
+                disabled
+            >
+
+                <i class="fa-solid fa-play"></i>
+
+                Start CBT
+
+            </button>
+
+        </div>
+
+
+    </div>
+    
+    
+        <!-- ==================================================
+         CBT QUESTION SCREEN
+    ================================================== -->
+
+    <div
+        id="studentCbtQuestionScreen"
+        class="student-cbt-question-screen d-none"
+    >
+
+        <!-- ==================================================
+             QUESTION HEADER
+        ================================================== -->
+
+        <div class="student-cbt-question-header">
+
+            <div>
+
+                <span class="student-cbt-section-label">
+                    COMPUTER BASED TEST
+                </span>
+
+                <h2 id="studentCbtQuestionNumber">
+                    Question 1 of 40
+                </h2>
+
+            </div>
+
+
+            <div class="student-cbt-question-progress-text">
+
+                <span id="studentCbtProgress">
+                    0 of 40 answered
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             PROGRESS BAR
+        ================================================== -->
+        
+        <!-- ==================================================
+     CBT SUBJECT TABS
+================================================== -->
+
+<div
+    id="studentCbtSubjectTabs"
+    class="student-cbt-subject-tabs"
+>
+</div>
+
+        <div class="student-cbt-progress-container">
+
+            <div class="progress">
+
+                <div
+                    id="studentCbtProgressBar"
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: 0%;"
+                    aria-valuenow="0"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             QUESTION CARD
+        ================================================== -->
+
+        <div class="student-cbt-question-card">
+
+            <div
+                id="studentCbtQuestionText"
+                class="student-cbt-question-text"
+            ></div>
+
+
+            <!-- ==================================================
+                 ANSWER OPTIONS
+            ================================================== -->
+
+            <div
+                id="studentCbtOptions"
+                class="student-cbt-options"
+            ></div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             NAVIGATION
+        ================================================== -->
+
+        <div class="student-cbt-navigation">
+
+            <button
+                type="button"
+                id="studentCbtPreviousBtn"
+                class="btn student-cbt-secondary-btn"
+                disabled
+            >
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                Previous
+
+            </button>
+
+
+            <button
+                type="button"
+                id="studentCbtNextBtn"
+                class="btn student-cbt-primary-btn"
+            >
+
+                Next
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <button
+                type="button"
+                id="studentCbtSubmitBtn"
+                class="btn student-cbt-submit-btn d-none"
+            >
+
+                <i class="fa-solid fa-check"></i>
+
+                Submit CBT
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div
+        id="studentCbtEmpty"
+        class="student-cbt-empty d-none"
+    >
+
+        <div class="student-cbt-empty-icon">
+
+            <i class="fa-solid fa-laptop-code"></i>
+
+        </div>
+
+        <h2>
+            No CBT Available
+        </h2>
+
+        <p>
+            There are currently no active CBT examinations available.
+            Please check again later.
+        </p>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         ERROR STATE
+    ================================================== -->
+
+    <div
+        id="studentCbtError"
+        class="student-cbt-empty d-none"
+    >
+
+        <div class="student-cbt-empty-icon">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+        </div>
+
+        <h2>
+            Unable to Load CBT
+        </h2>
+
+        <p id="studentCbtErrorMessage">
+            We could not load the available examinations.
+        </p>
+
+        <button
+            type="button"
+            id="retryCbtBtn"
+            class="btn student-cbt-primary-btn"
+        >
+
+            <i class="fa-solid fa-rotate-right"></i>
+
+            Try Again
+
+        </button>
+
+    </div>
+
+
+</section>
+
+
+            </main>
+
+
+
+            <!-- ==================================================
+                 FOOTER
+            =================================================== -->
+
+            <footer
+                id="dashboardFooter"
+                class="dashboard-footer"
+            >
+
+                <div class="footer-brand">
+
+                    <strong>
+                        Aplus Tutors
+                    </strong>
+
+                    <span>
+                        Your smarter path to exam success.
+                    </span>
+
+                </div>
+
+
+                <div class="footer-meta">
+
+                    <span>
+                        © 2026 Aplus Tutors
+                    </span>
+
+                    <span class="footer-divider">
+                        •
+                    </span>
+
+                    <span>
+                        Student Portal v2.0
+                    </span>
+
+                </div>
+
+            </footer>
+
+
+        </div>
+
+    </div>
+    
+    <!-- ==================================================
+     CBT RESULTS SCREEN
+================================================== -->
+
+<div
+    id="studentCbtResultsScreen"
+    class="student-cbt-results-screen d-none"
+>
+
+    <!-- RESULTS HEADER -->
+
+    <div class="student-cbt-results-header">
+
+        <div class="student-cbt-results-icon">
+            <i class="fa-solid fa-trophy"></i>
+        </div>
+
+        <span class="student-cbt-section-label">
+            EXAMINATION COMPLETED
+        </span>
+
+        <h2>Your CBT Results</h2>
+
+        <p>
+            Here is a breakdown of your examination performance.
+        </p>
+
+    </div>
+
+
+    <!-- OVERALL SCORE -->
+
+    <div class="student-cbt-overall-card">
+
+        <span class="student-cbt-results-label">
+            OVERALL SCORE
+        </span>
+
+        <div
+            id="studentCbtOverallPercentage"
+            class="student-cbt-overall-percentage"
+        >
+            0%
+        </div>
+
+        <p id="studentCbtOverallSummary">
+            You answered 0 out of 0 questions correctly.
+        </p>
+
+        <div class="student-cbt-overall-stats">
+
+            <div>
+                <strong id="studentCbtResultCorrect">
+                    0
+                </strong>
+                <span>Correct</span>
+            </div>
+
+            <div>
+                <strong id="studentCbtResultWrong">
+                    0
+                </strong>
+                <span>Wrong</span>
+            </div>
+
+            <div>
+                <strong id="studentCbtResultUnanswered">
+                    0
+                </strong>
+                <span>Unanswered</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUBJECT BREAKDOWN -->
+
+    <div class="student-cbt-subject-results-card">
+
+        <div class="student-cbt-results-section-heading">
+
+            <div>
+                <span class="student-cbt-section-label">
+                    SUBJECT PERFORMANCE
+                </span>
+
+                <h3>Results by Subject</h3>
+            </div>
+
+            <i class="fa-solid fa-chart-column"></i>
+
+        </div>
+
+
+        <div
+            id="studentCbtSubjectResults"
+            class="student-cbt-subject-results"
+        >
+
+            <!-- Subject results generated by JavaScript -->
+
+        </div>
+
+    </div>
+
+
+    <!-- EXAMINATION SUMMARY -->
+
+    <div class="student-cbt-result-details">
+
+        <div>
+            <i class="fa-regular fa-circle-question"></i>
+
+            <span>Total Questions</span>
+
+            <strong id="studentCbtResultTotal">
+                0
+            </strong>
+        </div>
+
+        <div>
+            <i class="fa-regular fa-clock"></i>
+
+            <span>Time Used</span>
+
+            <strong id="studentCbtResultTime">
+                —
+            </strong>
+        </div>
+
+        <div>
+            <i class="fa-solid fa-book-open"></i>
+
+            <span>Subjects Taken</span>
+
+            <strong id="studentCbtResultSubjectsCount">
+                0
+            </strong>
+        </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="student-cbt-results-actions">
+
+        <button
+            type="button"
+            id="studentCbtResultsDashboardBtn"
+            class="btn student-cbt-secondary-btn"
+        >
+            <i class="fa-solid fa-house"></i>
+            Back to Dashboard
+        </button>
+
+        <button
+            type="button"
+            id="studentCbtResultsRetryBtn"
+            class="btn student-cbt-primary-btn"
+        >
+            <i class="fa-solid fa-rotate-right"></i>
+            Take Another CBT
+        </button>
+
+    </div>
+
+</div>
+    
+    
+
+
+    <!-- =========================================================
+     MATHJAX
+     ========================================================= -->
+
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [
+            ['\\(', '\\)']
+        ],
+        displayMath: [
+            ['\\[', '\\]']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+
+    svg: {
+        fontCache: 'global'
+    },
+
+    options: {
+        skipHtmlTags: [
+            'script',
+            'noscript',
+            'style',
+            'textarea',
+            'pre',
+            'code'
+        ]
+    }
+};
+</script>
+
+<script
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+
+    <!-- ==================================================
+         APPWRITE SDK
+    =================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"
+    ></script>
+
+
+
+    <!-- ==================================================
+         BOOTSTRAP JS
+    =================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         APPWRITE CONFIGURATION
+    =================================================== -->
+
+    <script
+        src="appwrite.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         AUTHENTICATION GUARD
+    =================================================== -->
+
+    <script
+        src="guard.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         STUDENT DASHBOARD SCRIPT
+    =================================================== -->
+
+    <script
+        src="student-dashboard.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         STUDENT CBT SCRIPT
+    =================================================== -->
+
+    <script
+        src="student-cbt.js"
+    ></script>
+
+
+</body>
+
+</html>

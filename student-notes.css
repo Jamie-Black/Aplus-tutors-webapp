@@ -1,0 +1,2448 @@
+/* ==================================================
+   APLUS TUTORS
+   STUDENT STUDY NOTES
+   PHASE 3 — NOTE CARD DESIGN
+================================================== */
+
+
+/* ==================================================
+   PAGE HEADER
+================================================== */
+
+.study-notes-header {
+
+    margin-bottom: 28px;
+
+}
+
+
+.study-notes-heading {
+
+    max-width: 760px;
+
+}
+
+
+.study-notes-eyebrow {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 8px;
+
+    color: #b00020;
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+}
+
+
+.study-notes-eyebrow i {
+
+    font-size: 0.85rem;
+
+}
+
+
+.study-notes-title {
+
+    margin: 0;
+
+    color: #161616;
+
+    font-size: clamp(
+        1.7rem,
+        3vw,
+        2.25rem
+    );
+
+    font-weight: 800;
+
+    line-height: 1.2;
+
+}
+
+
+.study-notes-subtitle {
+
+    margin: 9px 0 0;
+
+    max-width: 650px;
+
+    color: #707070;
+
+    font-size: 0.95rem;
+
+    line-height: 1.65;
+
+}
+
+
+/* ==================================================
+   NOTES TOOLBAR
+================================================== */
+
+.study-notes-toolbar {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.notes-search {
+
+    position: relative;
+
+    flex: 1;
+
+}
+
+
+.notes-search i {
+
+    position: absolute;
+
+    top: 50%;
+
+    left: 16px;
+
+    z-index: 2;
+
+    color: #999;
+
+    font-size: 0.9rem;
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+
+}
+
+
+.notes-search .form-control {
+
+    min-height: 46px;
+
+    padding: 10px 16px 10px 43px;
+
+    border: 1px solid #e2e2e2;
+
+    border-radius: 10px;
+
+    background: #fff;
+
+    color: #222;
+
+    font-size: 0.9rem;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.notes-search .form-control:focus {
+
+    border-color: #b00020;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(176, 0, 32, 0.08);
+
+}
+
+
+.notes-filter {
+
+    width: 210px;
+
+}
+
+
+.notes-filter .form-select {
+
+    min-height: 46px;
+
+    padding-left: 14px;
+
+    border: 1px solid #e2e2e2;
+
+    border-radius: 10px;
+
+    color: #333;
+
+    font-size: 0.9rem;
+
+    box-shadow: none;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.notes-filter .form-select:focus {
+
+    border-color: #b00020;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(176, 0, 32, 0.08);
+
+}
+
+
+/* ==================================================
+   NOTES SECTION
+================================================== */
+
+.study-notes-section {
+
+    width: 100%;
+
+}
+
+
+.study-notes-section-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 14px;
+
+}
+
+
+.study-notes-section-header h2 {
+
+    margin: 0;
+
+    color: #222;
+
+    font-size: 1.1rem;
+
+    font-weight: 750;
+
+}
+
+
+.study-notes-section-header p {
+
+    margin: 4px 0 0;
+
+    color: #888;
+
+    font-size: 0.82rem;
+
+}
+
+
+.study-notes-card {
+
+    width: 100%;
+
+    padding: 22px;
+
+    border: 1px solid #e8e8e8;
+
+    border-radius: 14px;
+
+    background: #fff;
+
+    box-shadow:
+        0 4px 18px
+        rgba(0, 0, 0, 0.035);
+
+}
+
+
+/* ==================================================
+   NOTES GRID
+================================================== */
+
+.notes-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(
+                270px,
+                1fr
+            )
+        );
+
+    gap: 18px;
+
+}
+
+
+/* ==================================================
+   INDIVIDUAL NOTE CARD
+================================================== */
+
+.study-note-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+
+    min-height: 245px;
+
+    padding: 19px;
+
+    border: 1px solid #e8e8e8;
+
+    border-radius: 13px;
+
+    background: #fff;
+
+    box-shadow:
+        0 3px 12px
+        rgba(0, 0, 0, 0.025);
+
+    transition:
+        transform 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease;
+
+}
+
+
+.study-note-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(176, 0, 32, 0.28);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, 0.07);
+
+}
+
+
+/* ==================================================
+   CARD TOP
+================================================== */
+
+.study-note-card-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 17px;
+
+}
+
+
+.study-note-subject {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    min-width: 0;
+
+    max-width: 58%;
+
+    padding: 6px 9px;
+
+    overflow: hidden;
+
+    border-radius: 7px;
+
+    background:
+        rgba(176, 0, 32, 0.07);
+
+    color: #a0001d;
+
+    font-size: 0.73rem;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+}
+
+
+.study-note-subject i {
+
+    flex-shrink: 0;
+
+    font-size: 0.7rem;
+
+}
+
+
+.study-note-published {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    flex-shrink: 0;
+
+    color: #198754;
+
+    font-size: 0.7rem;
+
+    font-weight: 600;
+
+}
+
+
+.study-note-published i {
+
+    font-size: 0.62rem;
+
+}
+
+
+/* ==================================================
+   CARD BODY
+================================================== */
+
+.study-note-card-body {
+
+    flex: 1;
+
+}
+
+
+.study-note-card-title {
+
+    display: -webkit-box;
+
+    margin: 0 0 9px;
+
+    overflow: hidden;
+
+    color: #202020;
+
+    font-size: 1.05rem;
+
+    font-weight: 750;
+
+    line-height: 1.4;
+
+    -webkit-box-orient: vertical;
+
+    -webkit-line-clamp: 2;
+
+}
+
+
+.study-note-card-preview {
+
+    display: -webkit-box;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #777;
+
+    font-size: 0.83rem;
+
+    line-height: 1.65;
+
+    -webkit-box-orient: vertical;
+
+    -webkit-line-clamp: 3;
+
+}
+
+
+/* ==================================================
+   CARD FOOTER
+================================================== */
+
+.study-note-card-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #eeeeee;
+
+}
+
+
+.study-note-date {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #969696;
+
+    font-size: 0.72rem;
+
+}
+
+
+.study-note-date i {
+
+    font-size: 0.7rem;
+
+}
+
+
+/* ==================================================
+   READ NOTE BUTTON
+================================================== */
+
+.study-note-read-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 7px 11px;
+
+    border: 0;
+
+    border-radius: 7px;
+
+    background: #b00020;
+
+    color: #fff;
+
+    font-size: 0.74rem;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.study-note-read-btn:hover {
+
+    background: #8f001a;
+
+    transform:
+        translateX(2px);
+
+}
+
+
+.study-note-read-btn i {
+
+    font-size: 0.68rem;
+
+}
+
+
+/* ==================================================
+   LOADING STATE
+================================================== */
+
+.notes-state {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 280px;
+
+    padding: 40px 20px;
+
+    text-align: center;
+
+}
+
+
+.notes-loading-spinner {
+
+    margin-bottom: 15px;
+
+}
+
+
+.notes-loading-spinner .spinner-border {
+
+    width: 2rem;
+
+    height: 2rem;
+
+    color: #b00020;
+
+}
+
+
+.notes-state h3 {
+
+    margin: 0 0 7px;
+
+    color: #292929;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+}
+
+
+.notes-state p {
+
+    max-width: 430px;
+
+    margin: 0;
+
+    color: #858585;
+
+    font-size: 0.83rem;
+
+    line-height: 1.6;
+
+}
+
+
+/* ==================================================
+   EMPTY STATE
+================================================== */
+
+.notes-empty-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 58px;
+
+    height: 58px;
+
+    margin-bottom: 17px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(176, 0, 32, 0.07);
+
+    color: #b00020;
+
+    font-size: 1.25rem;
+
+}
+
+
+/* ==================================================
+   STUDY NOTE VIEW MODAL
+================================================== */
+
+.study-note-view-modal {
+
+    overflow: hidden;
+
+    border: 0;
+
+    border-radius: 14px;
+
+}
+
+
+.study-note-view-modal .modal-header {
+
+    padding: 22px 25px;
+
+    border-bottom:
+        1px solid #eeeeee;
+
+}
+
+
+.study-note-view-heading {
+
+    min-width: 0;
+
+}
+
+
+.note-view-subject {
+
+    display: inline-block;
+
+    margin-bottom: 7px;
+
+    color: #b00020;
+
+    font-size: 0.75rem;
+
+    font-weight: 750;
+
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+
+}
+
+
+.note-view-title {
+
+    margin: 0;
+
+    color: #202020;
+
+    font-size: clamp(
+        1.35rem,
+        3vw,
+        1.8rem
+    );
+
+    font-weight: 800;
+
+    line-height: 1.3;
+
+}
+
+
+.note-view-meta {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 9px;
+
+    color: #8a8a8a;
+
+    font-size: 0.73rem;
+
+}
+
+
+.note-view-published {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    color: #198754;
+
+    font-weight: 650;
+
+}
+
+
+.note-view-published i {
+
+    font-size: 0.6rem;
+
+}
+
+
+.meta-separator {
+
+    color: #c5c5c5;
+
+}
+
+
+/* ==================================================
+   NOTE READER
+================================================== */
+
+.study-note-view-modal .modal-body {
+
+    padding: 30px;
+
+    background: #fff;
+
+}
+
+
+.study-note-reader {
+
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    color: #333;
+
+    font-size: 0.97rem;
+
+    line-height: 1.8;
+
+}
+
+
+.study-note-reader p {
+
+    margin-bottom: 1.15rem;
+
+}
+
+
+.study-note-reader h2 {
+
+    margin-top: 2rem;
+
+    margin-bottom: 0.9rem;
+
+    color: #202020;
+
+    font-size: 1.45rem;
+
+    font-weight: 750;
+
+    line-height: 1.35;
+
+}
+
+
+.study-note-reader h3 {
+
+    margin-top: 1.7rem;
+
+    margin-bottom: 0.8rem;
+
+    color: #252525;
+
+    font-size: 1.2rem;
+
+    font-weight: 750;
+
+}
+
+
+.study-note-reader h4 {
+
+    margin-top: 1.5rem;
+
+    margin-bottom: 0.7rem;
+
+    color: #333;
+
+    font-size: 1.05rem;
+
+    font-weight: 700;
+
+}
+
+
+.study-note-reader ul,
+.study-note-reader ol {
+
+    margin-bottom: 1.2rem;
+
+    padding-left: 1.7rem;
+
+}
+
+
+.study-note-reader li {
+
+    margin-bottom: 0.4rem;
+
+}
+
+
+.study-note-reader hr {
+
+    margin: 2rem 0;
+
+    border: 0;
+
+    border-top:
+        1px solid #e3e3e3;
+
+}
+
+
+.study-note-reader strong {
+
+    font-weight: 750;
+
+}
+
+
+.study-note-reader em {
+
+    font-style: italic;
+
+}
+
+
+.study-note-reader u {
+
+    text-decoration: underline;
+
+}
+
+
+/* ==================================================
+   MODAL FOOTER
+================================================== */
+
+.study-note-view-modal .modal-footer {
+
+    padding: 15px 25px;
+
+    border-top:
+        1px solid #eeeeee;
+
+}
+
+
+.study-note-view-modal .modal-footer .btn {
+
+    border-radius: 8px;
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+}
+
+
+/* ==================================================
+   TABLET
+================================================== */
+
+@media (max-width: 768px) {
+
+    .study-notes-toolbar {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .notes-filter {
+
+        width: 100%;
+
+    }
+
+
+    .study-notes-card {
+
+        padding: 16px;
+
+    }
+
+
+    .notes-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+        gap: 14px;
+
+    }
+
+
+    .study-note-card {
+
+        padding: 16px;
+
+    }
+
+
+    .study-note-card-top {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .study-note-subject {
+
+        max-width: 100%;
+
+    }
+
+
+    .study-note-published {
+
+        align-self: flex-start;
+
+    }
+
+
+    .study-note-view-modal .modal-header {
+
+        padding: 18px;
+
+    }
+
+
+    .study-note-view-modal .modal-body {
+
+        padding: 22px 18px;
+
+    }
+
+
+    .study-note-view-modal .modal-footer {
+
+        padding: 13px 18px;
+
+    }
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 576px) {
+
+    .study-notes-header {
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .study-notes-title {
+
+        font-size: 1.55rem;
+
+    }
+
+
+    .study-notes-subtitle {
+
+        font-size: 0.84rem;
+
+    }
+
+
+    .study-notes-section-header {
+
+        margin-bottom: 11px;
+
+    }
+
+
+    .study-notes-section-header h2 {
+
+        font-size: 1rem;
+
+    }
+
+
+    .study-notes-card {
+
+        padding: 11px;
+
+        border-radius: 11px;
+
+    }
+
+
+    .notes-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 11px;
+
+    }
+
+
+    .study-note-card {
+
+        min-height: 220px;
+
+        padding: 16px;
+
+        border-radius: 11px;
+
+    }
+
+
+    .study-note-card:hover {
+
+        transform: none;
+
+    }
+
+
+    .study-note-card-title {
+
+        font-size: 0.98rem;
+
+    }
+
+
+    .study-note-card-preview {
+
+        font-size: 0.8rem;
+
+    }
+
+
+    .study-note-card-footer {
+
+        margin-top: 16px;
+
+        padding-top: 13px;
+
+    }
+
+
+    .study-note-date {
+
+        font-size: 0.68rem;
+
+    }
+
+
+    .study-note-read-btn {
+
+        padding: 7px 9px;
+
+        font-size: 0.7rem;
+
+    }
+
+
+    .study-note-view-modal {
+
+        border-radius: 10px;
+
+    }
+
+
+    .study-note-view-modal .modal-header {
+
+        padding: 16px;
+
+    }
+
+
+    .study-note-view-modal .modal-body {
+
+        padding: 20px 16px;
+
+    }
+
+
+    .study-note-reader {
+
+        font-size: 0.9rem;
+
+        line-height: 1.75;
+
+    }
+
+
+    .study-note-reader h2 {
+
+        font-size: 1.25rem;
+
+    }
+
+
+    .study-note-reader h3 {
+
+        font-size: 1.1rem;
+
+    }
+
+
+    .study-note-reader h4 {
+
+        font-size: 1rem;
+
+    }
+
+
+    .study-note-view-modal .modal-footer {
+
+        padding: 12px 16px;
+
+    }
+
+}
+
+
+/* ==================================================
+   VERY SMALL SCREENS
+================================================== */
+
+@media (max-width: 360px) {
+
+    .study-note-card-footer {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .study-note-read-btn {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   STUDY NOTE READER
+================================================== */
+
+.study-note-reader {
+
+    border: none;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.20);
+
+}
+
+
+/* ==================================================
+   READER HEADER
+================================================== */
+
+.study-note-reader-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 24px 28px;
+
+    border-bottom: 1px solid
+        rgba(0, 0, 0, 0.07);
+
+}
+
+
+.study-note-reader-heading {
+
+    min-width: 0;
+
+}
+
+
+.study-note-reader-subject {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-bottom: 7px;
+
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    background: rgba(180, 0, 0, 0.08);
+
+    color: #b00000;
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+
+}
+
+
+.study-note-reader-header
+.modal-title {
+
+    margin: 0;
+
+    color: #161616;
+
+    font-size: clamp(
+        1.35rem,
+        2.5vw,
+        2rem
+    );
+
+    font-weight: 800;
+
+    line-height: 1.25;
+
+}
+
+
+.study-note-reader-date {
+
+    margin-top: 8px;
+
+    color: #777;
+
+    font-size: 0.82rem;
+
+}
+
+
+/* ==================================================
+   CLOSE BUTTON
+================================================== */
+
+.study-note-reader-header
+.btn-close {
+
+    flex: 0 0 auto;
+
+    margin-top: 4px;
+
+    padding: 10px;
+
+    border-radius: 50%;
+
+    background-size: 11px;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.study-note-reader-header
+.btn-close:hover {
+
+    background-color:
+        rgba(0, 0, 0, 0.07);
+
+    transform: rotate(90deg);
+
+}
+
+
+/* ==================================================
+   READING PROGRESS
+================================================== */
+
+.study-note-progress-track {
+
+    width: 100%;
+
+    height: 4px;
+
+    background: #eeeeee;
+
+    overflow: hidden;
+
+}
+
+
+.study-note-progress-bar {
+
+    width: 0%;
+
+    height: 100%;
+
+    background: #b00000;
+
+    transition: width 0.1s linear;
+
+}
+
+
+/* ==================================================
+   READER BODY
+================================================== */
+
+.study-note-reader-body {
+
+    padding:
+        35px
+        clamp(22px, 5vw, 75px);
+
+    max-height:
+        calc(100vh - 230px);
+
+    overflow-y: auto;
+
+    scroll-behavior: smooth;
+
+}
+
+
+/* ==================================================
+   READER TYPOGRAPHY
+================================================== */
+
+.study-note-reader-body {
+
+    color: #292929;
+
+    font-size: 1rem;
+
+    line-height: 1.85;
+
+}
+
+
+.study-note-reader-body p {
+
+    margin-bottom: 1.25rem;
+
+}
+
+
+.study-note-reader-body
+h1,
+.study-note-reader-body
+h2,
+.study-note-reader-body
+h3,
+.study-note-reader-body
+h4,
+.study-note-reader-body
+h5,
+.study-note-reader-body
+h6 {
+
+    margin-top: 2rem;
+
+    margin-bottom: 1rem;
+
+    color: #171717;
+
+    font-weight: 800;
+
+    line-height: 1.3;
+
+}
+
+
+.study-note-reader-body
+h1 {
+
+    font-size: 2rem;
+
+}
+
+
+.study-note-reader-body
+h2 {
+
+    font-size: 1.65rem;
+
+}
+
+
+.study-note-reader-body
+h3 {
+
+    font-size: 1.4rem;
+
+}
+
+
+.study-note-reader-body
+h4 {
+
+    font-size: 1.2rem;
+
+}
+
+
+.study-note-reader-body
+ul,
+.study-note-reader-body
+ol {
+
+    margin-top: 1rem;
+
+    margin-bottom: 1.5rem;
+
+    padding-left: 1.7rem;
+
+}
+
+
+.study-note-reader-body
+li {
+
+    margin-bottom: 0.55rem;
+
+}
+
+
+.study-note-reader-body
+strong {
+
+    font-weight: 800;
+
+}
+
+
+.study-note-reader-body
+u {
+
+    text-decoration-thickness: 2px;
+
+    text-underline-offset: 3px;
+
+}
+
+
+.study-note-reader-body
+hr {
+
+    margin:
+        2rem
+        0;
+
+    border: 0;
+
+    border-top:
+        1px solid
+        rgba(0, 0, 0, 0.10);
+
+}
+
+
+/* ==================================================
+   TABLES
+================================================== */
+
+.study-note-reader-body
+table {
+
+    width: 100%;
+
+    margin:
+        1.5rem
+        0;
+
+    border-collapse: collapse;
+
+    overflow: hidden;
+
+}
+
+
+.study-note-reader-body
+th,
+.study-note-reader-body
+td {
+
+    padding: 10px 12px;
+
+    border:
+        1px solid
+        #dddddd;
+
+    text-align: left;
+
+}
+
+
+.study-note-reader-body
+th {
+
+    background:
+        #f5f5f5;
+
+    color: #171717;
+
+    font-weight: 700;
+
+}
+
+
+/* ==================================================
+   LINKS
+================================================== */
+
+.study-note-reader-body
+a {
+
+    color: #b00000;
+
+    font-weight: 600;
+
+    text-decoration:
+        underline;
+
+    text-underline-offset: 3px;
+
+}
+
+
+.study-note-reader-body
+a:hover {
+
+    color: #7f0000;
+
+}
+
+
+/* ==================================================
+   IMAGES
+================================================== */
+
+.study-note-reader-body
+img {
+
+    display: block;
+
+    max-width: 100%;
+
+    height: auto;
+
+    margin:
+        1.5rem
+        auto;
+
+    border-radius: 10px;
+
+}
+
+
+/* ==================================================
+   BLOCKQUOTES
+================================================== */
+
+.study-note-reader-body
+blockquote {
+
+    margin:
+        1.5rem
+        0;
+
+    padding:
+        15px
+        20px;
+
+    border-left:
+        4px solid
+        #b00000;
+
+    background:
+        rgba(180, 0, 0, 0.045);
+
+    color: #555;
+
+}
+
+
+/* ==================================================
+   CODE / PRE
+================================================== */
+
+.study-note-reader-body
+pre {
+
+    max-width: 100%;
+
+    padding: 16px;
+
+    border-radius: 10px;
+
+    background: #181818;
+
+    color: #ffffff;
+
+    overflow-x: auto;
+
+}
+
+
+.study-note-reader-body
+code {
+
+    font-size: 0.9em;
+
+}
+
+
+/* ==================================================
+   READER FOOTER
+================================================== */
+
+.study-note-reader-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding:
+        15px
+        24px;
+
+    border-top:
+        1px solid
+        rgba(0, 0, 0, 0.07);
+
+    background: #fafafa;
+
+}
+
+
+/* ==================================================
+   NAVIGATION BUTTONS
+================================================== */
+
+.study-note-navigation-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    min-width: 105px;
+
+    padding:
+        9px
+        14px;
+
+    border:
+        1px solid
+        rgba(0, 0, 0, 0.12);
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #222;
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+
+.study-note-navigation-btn:hover:not(:disabled) {
+
+    border-color: #b00000;
+
+    background: #b00000;
+
+    color: #ffffff;
+
+}
+
+
+.study-note-navigation-btn:disabled {
+
+    opacity: 0.4;
+
+    cursor: not-allowed;
+
+}
+
+
+/* ==================================================
+   CLOSE BUTTON
+================================================== */
+
+.study-note-close-btn {
+
+    padding:
+        9px
+        18px;
+
+    border-radius: 8px;
+
+    background: #171717;
+
+    color: #ffffff;
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+}
+
+
+.study-note-close-btn:hover {
+
+    background: #000000;
+
+    color: #ffffff;
+
+}
+
+
+/* ==================================================
+   MOBILE READER
+================================================== */
+
+@media (max-width: 576px) {
+
+    .study-note-reader {
+
+        border-radius: 14px;
+
+    }
+
+
+    .study-note-reader-header {
+
+        padding:
+            18px;
+
+    }
+
+
+    .study-note-reader-header
+    .modal-title {
+
+        font-size: 1.25rem;
+
+    }
+
+
+    .study-note-reader-body {
+
+        padding:
+            25px
+            18px;
+
+        max-height:
+            calc(100vh - 205px);
+
+        font-size: 0.95rem;
+
+        line-height: 1.75;
+
+    }
+
+
+    .study-note-reader-body
+    h1 {
+
+        font-size: 1.55rem;
+
+    }
+
+
+    .study-note-reader-body
+    h2 {
+
+        font-size: 1.35rem;
+
+    }
+
+
+    .study-note-reader-body
+    h3 {
+
+        font-size: 1.2rem;
+
+    }
+
+
+    .study-note-reader-footer {
+
+        padding:
+            12px;
+
+        gap: 6px;
+
+    }
+
+
+    .study-note-navigation-btn {
+
+        min-width: 0;
+
+        padding:
+            8px
+            10px;
+
+        font-size: 0.78rem;
+
+    }
+
+
+    .study-note-close-btn {
+
+        padding:
+            8px
+            12px;
+
+        font-size: 0.78rem;
+
+    }
+
+}
+
+
+/* ==================================================
+   VERY SMALL SCREENS
+================================================== */
+
+@media (max-width: 380px) {
+
+    .study-note-reader-footer {
+
+        display: grid;
+
+        grid-template-columns:
+            1fr
+            1fr;
+
+    }
+
+
+    .study-note-close-btn {
+
+        grid-column:
+            1 / -1;
+
+        grid-row: 1;
+
+        width: 100%;
+
+    }
+
+
+    #previousNoteBtn {
+
+        grid-column: 1;
+
+        grid-row: 2;
+
+        width: 100%;
+
+    }
+
+
+    #nextNoteBtn {
+
+        grid-column: 2;
+
+        grid-row: 2;
+
+        width: 100%;
+
+    }
+
+}
+
+/* ============================================================
+   APLUS TUTORS
+   STUDY NOTES DASHBOARD
+============================================================ */
+
+.study-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin: 28px 0;
+}
+
+.study-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    padding: 22px 18px;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.035);
+}
+
+.study-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+    font-size: 19px;
+}
+
+.total-icon {
+    color: #dc143c;
+    background: #fff0f3;
+}
+
+.unread-icon {
+    color: #b45309;
+    background: #fff7e8;
+}
+
+.progress-icon {
+    color: #2563eb;
+    background: #eff6ff;
+}
+
+.completed-icon {
+    color: #15803d;
+    background: #ecfdf3;
+}
+
+.study-stat-info {
+    min-width: 0;
+}
+
+.study-stat-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.study-stat-info h3 {
+    margin: 0;
+    color: #111111;
+    font-size: 27px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.study-stat-description {
+    display: block;
+    margin-top: 5px;
+    color: #888888;
+    font-size: 11px;
+}
+
+
+/* ============================================================
+   OVERALL STUDY PROGRESS
+============================================================ */
+
+.overall-study-progress {
+    margin-bottom: 28px;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.035);
+}
+
+.overall-progress-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.overall-progress-heading h3 {
+    margin: 0 0 7px;
+    color: #111111;
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.overall-progress-heading p {
+    margin: 0;
+    color: #777777;
+    font-size: 13px;
+}
+
+#overallProgressPercentage {
+    color: #dc143c;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.overall-progress-track {
+    height: 10px;
+    overflow: hidden;
+    background: #eeeeee;
+    border-radius: 20px;
+}
+
+.overall-progress-bar {
+    width: 0;
+    height: 100%;
+    background: #dc143c;
+    border-radius: inherit;
+    transition: width 0.35s ease;
+}
+
+.overall-progress-footer {
+    margin-top: 12px;
+    color: #777777;
+    font-size: 12px;
+}
+
+
+/* ============================================================
+   STUDY STATUS FILTER
+============================================================ */
+
+.notes-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 170px;
+}
+
+.notes-filter-group label {
+    color: #555555;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.notes-filter-group select {
+    min-height: 44px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.notes-filter-group select:focus {
+    border-color: #dc143c;
+    box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.09);
+}
+
+
+/* ============================================================
+   STUDY NOTE CARDS
+============================================================ */
+
+.study-note-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.035);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.study-note-card:hover {
+    transform: translateY(-3px);
+    border-color: #f1b8c4;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.07);
+}
+
+.study-note-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.study-note-subject {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 6px 10px;
+    overflow-wrap: anywhere;
+    color: #a80f2e;
+    background: #fff0f3;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.study-note-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 9px;
+    border-radius: 7px;
+    font-size: 10px;
+    font-weight: 750;
+}
+
+.study-note-status.unread {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.study-note-status.in-progress {
+    color: #1d4ed8;
+    background: #dbeafe;
+}
+
+.study-note-status.completed {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.study-note-card-content {
+    flex: 1;
+}
+
+.study-note-card-title {
+    margin: 0 0 10px;
+    color: #111111;
+    font-size: 19px;
+    font-weight: 750;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.study-note-card-preview {
+    display: -webkit-box;
+    margin: 0 0 22px;
+    overflow: hidden;
+    color: #707070;
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.study-note-card-progress {
+    margin-bottom: 20px;
+}
+
+.note-card-progress-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 9px;
+    color: #777777;
+    font-size: 11px;
+}
+
+.note-card-progress-heading span:last-child {
+    color: #222222;
+    font-weight: 750;
+}
+
+.note-card-progress-track {
+    height: 6px;
+    overflow: hidden;
+    background: #eeeeee;
+    border-radius: 20px;
+}
+
+.note-card-progress-bar {
+    height: 100%;
+    background: #dc143c;
+    border-radius: inherit;
+    transition: width 0.3s ease;
+}
+
+.study-note-card-meta {
+    margin-bottom: 18px;
+    color: #888888;
+    font-size: 11px;
+}
+
+.study-note-card-meta i {
+    margin-right: 5px;
+}
+
+.study-note-card-actions {
+    margin-top: auto;
+}
+
+.study-note-open-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 16px;
+    color: #ffffff;
+    background: #dc143c;
+    border: 1px solid #dc143c;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.study-note-open-btn:hover {
+    color: #ffffff;
+    background: #a80f2e;
+    border-color: #a80f2e;
+}
+
+
+/* ============================================================
+   RESPONSIVE DASHBOARD
+============================================================ */
+
+@media (max-width: 1100px) {
+
+    .study-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .study-stats-grid {
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .study-stat-card {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+        padding: 15px 13px;
+        border-radius: 12px;
+    }
+
+    .study-stat-icon {
+        width: 39px;
+        height: 39px;
+        font-size: 16px;
+    }
+
+    .study-stat-info h3 {
+        font-size: 23px;
+    }
+
+    .study-stat-label {
+        font-size: 11px;
+    }
+
+    .study-stat-description {
+        font-size: 10px;
+    }
+
+    .overall-study-progress {
+        padding: 18px;
+    }
+
+    .overall-progress-heading h3 {
+        font-size: 16px;
+    }
+
+    .overall-progress-heading p {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    #overallProgressPercentage {
+        font-size: 23px;
+    }
+
+    .notes-filter-group {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .study-note-card {
+        padding: 18px;
+    }
+
+}

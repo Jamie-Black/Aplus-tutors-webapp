@@ -1,0 +1,559 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Admin Profile | Aplus Tutors</title>
+
+<!--==================================================
+BOOTSTRAP
+==================================================-->
+
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>
+
+<!--==================================================
+FONT AWESOME
+==================================================-->
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+<!--==================================================
+ADMIN DASHBOARD CSS
+==================================================-->
+
+<link
+    rel="stylesheet"
+    href="admin-dashboard.css"
+>
+
+<!--==================================================
+ADMIN PROFILE CSS
+==================================================-->
+
+<link
+    rel="stylesheet"
+    href="admin-videos.css"
+>
+
+</head><body data-role="admin"><!--==================================================
+PAGE LOADER
+==================================================-->
+
+<div id="pageLoader">
+
+    <div class="loader-content">
+
+        <div class="loader-spinner"></div>
+
+        <h3>Aplus Tutors</h3>
+
+        <p>Loading Video lessons...</p>
+
+    </div>
+
+</div>
+
+
+<!--==================================================
+SIDEBAR OVERLAY
+==================================================-->
+
+<div
+    id="overlay"
+    class="overlay"
+></div>
+
+
+<!--==================================================
+DASHBOARD LAYOUT
+==================================================-->
+
+<div class="dashboard">
+
+
+    <!--==================================================
+    SIDEBAR
+    ==================================================-->
+
+    <aside id="sidebar"></aside>
+
+
+    <!--==================================================
+    MAIN CONTENT
+    ==================================================-->
+
+    <main class="main-content">
+
+
+        <!--==================================================
+        TOPBAR
+        ==================================================-->
+
+        <header id="topbar"></header>
+        
+        
+        <!--Video content-->
+        
+        
+          <!--==================================================
+VIDEO CONTENT
+==================================================-->
+
+<div class="admin-videos-page">
+
+
+    <!--==================================================
+    PAGE HEADER
+    ==================================================-->
+
+    <div class="videos-page-header">
+
+        <div>
+
+            <span class="videos-page-eyebrow">
+                APLUS TUTORS
+            </span>
+
+            <h1>
+                Video Lessons
+            </h1>
+
+            <p>
+                Upload and manage video lessons for your students.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!--==================================================
+    UPLOAD SECTION
+    ==================================================-->
+
+    <section class="video-admin-card">
+
+
+        <div class="video-admin-card-header">
+
+            <div>
+
+                <h2>
+                    Add Video Lesson
+                </h2>
+
+                <p>
+                    Upload a lesson and connect it to a subject and topic.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!--==================================================
+        FORM
+        ==================================================-->
+
+        <form
+            id="videoLessonForm"
+            novalidate
+        >
+
+
+            <!-- SUBJECT -->
+
+            <div class="video-form-group">
+
+                <label for="videoSubject">
+                    Subject
+                </label>
+
+                <select
+                    id="videoSubject"
+                    class="form-select"
+                    required
+                >
+
+                    <option value="">
+                        Select subject
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- TOPIC -->
+
+            <div class="video-form-group">
+
+                <label for="videoTopic">
+                    Topic
+                </label>
+
+                <select
+                    id="videoTopic"
+                    class="form-select"
+                    required
+                    disabled
+                >
+
+                    <option value="">
+                        Select a subject first
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- TITLE -->
+
+            <div class="video-form-group">
+
+                <label for="videoTitle">
+                    Lesson title
+                </label>
+
+                <input
+                    type="text"
+                    id="videoTitle"
+                    class="form-control"
+                    placeholder="e.g. Introduction to Motion"
+                    maxlength="255"
+                    required
+                >
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="video-form-group">
+
+                <label for="videoDescription">
+                    Description
+                </label>
+
+                <textarea
+                    id="videoDescription"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Briefly describe what students will learn in this lesson."
+                ></textarea>
+
+            </div>
+
+
+            <!-- VIDEO -->
+
+            <div class="video-form-group">
+
+                <label for="videoFile">
+                    Video lesson
+                </label>
+
+                <input
+                    type="file"
+                    id="videoFile"
+                    class="form-control"
+                    accept="video/mp4,video/webm,video/ogg"
+                    required
+                >
+
+                <div class="video-input-help">
+                    MP4 is recommended for the best browser compatibility.
+                </div>
+
+            </div>
+
+
+            <!-- THUMBNAIL -->
+
+            <div class="video-form-group">
+
+                <label for="videoThumbnail">
+                    Thumbnail
+                    <span>(optional)</span>
+                </label>
+
+                <input
+                    type="file"
+                    id="videoThumbnail"
+                    class="form-control"
+                    accept="image/jpeg,image/png,image/webp"
+                >
+
+                <div class="video-input-help">
+                    Recommended: a clear 16:9 lesson image.
+                </div>
+
+            </div>
+
+
+            <!-- TWO COLUMNS -->
+
+            <div class="video-form-row">
+
+
+                <!-- ORDER -->
+
+                <div class="video-form-group">
+
+                    <label for="videoOrder">
+                        Lesson order
+                    </label>
+
+                    <input
+                        type="number"
+                        id="videoOrder"
+                        class="form-control"
+                        min="1"
+                        value="1"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="video-form-group">
+
+                    <label for="videoStatus">
+                        Status
+                    </label>
+
+                    <select
+                        id="videoStatus"
+                        class="form-select"
+                    >
+
+                        <option value="draft">
+                            Draft
+                        </option>
+
+                        <option value="published">
+                            Published
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div
+                id="videoUploadProgress"
+                class="video-upload-progress"
+                hidden
+            >
+
+                <div class="video-progress-label">
+
+                    <span id="videoProgressText">
+                        Preparing upload...
+                    </span>
+
+                    <span id="videoProgressPercent">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="video-progress-track">
+
+                    <div
+                        id="videoProgressBar"
+                        class="video-progress-bar"
+                        style="width: 0%;"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="videoFormMessage"
+                class="video-form-message"
+                hidden
+            ></div>
+
+
+            <!-- BUTTON -->
+
+            <div class="video-form-actions">
+
+                <button
+                    type="submit"
+                    id="uploadVideoBtn"
+                    class="btn-upload-video"
+                >
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    <span>
+                        Upload Video Lesson
+                    </span>
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </section>
+
+
+
+    <!--==================================================
+    EXISTING LESSONS
+    ==================================================-->
+
+    <section class="video-admin-card">
+
+
+        <div class="video-admin-card-header">
+
+            <div>
+
+                <h2>
+                    Video Lessons
+                </h2>
+
+                <p>
+                    Manage the video lessons currently stored in Aplus Tutors.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="refreshVideosBtn"
+                class="btn-refresh-videos"
+            >
+
+                <i class="fa-solid fa-rotate"></i>
+
+                Refresh
+
+            </button>
+
+        </div>
+
+
+        <!-- FILTER -->
+
+        <div class="video-list-filter">
+
+            <div>
+
+                <label for="videoFilterSubject">
+                    Filter by subject
+                </label>
+
+                <select
+                    id="videoFilterSubject"
+                    class="form-select"
+                >
+
+                    <option value="">
+                        All subjects
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- LIST -->
+
+        <div
+            id="videoLessonsContainer"
+            class="video-lessons-container"
+        >
+
+            <div class="video-list-loading">
+
+                <div class="video-small-spinner"></div>
+
+                <span>
+                    Loading video lessons...
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+    </main>
+
+</div>
+
+
+
+
+
+<!-- Appwrite -->
+<script
+    src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"
+    
+></script>
+
+<!-- Bootstrap -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+></script>
+
+<!-- Appwrite Configuration -->
+
+<script src="appwrite.js"></script>
+
+<!-- Authentication Guard -->
+
+<script src="guard.js"></script>
+
+<!-- Admin Dashboard Shell -->
+
+<script src="admin-dashboard.js"></script>
+
+<!-- Admin videos page -->
+
+<script src="admin-videos.js">
+    
+    
+</script>
+</body>
+
+</html>
+
+
+
+
+                        

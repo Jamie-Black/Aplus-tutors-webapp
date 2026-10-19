@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Admin results | Aplus Tutors</title>
+
+<!--==================================================
+BOOTSTRAP
+==================================================-->
+
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>
+
+<!--==================================================
+FONT AWESOME
+==================================================-->
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+<!--==================================================
+ADMIN DASHBOARD CSS
+==================================================-->
+
+<link
+    rel="stylesheet"
+    href="admin-dashboard.css"
+>
+
+<!--==================================================
+ADMIN PROFILE CSS
+==================================================-->
+
+<link
+    rel="stylesheet"
+    href="admin-results.css"
+>
+
+</head>
+
+<body data-role="admin">
+  
+<!--==================================================
+PAGE LOADER
+==================================================-->
+
+<div id="pageLoader">
+
+    <div class="loader-content">
+
+        <div class="loader-spinner"></div>
+
+        <h3>Aplus Tutors</h3>
+
+        <p>Loading your students cbt attempts...</p>
+
+    </div>
+
+</div>
+
+
+<!--==================================================
+SIDEBAR OVERLAY
+==================================================-->
+
+<div
+    id="overlay"
+    class="overlay"
+></div>
+
+
+<!--==================================================
+DASHBOARD LAYOUT
+==================================================-->
+
+<div class="dashboard">
+
+
+    <!--==================================================
+    SIDEBAR
+    ==================================================-->
+
+    <aside id="sidebar"></aside>
+
+
+    <!--==================================================
+    MAIN CONTENT
+    ==================================================-->
+
+    <main class="main-content">
+
+
+        <!--==================================================
+        TOPBAR
+        ==================================================-->
+
+        <header id="topbar"></header>
+        
+<div class="dashboard-content admin-results-page">
+
+    <!-- PAGE HEADER -->
+    <section class="results-header">
+
+        <div>
+            <span class="results-eyebrow">
+                APLUS TUTORS ADMINISTRATION
+            </span>
+
+            <h1>CBT Results</h1>
+
+            <p>
+                Monitor student examinations,
+                scores, and academic performance.
+            </p>
+        </div>
+
+        <button
+            type="button"
+            class="results-refresh-btn"
+            id="refreshResultsBtn"
+        >
+            <i class="fa-solid fa-rotate"></i>
+            Refresh
+        </button>
+
+    </section>
+
+
+    <!-- SUMMARY CARDS -->
+    <section class="results-stats-grid">
+
+        <article class="results-stat-card">
+
+            <div class="results-stat-icon">
+                <i class="fa-solid fa-file-circle-check"></i>
+            </div>
+
+            <div>
+                <p>Total CBT Attempts</p>
+
+                <h2 id="totalAttempts">0</h2>
+
+                <span>All recorded attempts</span>
+            </div>
+
+        </article>
+
+
+        <article class="results-stat-card">
+
+            <div class="results-stat-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div>
+                <p>Unique Students</p>
+
+                <h2 id="uniqueStudents">0</h2>
+
+                <span>Students with attempts</span>
+            </div>
+
+        </article>
+
+
+        <article class="results-stat-card">
+
+            <div class="results-stat-icon">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+
+            <div>
+                <p>Average Score</p>
+
+                <h2 id="averageScore">0%</h2>
+
+                <span>Completed attempts</span>
+            </div>
+
+        </article>
+
+
+        <article class="results-stat-card">
+
+            <div class="results-stat-icon">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+
+            <div>
+                <p>Highest Score</p>
+
+                <h2 id="highestScore">0%</h2>
+
+                <span>Best completed attempt</span>
+            </div>
+
+        </article>
+
+
+        <article class="results-stat-card">
+
+            <div class="results-stat-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div>
+                <p>Pass Rate</p>
+
+                <h2 id="passRate">0%</h2>
+
+                <span>Completed attempts</span>
+            </div>
+
+        </article>
+
+
+        <article class="results-stat-card">
+
+            <div class="results-stat-icon">
+                <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+
+            <div>
+                <p>In Progress</p>
+
+                <h2 id="inProgressAttempts">0</h2>
+
+                <span>Unfinished examinations</span>
+            </div>
+
+        </article>
+
+    </section>
+
+
+    <!-- RESULTS TABLE SECTION -->
+    <section class="results-table-section">
+
+        <div class="results-section-header">
+
+            <div>
+                <h2>Student CBT Attempts</h2>
+
+                <p>
+                    View examination history and student performance.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH AND FILTERS -->
+        <div class="results-toolbar">
+
+            <div class="results-search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="search"
+                    id="resultsSearch"
+                    placeholder="Search student name or email..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <select
+                id="departmentFilter"
+                class="results-filter"
+            >
+
+                <option value="">All Departments</option>
+
+                <option value="Science">Science</option>
+
+                <option value="Commercial">Commercial</option>
+
+                <option value="Arts">Arts</option>
+
+            </select>
+
+
+            <select
+                id="statusFilter"
+                class="results-filter"
+            >
+
+                <option value="">All Statuses</option>
+
+                <option value="completed">Completed</option>
+
+                <option value="in_progress">In Progress</option>
+
+            </select>
+
+
+            <input
+                type="date"
+                id="resultsDateFilter"
+                class="results-filter"
+                aria-label="Filter by examination date"
+            >
+
+        </div>
+
+
+        <!-- TABLE MESSAGE -->
+        <div
+            id="resultsMessage"
+            class="results-message"
+            role="status"
+            aria-live="polite"
+        >
+            Loading CBT results...
+        </div>
+
+
+        <!-- TABLE -->
+        <div class="results-table-wrapper">
+
+            <table class="results-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student</th>
+
+                        <th>Department</th>
+
+                        <th>Examination</th>
+
+                        <th>Score</th>
+
+                        <th>Correct</th>
+
+                        <th>Questions</th>
+
+                        <th>Date</th>
+
+                        <th>Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="resultsTableBody">
+
+                    <!-- Loaded dynamically -->
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- PAGINATION -->
+        <div class="results-pagination">
+
+            <p id="resultsPaginationInfo">
+                No attempts loaded
+            </p>
+
+            <div class="results-pagination-buttons">
+
+                <button
+                    type="button"
+                    id="previousResultsPage"
+                    disabled
+                >
+                    <i class="fa-solid fa-chevron-left"></i>
+                    Previous
+                </button>
+
+                <span id="resultsPageNumber">
+                    Page 1
+                </span>
+
+                <button
+                    type="button"
+                    id="nextResultsPage"
+                    disabled
+                >
+                    Next
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+    </main>
+
+</div>
+
+
+
+
+
+<!-- Appwrite -->
+<script
+    src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"
+    
+></script>
+
+<!-- Bootstrap -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+></script>
+
+<!-- Appwrite Configuration -->
+
+<script src="appwrite.js"></script>
+
+<!-- Authentication Guard -->
+
+<script src="guard.js"></script>
+
+<!-- Admin Dashboard Shell -->
+
+<script src="admin-dashboard.js"></script>
+
+<!-- Admin videos page -->
+
+<script src="admin-results.js">
+    
+    
+</script>
+</body>
+
+</html>

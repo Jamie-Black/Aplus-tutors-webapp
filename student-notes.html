@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Aplus Tutors Student Dashboard - Learn, practice, test yourself and track your progress."
+    >
+
+    <meta
+        name="theme-color"
+        content="#b00020"
+    >
+
+    <title>Student Notes | Aplus Tutors</title>
+
+
+    <!-- ==================================================
+         GOOGLE FONT
+    =================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- ==================================================
+         FONT AWESOME
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+
+    <!-- ==================================================
+         BOOTSTRAP
+    =================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- ==================================================
+         STUDENT DASHBOARD CSS
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="student-dashboard.css"
+    >
+
+
+    <!-- ==================================================
+         STUDENT SUBJECTS CSS
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="student-notes.css"
+    >
+
+</head>
+
+
+<body data-role="student">
+
+
+    <!-- ==================================================
+         PAGE LOADER
+    =================================================== -->
+
+    <div
+        id="pageLoader"
+        class="page-loader"
+    >
+
+        <div class="loader-wrapper">
+
+            <div class="loader"></div>
+
+            <div class="loader-brand">
+                Aplus Tutors
+            </div>
+
+            <p>
+                Loading your subjects...
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         MOBILE SIDEBAR OVERLAY
+    =================================================== -->
+
+    <div
+        id="overlay"
+        class="overlay"
+    ></div>
+
+
+
+    <!-- ==================================================
+         DASHBOARD APP
+    =================================================== -->
+
+    <div class="dashboard-app">
+
+
+        <!-- ==================================================
+             SIDEBAR
+        =================================================== -->
+
+        <aside
+            id="sidebar"
+            class="sidebar"
+        >
+
+            <!--
+                The sidebar content is generated
+                by student-dashboard.js
+            -->
+
+        </aside>
+
+
+
+        <!-- ==================================================
+             MAIN AREA
+        =================================================== -->
+
+        <div class="dashboard-main">
+
+
+            <!-- ==================================================
+                 TOP NAVIGATION
+            =================================================== -->
+
+            <header
+                id="topbar"
+                class="topbar"
+            >
+
+                <!--
+                    The topbar is generated
+                    by student-dashboard.js
+                -->
+
+            </header>
+
+
+
+            <!-- ==================================================
+                 PAGE CONTENT
+            =================================================== -->
+
+            <!-- ==================================================
+     STUDY NOTES CONTENT
+================================================== -->
+
+<main class="dashboard-content">
+
+
+    <!-- ==================================================
+         PAGE HEADER
+    =================================================== -->
+
+    <section
+        class="study-notes-header"
+    >
+
+        <div class="study-notes-heading">
+
+            <span class="study-notes-eyebrow">
+
+                <i class="fa-solid fa-book-open"></i>
+
+                Learning Resources
+
+            </span>
+
+
+            <h1 class="study-notes-title">
+                Study Notes
+            </h1>
+
+
+            <p class="study-notes-subtitle">
+                Read your study materials and strengthen
+                your understanding of each subject.
+            </p>
+
+        </div>
+
+    </section>
+    
+    <!-- =========================================
+     STUDY NOTES STATISTICS
+========================================= -->
+
+<section class="study-stats-grid" aria-label="Study progress">
+
+    <!-- Total Notes -->
+
+    <div class="study-stat-card">
+        <div class="study-stat-icon total-icon">
+            <i class="fas fa-book-open"></i>
+        </div>
+
+        <div class="study-stat-info">
+            <span class="study-stat-label">Total Notes</span>
+            <h3 id="totalNotesStat">0</h3>
+            <span class="study-stat-description">
+                Available to study
+            </span>
+        </div>
+    </div>
+
+
+    <!-- Unread Notes -->
+
+    <div class="study-stat-card">
+        <div class="study-stat-icon unread-icon">
+            <i class="fas fa-book"></i>
+        </div>
+
+        <div class="study-stat-info">
+            <span class="study-stat-label">Unread</span>
+            <h3 id="unreadNotesStat">0</h3>
+            <span class="study-stat-description">
+                Not started
+            </span>
+        </div>
+    </div>
+
+
+    <!-- In Progress -->
+
+    <div class="study-stat-card">
+        <div class="study-stat-icon progress-icon">
+            <i class="fas fa-hourglass-half"></i>
+        </div>
+
+        <div class="study-stat-info">
+            <span class="study-stat-label">In Progress</span>
+            <h3 id="inProgressNotesStat">0</h3>
+            <span class="study-stat-description">
+                Currently studying
+            </span>
+        </div>
+    </div>
+
+
+    <!-- Completed Notes -->
+
+    <div class="study-stat-card">
+        <div class="study-stat-icon completed-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+
+        <div class="study-stat-info">
+            <span class="study-stat-label">Completed</span>
+            <h3 id="completedNotesStat">0</h3>
+            <span class="study-stat-description">
+                Finished studying
+            </span>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     OVERALL STUDY PROGRESS
+========================================= -->
+
+<section class="overall-study-progress">
+
+    <div class="overall-progress-heading">
+        <div>
+            <h3>Overall Study Progress</h3>
+            <p>Track your progress across all available notes.</p>
+        </div>
+
+        <span id="overallProgressPercentage">0%</span>
+    </div>
+
+    <div
+        class="overall-progress-track"
+        role="progressbar"
+        aria-label="Overall study progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        id="overallProgressTrack"
+    >
+        <div
+            class="overall-progress-bar"
+            id="overallProgressBar"
+        ></div>
+    </div>
+
+    <div class="overall-progress-footer">
+        <span id="overallProgressSummary">
+            0 of 0 notes completed
+        </span>
+    </div>
+
+</section>
+
+
+
+    <!-- ==================================================
+         NOTES TOOLBAR
+    =================================================== -->
+
+    <section
+        class="study-notes-toolbar"
+        aria-label="Study notes filters"
+    >
+
+
+        <!-- ==================================================
+             SEARCH
+        =================================================== -->
+
+        <div class="notes-search">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="search"
+                id="notesSearch"
+                class="form-control"
+                placeholder="Search study notes..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+
+        <!-- ==================================================
+             SUBJECT FILTER
+        =================================================== -->
+
+        <div class="notes-filter">
+
+            <select
+                id="subjectFilter"
+                class="form-select"
+            >
+
+                <option value="">
+                    All Subjects
+                </option>
+
+            </select>
+
+        </div>
+        
+        <!-- STUDY STATUS FILTER -->
+
+<div class="notes-filter-group">
+    
+    <label for="studyStatusFilter">
+        Study Status
+    </label>
+    
+    <select id="studyStatusFilter" class="form-select">
+    
+        <option value="all">All Notes</option>
+        
+        <option value="unread">Unread</option>
+        
+        <option value="in_progress">In Progress</option>
+        
+        <option value="completed">Completed</option>
+        
+    </select>
+    
+</div>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         NOTES SECTION
+    =================================================== -->
+
+    <section
+        class="study-notes-section"
+    >
+
+
+        <!-- ==================================================
+             SECTION HEADER
+        =================================================== -->
+
+        <div class="study-notes-section-header">
+
+            <div>
+
+                <h2>
+                    Available Notes
+                </h2>
+
+                <p>
+                    <span id="notesCount">
+                        0 notes
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             NOTES CONTENT CARD
+        =================================================== -->
+
+        <div
+            class="study-notes-card"
+        >
+
+
+            <!-- ==================================================
+                 LOADING STATE
+            =================================================== -->
+
+            <div
+                id="notesLoading"
+                class="notes-state"
+            >
+
+                <div class="notes-loading-spinner">
+
+                    <div
+                        class="spinner-border"
+                        role="status"
+                        aria-hidden="true"
+                    ></div>
+
+                </div>
+
+
+                <h3>
+                    Loading your study notes
+                </h3>
+
+
+                <p>
+                    Please wait while we prepare your
+                    learning materials.
+                </p>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 EMPTY STATE
+            =================================================== -->
+
+            <div
+                id="notesEmpty"
+                class="notes-state d-none"
+            >
+
+                <div class="notes-empty-icon">
+
+                    <i class="fa-solid fa-book-open"></i>
+
+                </div>
+
+
+                <h3>
+                    No study notes found
+                </h3>
+
+
+                <p>
+                    There are currently no published study
+                    notes matching your search.
+                </p>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 NOTES GRID
+            =================================================== -->
+
+            <div
+                id="notesGrid"
+                class="notes-grid d-none"
+            >
+
+                <!--
+                    Published study notes will be
+                    generated here by JavaScript.
+                -->
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+            <!-- ==================================================
+                 FOOTER
+            =================================================== -->
+
+            <footer
+                id="dashboardFooter"
+                class="dashboard-footer"
+            >
+
+                <div class="footer-brand">
+
+                    <strong>
+                        Aplus Tutors
+                    </strong>
+
+                    <span>
+                        Your smarter path to exam success.
+                    </span>
+
+                </div>
+
+
+                <div class="footer-meta">
+
+                    <span>
+                        © 2026 Aplus Tutors
+                    </span>
+
+                    <span class="footer-divider">
+                        •
+                    </span>
+
+                    <span>
+                        Student Portal v2.0
+                    </span>
+
+                </div>
+
+            </footer>
+
+
+        </div>
+
+    </div>
+    
+    
+    <!-- ==================================================
+     VIEW STUDY NOTE MODAL
+================================================== -->
+
+<!-- ==================================================
+     STUDY NOTE READER
+================================================== -->
+
+<div
+    class="modal fade"
+    id="viewNoteModal"
+    tabindex="-1"
+    aria-labelledby="viewNoteModalLabel"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+    >
+
+        <div class="modal-content study-note-reader">
+
+
+            <!-- ==================================================
+                 READER HEADER
+            ================================================== -->
+
+            <div class="modal-header study-note-reader-header">
+
+                <div class="study-note-reader-heading">
+
+                    <div
+                        class="study-note-reader-subject"
+                        id="viewNoteSubject"
+                    >
+                        General
+                    </div>
+
+
+                    <h2
+                        class="modal-title"
+                        id="viewNoteModalLabel"
+                    >
+                        Study Note
+                    </h2>
+
+
+                    <div
+                        class="study-note-reader-date"
+                        id="viewNoteDate"
+                    >
+                        Published / Updated
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!-- ==================================================
+                 READING PROGRESS
+            ================================================== -->
+
+            <div class="study-note-progress-track">
+
+                <div
+                    id="noteReadingProgress"
+                    class="study-note-progress-bar"
+                ></div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 READER BODY
+            ================================================== -->
+
+            <div
+                class="modal-body study-note-reader-body"
+                id="viewNoteContent"
+            >
+
+                <!-- Generated by JavaScript -->
+
+            </div>
+
+
+            <!-- ==================================================
+                 READER FOOTER
+            ================================================== -->
+
+            <div class="modal-footer study-note-reader-footer">
+
+                <button
+                    type="button"
+                    class="btn study-note-navigation-btn"
+                    id="previousNoteBtn"
+                    onclick="openPreviousNote()"
+                >
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Previous
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn study-note-close-btn"
+                    data-bs-dismiss="modal"
+                >
+
+                    Close
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn study-note-navigation-btn"
+                    id="nextNoteBtn"
+                    onclick="openNextNote()"
+                >
+
+                    Next
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+    <!-- ==================================================
+         APPWRITE SDK
+    =================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"
+    ></script>
+
+
+
+    <!-- ==================================================
+         BOOTSTRAP JS
+    =================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         APPWRITE CONFIGURATION
+    =================================================== -->
+
+    <script
+        src="appwrite.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         AUTHENTICATION GUARD
+    =================================================== -->
+
+    <script
+        src="guard.js"
+    ></script>
+    
+    
+    
+    <script>
+window.MathJax = {
+    tex: {
+        inlineMath: [
+            ['\\(', '\\)']
+        ],
+        displayMath: [
+            ['\\[', '\\]']
+        ]
+    },
+
+    options: {
+        skipHtmlTags: [
+            'script',
+            'noscript',
+            'style',
+            'textarea',
+            'pre',
+            'code'
+        ]
+    }
+};
+</script>
+
+<script
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+    <!-- ==================================================
+         STUDENT DASHBOARD SCRIPT
+    =================================================== -->
+
+    <script
+        src="student-dashboard.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         STUDENT NOTES SCRIPT
+    =================================================== -->
+
+    <script
+        src="student-notes.js"
+    ></script>
+
+
+</body>
+
+</html>

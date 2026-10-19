@@ -1,0 +1,1989 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Questions | Aplus Tutors</title>
+
+<!-- Bootstrap -->
+
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>
+
+<!-- Font Awesome -->
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+<!-- Dashboard CSS -->
+
+<link
+    rel="stylesheet"
+    href="admin-dashboard.css"
+>
+
+<!-- Study Notes CSS -->
+
+<link
+    rel="stylesheet"
+    href="questions.css"
+>
+
+</head><body data-role="admin"><!--==================================================
+PAGE LOADER
+==================================================-->
+
+<div id="pageLoader">
+
+    <div class="loader-content">
+
+        <div class="loader-spinner"></div>
+
+        <h3>Aplus Tutors</h3>
+
+        <p>Loading question bank...</p>
+
+    </div>
+
+</div>
+
+
+<!--==================================================
+OVERLAY
+==================================================-->
+
+<div
+    id="overlay"
+    class="overlay"
+></div>
+
+
+<!--==================================================
+DASHBOARD LAYOUT
+==================================================-->
+
+<div class="dashboard">
+
+
+    <!--==================================================
+    SIDEBAR
+    ==================================================-->
+
+    <aside id="sidebar"></aside>
+
+
+    <!--==================================================
+    MAIN CONTENT
+    ==================================================-->
+
+    <main class="main-content">
+
+
+        <!--==================================================
+        TOPBAR
+        ==================================================-->
+
+        <header id="topbar"></header>
+
+ <!--==================================================
+    QUESTIONS PAGE
+    ==================================================-->
+
+    <section class="questions-page">
+
+
+        <!--==================================================
+        PAGE HEADER
+        ==================================================-->
+
+        <div class="questions-page-header">
+
+            <div>
+
+                <span class="questions-eyebrow">
+                    <i class="fa-solid fa-database"></i>
+                    QUESTION BANK
+                </span>
+
+                <h1>
+                    Questions
+                </h1>
+
+                <p>
+                    Create, manage and organize questions
+                    for your quizzes and CBT practice.
+                </p>
+
+            </div>
+
+
+            <div class="questions-header-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-primary questions-add-btn"
+                    id="addQuestionBtn"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add Question
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!--==================================================
+        QUESTION STATISTICS
+        ==================================================-->
+
+        <div class="question-statistics">
+
+
+            <!-- TOTAL QUESTIONS -->
+
+            <div class="question-stat-card">
+
+                <div class="question-stat-icon">
+
+                    <i class="fa-solid fa-circle-question"></i>
+
+                </div>
+
+                <div class="question-stat-content">
+
+                    <span>
+                        Total Questions
+                    </span>
+
+                    <strong id="totalQuestions">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIVE QUESTIONS -->
+
+            <div class="question-stat-card">
+
+                <div class="question-stat-icon">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+                <div class="question-stat-content">
+
+                    <span>
+                        Active Questions
+                    </span>
+
+                    <strong id="activeQuestions">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SUBJECTS -->
+
+            <div class="question-stat-card">
+
+                <div class="question-stat-icon">
+
+                    <i class="fa-solid fa-book"></i>
+
+                </div>
+
+                <div class="question-stat-content">
+
+                    <span>
+                        Subjects
+                    </span>
+
+                    <strong id="questionSubjects">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TOPICS -->
+
+            <div class="question-stat-card">
+
+                <div class="question-stat-icon">
+
+                    <i class="fa-solid fa-layer-group"></i>
+
+                </div>
+
+                <div class="question-stat-content">
+
+                    <span>
+                        Topics
+                    </span>
+
+                    <strong id="questionTopics">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!--==================================================
+        QUESTION BANK PANEL
+        ==================================================-->
+
+        <div class="questions-panel">
+
+
+            <!--==================================================
+            PANEL HEADER
+            ==================================================-->
+
+            <div class="questions-panel-header">
+
+                <div>
+
+                    <h2>
+                        Question Bank
+                    </h2>
+
+                    <p>
+                        Browse and manage all questions.
+                    </p>
+
+                </div>
+
+
+                <div class="questions-panel-count">
+
+                    <span id="visibleQuestionCount">
+                        0
+                    </span>
+
+                    questions
+
+                </div>
+
+            </div>
+
+
+
+            <!--==================================================
+            FILTERS
+            ==================================================-->
+
+            <div class="questions-filters">
+
+
+                <!-- SEARCH -->
+
+                <div class="question-search">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="questionSearch"
+                        class="form-control"
+                        placeholder="Search questions..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+
+                <!-- SUBJECT -->
+
+                <div class="question-filter">
+
+                    <label for="questionSubjectFilter">
+                        Subject
+                    </label>
+
+                    <select
+                        id="questionSubjectFilter"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Subjects
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- TOPIC -->
+
+                <div class="question-filter">
+
+                    <label for="questionTopicFilter">
+                        Topic
+                    </label>
+
+                    <select
+                        id="questionTopicFilter"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Topics
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- DIFFICULTY -->
+
+                <div class="question-filter">
+
+                    <label for="questionDifficultyFilter">
+                        Difficulty
+                    </label>
+
+                    <select
+                        id="questionDifficultyFilter"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Levels
+                        </option>
+
+                        <option value="easy">
+                            Easy
+                        </option>
+
+                        <option value="medium">
+                            Medium
+                        </option>
+
+                        <option value="hard">
+                            Hard
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- STATUS -->
+
+                <div class="question-filter">
+
+                    <label for="questionStatusFilter">
+                        Status
+                    </label>
+
+                    <select
+                        id="questionStatusFilter"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Status
+                        </option>
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!--==================================================
+            QUESTION TABLE
+            ==================================================-->
+
+            <div class="questions-table-wrapper">
+
+                <table class="table questions-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                #
+                            </th>
+
+                            <th>
+                                Question
+                            </th>
+
+                            <th>
+                                Subject
+                            </th>
+
+                            <th>
+                                Topic
+                            </th>
+
+                            <th>
+                                Difficulty
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="questionsTableBody">
+
+                        <!-- Questions loaded by JavaScript -->
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="questions-loading"
+                            >
+
+                                <div>
+
+                                    <i class="fa-solid fa-spinner fa-spin"></i>
+
+                                    <span>
+                                        Loading questions...
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <!--==================================================
+            EMPTY STATE
+            ==================================================-->
+
+            <div
+                id="questionsEmptyState"
+                class="questions-empty-state d-none"
+            >
+
+                <div class="questions-empty-icon">
+
+                    <i class="fa-solid fa-circle-question"></i>
+
+                </div>
+
+                <h3>
+                    No questions found
+                </h3>
+
+                <p>
+                    There are no questions matching your
+                    current filters.
+                </p>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="emptyAddQuestionBtn"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add Question
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+  </main>   
+
+
+<!--==================================================
+ADD / EDIT QUESTION MODAL
+==================================================-->
+<div
+    class="modal fade"
+    id="questionModal"
+    tabindex="-1"
+    aria-labelledby="questionModalLabel"
+    aria-hidden="true"
+>
+
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+
+        <div class="modal-content question-modal">
+            <!--MODAL HEADER-->
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span class="question-modal-eyebrow">
+                        <i class="fa-solid fa-circle-question"></i>
+                        QUESTION BANK
+                    </span>
+
+                    <h5
+                        class="modal-title"
+                        id="questionModalLabel"
+                    >
+                        Add Question
+                    </h5>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+            <!-- MODAL BODY-->
+
+            <div class="modal-body">
+
+
+                <!--==================================================
+                QUESTION FORM
+                ==================================================-->
+
+                <form
+                    id="questionForm"
+                    novalidate
+                >
+
+
+                    <!-- Hidden question ID -->
+
+                    <input
+                        type="hidden"
+                        id="questionId"
+                    >
+
+
+
+                    <!--==================================================
+                    BASIC INFORMATION
+                    ==================================================-->
+
+                    <div class="question-form-section">
+
+                        <div class="question-form-section-title">
+
+                            <div class="question-form-section-icon">
+
+                                <i class="fa-solid fa-layer-group"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h6>
+                                    Question Information
+                                </h6>
+
+                                <p>
+                                    Select where this question belongs.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row g-3">
+
+
+                            <!-- SUBJECT -->
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="questionSubject"
+                                    class="form-label"
+                                >
+                                    Subject
+                                    <span>*</span>
+                                </label>
+
+                                <select
+                                    id="questionSubject"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select subject
+                                    </option>
+
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Please select a subject.
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- TOPIC -->
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="questionTopic"
+                                    class="form-label"
+                                >
+                                    Topic
+                                    <span>*</span>
+                                </label>
+
+                                <select
+                                    id="questionTopic"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select topic
+                                    </option>
+
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Please select a topic.
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- DIFFICULTY -->
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="questionDifficulty"
+                                    class="form-label"
+                                >
+                                    Difficulty
+                                    <span>*</span>
+                                </label>
+
+                                <select
+                                    id="questionDifficulty"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select difficulty
+                                    </option>
+
+                                    <option value="easy">
+                                        Easy
+                                    </option>
+
+                                    <option value="medium">
+                                        Medium
+                                    </option>
+
+                                    <option value="hard">
+                                        Hard
+                                    </option>
+
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Please select the difficulty.
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- QUESTION TYPE -->
+
+                            <div class="col-md-6">
+
+                                <label
+                                    for="questionType"
+                                    class="form-label"
+                                >
+                                    Question Type
+                                    <span>*</span>
+                                </label>
+
+                                <select
+                                    id="questionType"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select question type
+                                    </option>
+
+                                    <option value="multiple_choice">
+                                        Multiple Choice
+                                    </option>
+
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Please select the question type.
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!--==================================================
+                    QUESTION TEXT
+                    ==================================================-->
+
+                    <div class="question-form-section">
+
+                        <div class="question-form-section-title">
+
+                            <div class="question-form-section-icon">
+
+                                <i class="fa-solid fa-pen-to-square"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h6>
+                                    Question
+                                </h6>
+
+                                <p>
+                                    Enter the question students will answer.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label
+                                for="questionText"
+                                class="form-label"
+                            >
+                                Question Text
+                                <span>*</span>
+                            </label>
+
+                            <!-- =========================================================
+     QUESTION EDITOR
+     ========================================================= -->
+
+<div class="mb-4 question-editor-wrapper">
+
+    <label
+        for="questionText"
+        class="form-label"
+    >
+        Question
+        <span class="text-danger">*</span>
+    </label>
+
+    <div class="question-editor">
+
+        <!-- Toolbar -->
+        <div class="question-editor-toolbar">
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="fraction"
+                title="Insert fraction"
+            >
+                <span>½</span>
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="power"
+                title="Insert power"
+            >
+                x²
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="square-root"
+                title="Insert square root"
+            >
+                √x
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="subscript"
+                title="Insert subscript"
+            >
+                x₁
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="equation"
+                title="Insert display equation"
+            >
+                ∑
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="degree"
+                title="Insert degree"
+            >
+                °
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="pi"
+                title="Insert pi"
+            >
+                π
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="theta"
+                title="Insert theta"
+            >
+                θ
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="plus-minus"
+                title="Insert plus or minus"
+            >
+                ±
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="multiply"
+                title="Insert multiplication"
+            >
+                ×
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="not-equal"
+                title="Insert not equal"
+            >
+                ≠
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="less-equal"
+                title="Less than or equal"
+            >
+                ≤
+            </button>
+
+            <button
+                type="button"
+                class="math-tool-btn"
+                data-math-insert="greater-equal"
+                title="Greater than or equal"
+            >
+                ≥
+            </button>
+            
+            <!-- INSERT QUESTION IMAGE -->
+
+<span class="toolbar-divider"></span>
+
+<button
+    type="button"
+    id="insertQuestionImageBtn"
+    class="math-tool-btn"
+    title="Insert image into question"
+>
+    <i class="fa-solid fa-image"></i>
+    <span>Insert Image</span>
+</button>
+
+<input
+    type="file"
+    id="questionImageFile"
+    accept="image/jpeg,image/png,image/webp,image/gif"
+    hidden
+>
+
+        </div>
+
+
+        <!-- Editor -->
+        <div class="question-editor-wrapper">
+
+    <div class="question-editor-toolbar">
+
+        <button type="button" data-command="undo" title="Undo">
+            ↶
+        </button>
+
+        <button type="button" data-command="redo" title="Redo">
+            ↷
+        </button>
+
+        <span class="toolbar-divider"></span>
+
+
+        <select data-format-block title="Text format">
+
+            <option value="p">Paragraph</option>
+
+            <option value="h1">Heading 1</option>
+
+            <option value="h2">Heading 2</option>
+
+            <option value="h3">Heading 3</option>
+
+            <option value="h4">Heading 4</option>
+
+        </select>
+
+
+        <span class="toolbar-divider"></span>
+
+
+        <button type="button" data-command="bold" title="Bold">
+            <strong>B</strong>
+        </button>
+
+        <button type="button" data-command="italic" title="Italic">
+            <em>I</em>
+        </button>
+
+        <button type="button" data-command="underline" title="Underline">
+            <u>U</u>
+        </button>
+
+        <button type="button" data-command="strikeThrough" title="Strikethrough">
+            <s>S</s>
+        </button>
+
+
+        <span class="toolbar-divider"></span>
+
+
+        <button type="button" data-command="insertUnorderedList" title="Bulleted list">
+            •
+        </button>
+
+        <button type="button" data-command="insertOrderedList" title="Numbered list">
+            1.
+        </button>
+
+        <button type="button" data-command="outdent" title="Decrease indent">
+            ←
+        </button>
+
+        <button type="button" data-command="indent" title="Increase indent">
+            →
+        </button>
+
+
+        <span class="toolbar-divider"></span>
+
+
+        <button type="button" data-command="justifyLeft" title="Align left">
+            ≡
+        </button>
+
+        <button type="button" data-command="justifyCenter" title="Center">
+            ≡
+        </button>
+
+        <button type="button" data-command="justifyRight" title="Align right">
+            ≡
+        </button>
+
+
+        <span class="toolbar-divider"></span>
+
+
+        <button
+            type="button"
+            data-command="superscript"
+            title="Superscript"
+        >
+            X<sup>2</sup>
+        </button>
+
+        <button
+            type="button"
+            data-command="subscript"
+            title="Subscript"
+        >
+            X<sub>2</sub>
+        </button>
+
+
+        <span class="toolbar-divider"></span>
+
+
+        <button
+            type="button"
+            data-insert-math="fraction"
+            title="Insert fraction"
+        >
+            ½
+        </button>
+
+        <button
+            type="button"
+            data-insert-math="power"
+            title="Insert mathematical power"
+        >
+            x²
+        </button>
+
+        <button
+            type="button"
+            data-insert-math="sqrt"
+            title="Insert square root"
+        >
+            √
+        </button>
+
+        <button
+            type="button"
+            data-insert-math="equation"
+            title="Insert equation"
+        >
+            ∑
+        </button>
+
+
+        <span class="toolbar-divider"></span>
+
+
+        <button
+            type="button"
+            data-command="removeFormat"
+            title="Clear formatting"
+        >
+            Tx
+        </button>
+        
+        <span class="toolbar-divider"></span>
+
+    </div>
+
+
+    <div
+        id="questionText"
+        class="question-rich-editor"
+        contenteditable="true"
+        role="textbox"
+        aria-multiline="true"
+        spellcheck="true"
+        data-placeholder="Type your question here..."
+    ></div>
+
+
+    <div class="question-editor-footer">
+
+        <span>
+            Rich text + MathJax supported
+        </span>
+
+        <button
+            type="button"
+            id="clearQuestionEditorBtn"
+        >
+            Clear
+        </button>
+
+    </div>
+
+</div>
+
+
+        <!-- Helper -->
+        <div class="question-editor-help">
+
+            <span>
+                Math supported
+            </span>
+
+            <code>\(x^2\)</code>
+
+            <span>for inline math</span>
+
+            <code>\[x^2 + y^2 = z^2\]</code>
+
+            <span>for a separate equation.</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Live Preview -->
+
+    <div class="math-preview-card">
+
+        <div class="math-preview-header">
+
+            <span>
+                Math Preview
+            </span>
+
+            <button
+                type="button"
+                id="clearMathPreviewBtn"
+                class="btn btn-sm btn-link"
+            >
+                Clear preview
+            </button>
+
+        </div>
+
+        <div
+            id="questionMathPreview"
+            class="math-preview-content"
+        >
+            Your formatted question will appear here.
+        </div>
+
+    </div>
+
+</div>
+
+                            <div class="invalid-feedback">
+                                Please enter the question.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!--==================================================
+                    ANSWER OPTIONS
+                    ==================================================-->
+
+                    <div class="question-form-section">
+
+                        <div class="question-form-section-title">
+
+                            <div class="question-form-section-icon">
+
+                                <i class="fa-solid fa-list"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h6>
+                                    Answer Options
+                                </h6>
+
+                                <p>
+                                    Enter the four possible answers and
+                                    select the correct answer.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row g-3">
+
+
+                            <!-- OPTION A -->
+
+                            <div class="col-md-6">
+
+                                <div class="answer-option">
+
+                                    <div class="answer-option-label">
+
+                                        <span>
+                                            A
+                                        </span>
+
+                                    </div>
+
+                                    <div class="answer-option-input">
+
+                                        <input
+                                            type="text"
+                                            id="optionA"
+                                            class="form-control"
+                                            placeholder="Option A"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- OPTION B -->
+
+                            <div class="col-md-6">
+
+                                <div class="answer-option">
+
+                                    <div class="answer-option-label">
+
+                                        <span>
+                                            B
+                                        </span>
+
+                                    </div>
+
+                                    <div class="answer-option-input">
+
+                                        <input
+                                            type="text"
+                                            id="optionB"
+                                            class="form-control"
+                                            placeholder="Option B"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- OPTION C -->
+
+                            <div class="col-md-6">
+
+                                <div class="answer-option">
+
+                                    <div class="answer-option-label">
+
+                                        <span>
+                                            C
+                                        </span>
+
+                                    </div>
+
+                                    <div class="answer-option-input">
+
+                                        <input
+                                            type="text"
+                                            id="optionC"
+                                            class="form-control"
+                                            placeholder="Option C"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- OPTION D -->
+
+                            <div class="col-md-6">
+
+                                <div class="answer-option">
+
+                                    <div class="answer-option-label">
+
+                                        <span>
+                                            D
+                                        </span>
+
+                                    </div>
+
+                                    <div class="answer-option-input">
+
+                                        <input
+                                            type="text"
+                                            id="optionD"
+                                            class="form-control"
+                                            placeholder="Option D"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- CORRECT ANSWER -->
+
+                        <div class="mt-4">
+
+                            <label
+                                for="correctAnswer"
+                                class="form-label"
+                            >
+                                Correct Answer
+                                <span>*</span>
+                            </label>
+
+                            <select
+                                id="correctAnswer"
+                                class="form-select"
+                                required
+                            >
+
+                                <option value="">
+                                    Select correct answer
+                                </option>
+
+                                <option value="A">
+                                    A
+                                </option>
+
+                                <option value="B">
+                                    B
+                                </option>
+
+                                <option value="C">
+                                    C
+                                </option>
+
+                                <option value="D">
+                                    D
+                                </option>
+
+                            </select>
+
+                            <div class="invalid-feedback">
+                                Please select the correct answer.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!--==================================================
+                    EXPLANATION
+                    ==================================================-->
+
+                    <div class="question-form-section">
+
+                        <div class="question-form-section-title">
+
+                            <div class="question-form-section-icon">
+
+                                <i class="fa-solid fa-lightbulb"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h6>
+                                    Explanation
+                                </h6>
+
+                                <p>
+                                    Optional explanation shown after
+                                    answering the question.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div>
+
+                            <label
+                                for="questionExplanation"
+                                class="form-label"
+                            >
+                                Answer Explanation
+                            </label>
+
+                            <textarea
+                                id="questionExplanation"
+                                class="form-control"
+                                rows="4"
+                                placeholder="Enter an explanation for the correct answer..."
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!--==================================================
+                    STATUS
+                    ==================================================-->
+
+                    <div class="question-form-section">
+
+                        <div class="question-form-section-title">
+
+                            <div class="question-form-section-icon">
+
+                                <i class="fa-solid fa-toggle-on"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h6>
+                                    Question Status
+                                </h6>
+
+                                <p>
+                                    Control whether students can see
+                                    this question.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="question-status-control">
+
+                            <div>
+
+                                <strong>
+                                    Active Question
+                                </strong>
+
+                                <small>
+                                    Active questions can be used in
+                                    quizzes and CBT practice.
+                                </small>
+
+                            </div>
+
+
+                            <div class="form-check form-switch">
+
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    role="switch"
+                                    id="questionStatus"
+                                    checked
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+<!--==================================================
+MODAL FOOTER
+==================================================-->
+
+<div class="modal-footer">
+
+    <button
+        type="button"
+        class="btn btn-light"
+        data-bs-dismiss="modal"
+    >
+
+        Cancel
+
+    </button>
+
+
+    <button
+        type="submit"
+        class="btn btn-primary"
+        id="saveQuestionBtn"
+    >
+
+        <i class="fa-solid fa-floppy-disk"></i>
+
+        <span id="saveQuestionText">
+            Save Question
+        </span>
+
+    </button>
+
+</div>
+        </div>
+        
+        
+    </div>
+    
+    
+    
+</div>
+  
+  
+      <!-- ==================================================
+VIEW QUESTION MODAL
+================================================== -->
+
+<div
+    class="modal fade"
+    id="viewQuestionModal"
+    tabindex="-1"
+    aria-labelledby="viewQuestionModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+
+        <div class="modal-content question-modal">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+
+                <div>
+                    <span class="question-modal-eyebrow">
+                        <i class="fa-solid fa-circle-question"></i>
+                        QUESTION BANK
+                    </span>
+
+                    <h5
+                        class="modal-title"
+                        id="viewQuestionModalLabel"
+                    >
+                        View Question
+                    </h5>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!-- BODY -->
+            <div class="modal-body">
+
+                <!-- QUESTION INFORMATION -->
+                <div class="row g-3 mb-4">
+
+                    <div class="col-md-6">
+                        <div class="mb-1 fw-semibold">
+                            Subject
+                        </div>
+
+                        <div id="viewQuestionSubject">
+                            —
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-1 fw-semibold">
+                            Topic
+                        </div>
+
+                        <div id="viewQuestionTopic">
+                            —
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="mb-1 fw-semibold">
+                            Difficulty
+                        </div>
+
+                        <div id="viewQuestionDifficulty">
+                            —
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="mb-1 fw-semibold">
+                            Question Type
+                        </div>
+
+                        <div id="viewQuestionType">
+                            —
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="mb-1 fw-semibold">
+                            Status
+                        </div>
+
+                        <div id="viewQuestionStatus">
+                            —
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <hr>
+
+
+                <!-- QUESTION TEXT -->
+                <div class="mb-4">
+
+                    <h6 class="fw-bold mb-3">
+                        Question
+                    </h6>
+
+                    <div
+                        id="viewQuestionText"
+                        class="view-question-content"
+                    >
+                        Loading question...
+                    </div>
+
+                </div>
+
+
+                <hr>
+
+
+                <!-- ANSWER OPTIONS -->
+                <div class="mb-4">
+
+                    <h6 class="fw-bold mb-3">
+                        Answer Options
+                    </h6>
+
+                    <div class="d-grid gap-3">
+
+                        <div class="border rounded p-3">
+                            <strong>A.</strong>
+                            <span id="viewOptionA">—</span>
+                        </div>
+
+                        <div class="border rounded p-3">
+                            <strong>B.</strong>
+                            <span id="viewOptionB">—</span>
+                        </div>
+
+                        <div class="border rounded p-3">
+                            <strong>C.</strong>
+                            <span id="viewOptionC">—</span>
+                        </div>
+
+                        <div class="border rounded p-3">
+                            <strong>D.</strong>
+                            <span id="viewOptionD">—</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CORRECT ANSWER -->
+                <div class="alert alert-success">
+
+                    <div class="fw-bold mb-1">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Correct Answer
+                    </div>
+
+                    <div id="viewCorrectAnswer">
+                        —
+                    </div>
+
+                </div>
+
+
+                <!-- EXPLANATION -->
+                <div class="mt-4">
+
+                    <h6 class="fw-bold mb-2">
+                        Explanation
+                    </h6>
+
+                    <div
+                        id="viewQuestionExplanation"
+                        class="view-question-explanation"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="editQuestionFromViewBtn"
+                >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Edit Question
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<!--==================================================
+JAVASCRIPT
+==================================================-->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js">
+</script>
+
+<!-- ==================================================
+     MATHJAX CONFIGURATION
+================================================== -->
+
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [
+            ['\\(', '\\)']
+        ],
+
+        displayMath: [
+            ['\\[', '\\]']
+        ]
+    },
+
+    options: {
+        skipHtmlTags: [
+            'script',
+            'noscript',
+            'style',
+            'textarea',
+            'pre',
+            'code'
+        ]
+    },
+
+    startup: {
+        typeset: false
+    }
+};
+</script>
+
+<!-- ==================================================
+     MATHJAX LIBRARY
+================================================== -->
+
+<script
+    defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+<!-- Appwrite SDK -->
+
+<script src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"></script>
+
+
+<!-- Bootstrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<!-- =========================================================
+     MATHJAX
+     ========================================================= -->
+
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [
+            ['\\(', '\\)']
+        ],
+        displayMath: [
+            ['\\[', '\\]']
+        ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+
+    svg: {
+        fontCache: 'global'
+    },
+
+    options: {
+        skipHtmlTags: [
+            'script',
+            'noscript',
+            'style',
+            'textarea',
+            'pre',
+            'code'
+        ]
+    }
+};
+</script>
+
+<script
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+></script>
+
+<!-- Appwrite Configuration -->
+
+<script src="appwrite.js"></script>
+
+
+<!-- Authentication Guard -->
+
+<script src="guard.js"></script>
+
+
+<!-- Admin Dashboard -->
+
+<script src="admin-dashboard.js"></script>
+
+
+<!-- Study Notes -->
+
+<script src="questions.js"></script>
+
+</body></html>

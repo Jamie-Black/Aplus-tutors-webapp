@@ -1,0 +1,863 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Admin Profile | Aplus Tutors</title>
+
+<!--==================================================
+BOOTSTRAP
+==================================================-->
+
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>
+
+<!--==================================================
+FONT AWESOME
+==================================================-->
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+<!--==================================================
+ADMIN DASHBOARD CSS
+==================================================-->
+
+<link
+    rel="stylesheet"
+    href="admin-dashboard.css"
+>
+
+<!--==================================================
+ADMIN PROFILE CSS
+==================================================-->
+
+<link
+    rel="stylesheet"
+    href="admin-profile.css"
+>
+
+</head><body data-role="admin"><!--==================================================
+PAGE LOADER
+==================================================-->
+
+<div id="pageLoader">
+
+    <div class="loader-content">
+
+        <div class="loader-spinner"></div>
+
+        <h3>Aplus Tutors</h3>
+
+        <p>Loading Admin Profile...</p>
+
+    </div>
+
+</div>
+
+
+<!--==================================================
+SIDEBAR OVERLAY
+==================================================-->
+
+<div
+    id="overlay"
+    class="overlay"
+></div>
+
+
+<!--==================================================
+DASHBOARD LAYOUT
+==================================================-->
+
+<div class="dashboard">
+
+
+    <!--==================================================
+    SIDEBAR
+    ==================================================-->
+
+    <aside id="sidebar"></aside>
+
+
+    <!--==================================================
+    MAIN CONTENT
+    ==================================================-->
+
+    <main class="main-content">
+
+
+        <!--==================================================
+        TOPBAR
+        ==================================================-->
+
+        <header id="topbar"></header>
+
+
+        <!--==================================================
+        PROFILE CONTENT
+        ==================================================-->
+
+        <section
+            id="profileContent"
+            class="page-content admin-profile-page"
+        >
+
+
+            <!--==================================================
+            PROFILE HEADER
+            ==================================================-->
+
+            <div class="profile-header-card">
+
+
+                <div class="profile-header-background"></div>
+
+
+                <div class="profile-header-content">
+
+
+                    <!-- Profile Photo -->
+
+                    <div class="profile-photo-wrapper">
+
+                        <img
+                            id="profilePhoto"
+                            class="profile-photo"
+                            src=""
+                            alt="Admin profile photo"
+                        >
+
+                        <button
+                            type="button"
+                            id="changePhotoBtn"
+                            class="photo-edit-btn"
+                            title="Change profile photo"
+                        >
+
+                            <i class="fa-solid fa-camera"></i>
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- Profile Identity -->
+
+                    <div class="profile-identity">
+
+                        <h1 id="profileName">
+
+                            Loading...
+
+                        </h1>
+
+                        <p id="profileEmail">
+
+                        </p>
+
+
+                        <div class="profile-badges">
+
+                            <span class="profile-role-badge">
+
+                                <i class="fa-solid fa-shield-halved"></i>
+
+                                Administrator
+
+                            </span>
+
+
+                            <span
+                                id="profileStatusBadge"
+                                class="profile-status-badge"
+                            >
+
+                                <span class="status-dot"></span>
+
+                                Active
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!--==================================================
+            MAIN PROFILE GRID
+            ==================================================-->
+
+            <div class="profile-grid">
+
+
+                <!--==================================================
+                PERSONAL INFORMATION
+                ==================================================-->
+
+                <div class="profile-card personal-info-card">
+
+
+                    <div class="profile-card-header">
+
+                        <div class="profile-card-title">
+
+                            <div class="profile-card-icon">
+
+                                <i class="fa-solid fa-user"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h2>
+
+                                    Personal Information
+
+                                </h2>
+
+                                <p>
+
+                                    Manage your administrator profile.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-card-body">
+
+
+                        <form id="profileForm">
+
+
+                            <!-- Full Name -->
+
+                            <div class="profile-form-group">
+
+                                <label
+                                    for="fullName"
+                                    class="profile-form-label"
+                                >
+
+                                    Full Name
+
+                                </label>
+
+                                <div class="profile-input-wrapper">
+
+                                    <i class="fa-solid fa-user"></i>
+
+                                    <input
+                                        type="text"
+                                        id="fullName"
+                                        name="fullName"
+                                        class="profile-form-control"
+                                        placeholder="Enter your full name"
+                                        autocomplete="name"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Email -->
+
+                            <div class="profile-form-group">
+
+                                <label
+                                    for="email"
+                                    class="profile-form-label"
+                                >
+
+                                    Email Address
+
+                                </label>
+
+                                <div class="profile-input-wrapper">
+
+                                    <i class="fa-solid fa-envelope"></i>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        class="profile-form-control"
+                                        placeholder="Enter your email"
+                                        autocomplete="email"
+                                        readonly
+                                    >
+
+                                </div>
+
+                                <small class="profile-help-text">
+
+                                    Email is managed by your account.
+
+                                </small>
+
+                            </div>
+
+
+                            <!-- Department -->
+
+                            <div class="profile-form-group">
+
+                                <label
+                                    for="department"
+                                    class="profile-form-label"
+                                >
+
+                                    Department
+
+                                </label>
+
+                                <div class="profile-input-wrapper">
+
+                                    <i class="fa-solid fa-building"></i>
+
+                                    <input
+                                        type="text"
+                                        id="department"
+                                        name="department"
+                                        class="profile-form-control"
+                                        placeholder="Administration"
+                                        readonly
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Role -->
+
+                            <div class="profile-form-group">
+
+                                <label
+                                    for="role"
+                                    class="profile-form-label"
+                                >
+
+                                    Role
+
+                                </label>
+
+                                <div class="profile-input-wrapper">
+
+                                    <i class="fa-solid fa-user-shield"></i>
+
+                                    <input
+                                        type="text"
+                                        id="role"
+                                        name="role"
+                                        class="profile-form-control"
+                                        value="Administrator"
+                                        readonly
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Account Status -->
+
+                            <div class="profile-form-group">
+
+                                <label
+                                    for="status"
+                                    class="profile-form-label"
+                                >
+
+                                    Account Status
+
+                                </label>
+
+                                <div class="profile-input-wrapper">
+
+                                    <i class="fa-solid fa-circle-check"></i>
+
+                                    <input
+                                        type="text"
+                                        id="status"
+                                        name="status"
+                                        class="profile-form-control"
+                                        value="Active"
+                                        readonly
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Save Button -->
+
+                            <div class="profile-form-actions">
+
+                                <button
+                                    type="submit"
+                                    id="saveProfileBtn"
+                                    class="profile-save-btn"
+                                >
+
+                                    <i class="fa-solid fa-floppy-disk"></i>
+
+                                    <span>
+
+                                        Save Changes
+
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+
+                <!--==================================================
+                PROFILE PHOTO CARD
+                ==================================================-->
+
+                <div class="profile-card photo-card">
+
+
+                    <div class="profile-card-header">
+
+                        <div class="profile-card-title">
+
+                            <div class="profile-card-icon">
+
+                                <i class="fa-solid fa-image"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h2>
+
+                                    Profile Photo
+
+                                </h2>
+
+                                <p>
+
+                                    Update your administrator photo.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-card-body photo-card-body">
+
+
+                        <div class="photo-preview-container">
+
+                            <img
+                                id="photoPreview"
+                                class="photo-preview"
+                                src=""
+                                alt="Profile photo preview"
+                            >
+
+                        </div>
+
+
+                        <input
+                            type="file"
+                            id="profilePhotoInput"
+                            accept="image/jpeg,image/png,image/webp"
+                            hidden
+                        >
+
+
+                        <button
+                            type="button"
+                            id="selectPhotoBtn"
+                            class="select-photo-btn"
+                        >
+
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                            Choose Photo
+
+                        </button>
+
+
+                        <p class="photo-upload-info">
+
+                            JPG, PNG or WEBP
+
+                            <br>
+
+                            Maximum size: 5 MB
+
+                        </p>
+
+
+                        <div
+                            id="photoUploadStatus"
+                            class="photo-upload-status"
+                        ></div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!--==================================================
+                SECURITY CARD
+                ==================================================-->
+
+                <div class="profile-card security-card">
+
+
+                    <div class="profile-card-header">
+
+                        <div class="profile-card-title">
+
+                            <div class="profile-card-icon">
+
+                                <i class="fa-solid fa-lock"></i>
+
+                            </div>
+
+                            <div>
+
+                                <h2>
+
+                                    Security
+
+                                </h2>
+
+                                <p>
+
+                                    Manage your account security.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-card-body">
+
+
+                        <div class="security-item">
+
+
+                            <div class="security-item-icon">
+
+                                <i class="fa-solid fa-key"></i>
+
+                            </div>
+
+
+                            <div class="security-item-content">
+
+                                <h3>
+
+                                    Password
+
+                                </h3>
+
+                                <p>
+
+                                    Keep your administrator account secure.
+
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                id="changePasswordBtn"
+                                class="security-action-btn"
+                            >
+
+                                Change
+
+                            </button>
+
+
+                        </div>
+
+
+                        <div class="security-divider"></div>
+
+
+                        <div class="security-item">
+
+
+                            <div class="security-item-icon">
+
+                                <i class="fa-solid fa-right-from-bracket"></i>
+
+                            </div>
+
+
+                            <div class="security-item-content">
+
+                                <h3>
+
+                                    Sign Out
+
+                                </h3>
+
+                                <p>
+
+                                    Sign out from your Aplus Tutors account.
+
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                id="profileLogoutBtn"
+                                class="security-action-btn logout-action"
+                            >
+
+                                Logout
+
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!--==================================================
+            PROFILE MESSAGE
+            ==================================================-->
+
+            <div
+                id="profileMessage"
+                class="profile-message"
+                role="alert"
+            ></div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+<!--==================================================
+CHANGE PASSWORD MODAL
+==================================================--><div
+    class="modal fade"
+    id="changePasswordModal"
+    tabindex="-1"
+    aria-labelledby="changePasswordModalLabel"
+    aria-hidden="true"
+><div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content profile-modal">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <h5
+                    class="modal-title"
+                    id="changePasswordModalLabel"
+                >
+
+                    Change Password
+
+                </h5>
+
+                <p class="modal-subtitle">
+
+                    Update your account password.
+
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <form id="passwordForm">
+
+
+                <div class="profile-form-group">
+
+                    <label
+                        for="currentPassword"
+                        class="profile-form-label"
+                    >
+
+                        Current Password
+
+                    </label>
+
+                    <div class="profile-input-wrapper">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            type="password"
+                            id="currentPassword"
+                            class="profile-form-control"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-form-group">
+
+                    <label
+                        for="newPassword"
+                        class="profile-form-label"
+                    >
+
+                        New Password
+
+                    </label>
+
+                    <div class="profile-input-wrapper">
+
+                        <i class="fa-solid fa-key"></i>
+
+                        <input
+                            type="password"
+                            id="newPassword"
+                            class="profile-form-control"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-form-group">
+
+                    <label
+                        for="confirmPassword"
+                        class="profile-form-label"
+                    >
+
+                        Confirm New Password
+
+                    </label>
+
+                    <div class="profile-input-wrapper">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            class="profile-form-control"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="passwordMessage"
+                    class="password-message"
+                ></div>
+
+
+                <button
+                    type="submit"
+                    id="savePasswordBtn"
+                    class="profile-save-btn w-100"
+                >
+
+                    <i class="fa-solid fa-key"></i>
+
+                    Update Password
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div><!--==================================================
+JAVASCRIPT
+==================================================--><!-- Appwrite --><script
+    src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"
+></script><!-- Bootstrap --><script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+></script><!-- Appwrite Configuration --><script src="appwrite.js"></script><!-- Authentication Guard --><script src="guard.js"></script><!-- Admin Dashboard Shell --><script src="admin-dashboard.js"></script><!-- Admin Profile --><script src="admin-profile.js"></script></body></html>
+
+
+
+
+                        

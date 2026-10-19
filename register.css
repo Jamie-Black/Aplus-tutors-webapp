@@ -1,0 +1,1960 @@
+/* ==========================================================
+   APLUS TUTORS
+   REGISTER PAGE
+   PART 1
+   RESET • VARIABLES • LAYOUT • LEFT VISUAL
+========================================================== */
+
+
+/* ==========================================================
+   VARIABLES
+========================================================== */
+
+:root{
+
+    --primary:#990F2B;
+    --primary-dark:#740B20;
+    --primary-light:#C71F48;
+
+    --black:#121212;
+    --black-2:#1F1F1F;
+
+    --white:#ffffff;
+    --off-white:#f7f7f7;
+
+    --border:#e6e6e6;
+
+    --text:#1b1b1b;
+    --text-light:#6b7280;
+
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#d97706;
+
+    --radius-sm:12px;
+    --radius:18px;
+    --radius-lg:28px;
+
+    --shadow-sm:
+        0 8px 20px rgba(0,0,0,.08);
+
+    --shadow:
+        0 18px 50px rgba(0,0,0,.16);
+
+    --transition:.3s ease;
+
+}
+
+
+
+/* ==========================================================
+   RESET
+========================================================== */
+
+*,
+*::before,
+*::after{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    font-family:"Inter",sans-serif;
+
+    background:#fff;
+
+    color:var(--text);
+
+    line-height:1.6;
+
+    overflow-x:hidden;
+
+}
+
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+
+button,
+input,
+select{
+
+    font:inherit;
+
+}
+
+
+button{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+}
+
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+
+
+/* ==========================================================
+   PAGE LAYOUT
+========================================================== */
+
+.auth-page{
+
+    min-height:100vh;
+
+    display:grid;
+
+    grid-template-columns:1.05fr 1fr;
+
+    background:#fff;
+
+}
+
+
+
+/* ==========================================================
+   LEFT VISUAL
+========================================================== */
+
+.auth-visual{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:70px;
+
+    color:#fff;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            rgba(153,15,43,.95),
+
+            rgba(20,20,20,.95)
+
+        ),
+
+        url("../assets/register-bg.jpg")
+
+        center/cover no-repeat;
+
+}
+
+
+
+/* Overlay */
+
+.visual-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        radial-gradient(
+
+            circle at top right,
+
+            rgba(255,255,255,.12),
+
+            transparent 38%
+
+        ),
+
+        radial-gradient(
+
+            circle at bottom left,
+
+            rgba(255,255,255,.08),
+
+            transparent 42%
+
+        );
+
+}
+
+
+
+/* Decorative Shapes */
+
+.auth-visual::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:420px;
+
+    height:420px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    top:-150px;
+
+    right:-120px;
+
+}
+
+
+.auth-visual::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+
+    height:260px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.05);
+
+    bottom:-90px;
+
+    left:-70px;
+
+}
+
+
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+.visual-content{
+
+    position:relative;
+
+    z-index:2;
+
+    width:100%;
+
+    max-width:620px;
+
+}
+
+
+
+/* ==========================================================
+   LOGO
+========================================================== */
+
+.auth-logo{
+
+    display:inline-flex;
+
+    margin-bottom:85px;
+
+}
+
+
+.auth-logo img{
+
+    width:92px;
+
+    height:92px;
+
+    border-radius:22px;
+
+    background:#fff;
+
+    padding:6px;
+
+    object-fit:cover;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+
+/* ==========================================================
+   TEXT
+========================================================== */
+
+.visual-text{
+
+    margin-bottom:65px;
+
+}
+
+
+.eyebrow{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.10);
+
+    border:1px solid rgba(255,255,255,.14);
+
+    backdrop-filter:blur(10px);
+
+    font-size:.82rem;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    margin-bottom:28px;
+
+}
+
+
+.visual-text h1{
+
+    font-size:3.2rem;
+
+    line-height:1.15;
+
+    font-weight:800;
+
+    margin-bottom:24px;
+
+}
+
+
+.visual-text h1 span{
+
+    color:#FFD9E2;
+
+}
+
+
+.visual-text p{
+
+    max-width:540px;
+
+    font-size:1.05rem;
+
+    opacity:.92;
+
+}
+
+
+
+/* ==========================================================
+   STATS
+========================================================== */
+
+.visual-stats{
+
+    display:flex;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.visual-stats div{
+
+    min-width:130px;
+
+    padding:22px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.10);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    backdrop-filter:blur(12px);
+
+    transition:var(--transition);
+
+}
+
+
+.visual-stats div:hover{
+
+    transform:translateY(-5px);
+
+    background:rgba(255,255,255,.18);
+
+}
+
+
+.visual-stats strong{
+
+    display:block;
+
+    font-size:1.2rem;
+
+    font-weight:800;
+
+    margin-bottom:6px;
+
+}
+
+
+.visual-stats span{
+
+    font-size:.92rem;
+
+    opacity:.85;
+
+}
+
+
+
+/* ==========================================================
+   MOBILE LOGO
+========================================================== */
+
+.mobile-logo{
+
+    display:none;
+
+}
+
+
+
+
+/* ==========================================================
+   APLUS TUTORS
+   REGISTER PAGE
+   PART 2
+   FORM SECTION • INPUTS • SELECT • PASSWORD
+========================================================== */
+
+
+/* ==================================================
+   RIGHT FORM SECTION
+================================================== */
+
+.auth-form-section{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:48px 32px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #fafafa
+        );
+
+}
+
+
+.auth-form-container{
+
+    width:100%;
+
+    max-width:560px;
+
+    background:var(--white);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-lg);
+
+    padding:46px 40px;
+
+    box-shadow:var(--shadow);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+.auth-form-container::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:6px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--primary-light)
+        );
+
+}
+
+
+
+/* ==================================================
+   FORM HEADER
+================================================== */
+
+.form-heading{
+
+    text-align:center;
+
+    margin-bottom:34px;
+
+}
+
+
+.form-tag{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:8px 18px;
+
+    border-radius:999px;
+
+    background:rgba(153,15,43,.08);
+
+    color:var(--primary);
+
+    font-size:.82rem;
+
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    margin-bottom:18px;
+
+}
+
+
+.form-heading h2{
+
+    font-size:2rem;
+
+    font-weight:800;
+
+    color:var(--black);
+
+    margin-bottom:10px;
+
+}
+
+
+.form-heading p{
+
+    color:var(--text-light);
+
+    font-size:.96rem;
+
+    line-height:1.7;
+
+}
+
+
+
+/* ==================================================
+   AUTH MESSAGE
+================================================== */
+
+.auth-message{
+
+    display:none;
+
+    margin-bottom:24px;
+
+    padding:15px 18px;
+
+    border-radius:14px;
+
+    font-size:.95rem;
+
+    font-weight:600;
+
+    border:1px solid transparent;
+
+}
+
+
+.auth-message.show{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+.auth-message.success{
+
+    background:#edfdf3;
+
+    color:var(--success);
+
+    border-color:#b9eacb;
+
+}
+
+
+.auth-message.error{
+
+    background:#fff1f1;
+
+    color:var(--danger);
+
+    border-color:#f1bcbc;
+
+}
+
+
+.auth-message.warning{
+
+    background:#fff8eb;
+
+    color:var(--warning);
+
+    border-color:#f2d49b;
+
+}
+
+
+
+/* ==================================================
+   FORM
+================================================== */
+
+.auth-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:22px;
+
+}
+
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+.form-group label{
+
+    font-size:.94rem;
+
+    font-weight:700;
+
+    color:var(--black);
+
+}
+
+
+
+/* ==================================================
+   INPUT WRAPPER
+================================================== */
+
+.input-wrapper{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+
+.input-icon{
+
+    position:absolute;
+
+    left:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#909090;
+
+    transition:var(--transition);
+
+    z-index:2;
+
+}
+
+
+.input-icon i{
+
+    font-size:1rem;
+
+}
+
+
+
+/* ==================================================
+   INPUTS
+================================================== */
+
+.input-wrapper input,
+.input-wrapper select{
+
+    width:100%;
+
+    height:58px;
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    background:#fafafa;
+
+    color:var(--text);
+
+    font-size:.97rem;
+
+    outline:none;
+
+    transition:var(--transition);
+
+    padding-left:54px;
+
+}
+
+
+
+/* Placeholder */
+
+.input-wrapper input::placeholder{
+
+    color:#9ca3af;
+
+}
+
+
+
+/* ==================================================
+   SELECT
+================================================== */
+
+.input-wrapper select{
+
+    appearance:none;
+
+    -webkit-appearance:none;
+
+    -moz-appearance:none;
+
+    cursor:pointer;
+
+    padding-right:52px;
+
+    color:var(--text);
+
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='%23990F2B' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5l6.5 6 6.5-6' stroke='%23990F2B' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+    background-repeat:no-repeat;
+
+    background-position:right 18px center;
+
+    background-size:18px;
+
+}
+
+
+.input-wrapper select option{
+
+    color:var(--text);
+
+}
+
+
+
+/* ==================================================
+   FOCUS
+================================================== */
+
+.input-wrapper input:focus,
+.input-wrapper select:focus{
+
+    border-color:var(--primary);
+
+    background:#fff;
+
+    box-shadow:
+        0 0 0 4px rgba(153,15,43,.12);
+
+}
+
+
+.input-wrapper:focus-within .input-icon{
+
+    color:var(--primary);
+
+}
+
+
+
+/* Hover */
+
+.input-wrapper:hover input,
+.input-wrapper:hover select{
+
+    border-color:#d1d1d1;
+
+}
+
+
+
+/* ==================================================
+   PASSWORD TOGGLE
+================================================== */
+
+.password-toggle{
+
+    position:absolute;
+
+    right:14px;
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#777;
+
+    transition:var(--transition);
+
+}
+
+
+.password-toggle:hover{
+
+    background:#f2f2f2;
+
+    color:var(--primary);
+
+}
+
+
+.password-toggle i{
+
+    pointer-events:none;
+
+}
+
+
+
+/* ==================================================
+   INPUT STATES
+================================================== */
+
+input:disabled,
+select:disabled{
+
+    cursor:not-allowed;
+
+    opacity:.65;
+
+}
+
+
+input:read-only{
+
+    background:#f8f8f8;
+
+}
+
+
+
+/* ==================================================
+   SCROLLBAR
+================================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+
+::-webkit-scrollbar-track{
+
+    background:#eeeeee;
+
+}
+
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--primary);
+
+    border-radius:40px;
+
+}
+
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--primary-dark);
+
+}
+
+
+
+/* ==========================================================
+   APLUS TUTORS
+   REGISTER PAGE
+   PART 3
+   TERMS • BUTTON • LINKS • ANIMATIONS
+========================================================== */
+
+
+/* ==================================================
+   TERMS ROW
+================================================== */
+
+.terms-row{
+
+    margin-top:-4px;
+
+}
+
+
+.checkbox-label{
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:14px;
+
+    cursor:pointer;
+
+    user-select:none;
+
+    color:var(--text-light);
+
+    font-size:.94rem;
+
+    line-height:1.7;
+
+}
+
+
+/* Hide native checkbox */
+
+.checkbox-label input{
+
+    appearance:none;
+
+    -webkit-appearance:none;
+
+    width:22px;
+
+    height:22px;
+
+    border:2px solid #d7d7d7;
+
+    border-radius:6px;
+
+    margin-top:2px;
+
+    flex-shrink:0;
+
+    position:relative;
+
+    background:#fff;
+
+    transition:var(--transition);
+
+}
+
+
+/* Checkmark */
+
+.checkbox-label input::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:5px;
+
+    top:1px;
+
+    width:6px;
+
+    height:11px;
+
+    border:solid #fff;
+
+    border-width:0 3px 3px 0;
+
+    transform:rotate(45deg) scale(0);
+
+    transition:var(--transition);
+
+}
+
+
+.checkbox-label input:checked{
+
+    background:var(--primary);
+
+    border-color:var(--primary);
+
+}
+
+
+.checkbox-label input:checked::after{
+
+    transform:rotate(45deg) scale(1);
+
+}
+
+
+.checkbox-label:hover input{
+
+    border-color:var(--primary);
+
+}
+
+
+/* Links */
+
+.checkbox-label a{
+
+    color:var(--primary);
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+
+.checkbox-label a:hover{
+
+    color:var(--primary-dark);
+
+    text-decoration:underline;
+
+}
+
+
+
+/* ==================================================
+   SUBMIT BUTTON
+================================================== */
+
+.auth-submit{
+
+    position:relative;
+
+    width:100%;
+
+    height:58px;
+
+    margin-top:10px;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    color:#fff;
+
+    font-size:1rem;
+
+    font-weight:700;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary-light)
+        );
+
+    box-shadow:
+        0 15px 32px rgba(153,15,43,.28);
+
+    transition:all .35s ease;
+
+}
+
+
+.auth-submit:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 20px 40px rgba(153,15,43,.35);
+
+}
+
+
+.auth-submit:active{
+
+    transform:scale(.98);
+
+}
+
+
+.auth-submit:disabled{
+
+    cursor:not-allowed;
+
+    opacity:.75;
+
+}
+
+
+/* Shine animation */
+
+.auth-submit::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-120%;
+
+    width:60%;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.45),
+            transparent
+        );
+
+    transition:left .8s ease;
+
+}
+
+
+.auth-submit:hover::before{
+
+    left:140%;
+
+}
+
+
+
+/* ==================================================
+   BUTTON CONTENT
+================================================== */
+
+.btn-text,
+.btn-loader{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:.25s ease;
+
+}
+
+
+.btn-loader{
+
+    opacity:0;
+
+    visibility:hidden;
+
+}
+
+
+.btn-loader::before{
+
+    content:"";
+
+    width:22px;
+
+    height:22px;
+
+    border:3px solid rgba(255,255,255,.35);
+
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+
+}
+
+
+/* Loading State */
+
+.auth-submit.loading .btn-text{
+
+    opacity:0;
+
+    visibility:hidden;
+
+}
+
+
+.auth-submit.loading .btn-loader{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+
+
+/* ==================================================
+   LOGIN LINK
+================================================== */
+
+.auth-switch{
+
+    margin-top:32px;
+
+    text-align:center;
+
+    color:var(--text-light);
+
+}
+
+
+.auth-switch p{
+
+    font-size:.95rem;
+
+}
+
+
+.auth-switch a{
+
+    color:var(--primary);
+
+    font-weight:700;
+
+    transition:var(--transition);
+
+}
+
+
+.auth-switch a:hover{
+
+    color:var(--primary-dark);
+
+    text-decoration:underline;
+
+}
+
+
+
+/* ==================================================
+   BACK HOME
+================================================== */
+
+.back-home{
+
+    margin-top:30px;
+
+    text-align:center;
+
+}
+
+
+.back-home a{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:var(--text-light);
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+
+.back-home a:hover{
+
+    color:var(--primary);
+
+}
+
+
+.back-home a i{
+
+    transition:transform .3s ease;
+
+}
+
+
+.back-home a:hover i{
+
+    transform:translateX(-6px);
+
+}
+
+
+
+/* ==================================================
+   ANIMATIONS
+================================================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(22px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+.auth-form-container{
+
+    animation:fadeUp .65s ease;
+
+}
+
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+
+/* ==================================================
+   ACCESSIBILITY
+================================================== */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible{
+
+    outline:3px solid rgba(153,15,43,.22);
+
+    outline-offset:3px;
+
+}
+
+
+
+/* ==================================================
+   TEXT SELECTION
+================================================== */
+
+::selection{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+
+
+/* ==========================================================
+   APLUS TUTORS
+   REGISTER PAGE
+   PART 4
+   RESPONSIVE DESIGN • ACCESSIBILITY • FINAL POLISH
+========================================================== */
+
+
+/* ==================================================
+   EXTRA LARGE SCREENS
+================================================== */
+
+@media (min-width:1500px){
+
+    .auth-page{
+
+        grid-template-columns:1.15fr 1fr;
+
+    }
+
+    .visual-content{
+
+        max-width:680px;
+
+    }
+
+    .visual-text h1{
+
+        font-size:3.8rem;
+
+    }
+
+    .auth-form-container{
+
+        max-width:590px;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   LARGE LAPTOPS
+================================================== */
+
+@media (max-width:1200px){
+
+    .auth-visual{
+
+        padding:55px;
+
+    }
+
+    .visual-text h1{
+
+        font-size:2.8rem;
+
+    }
+
+    .auth-logo{
+
+        margin-bottom:65px;
+
+    }
+
+    .visual-stats{
+
+        gap:14px;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   TABLETS
+================================================== */
+
+@media (max-width:992px){
+
+    .auth-page{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .auth-visual{
+
+        display:none;
+
+    }
+
+    .auth-form-section{
+
+        min-height:100vh;
+
+        padding:36px 20px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(153,15,43,.05),
+                #ffffff
+            );
+
+    }
+
+    .mobile-logo{
+
+        display:flex;
+
+        justify-content:center;
+
+        margin-bottom:28px;
+
+    }
+
+    .mobile-logo img{
+
+        width:70px;
+
+        height:70px;
+
+        border-radius:18px;
+
+        object-fit:cover;
+
+        box-shadow:var(--shadow-sm);
+
+    }
+
+}
+
+
+
+/* ==================================================
+   MOBILE DEVICES
+================================================== */
+
+@media (max-width:768px){
+
+    .auth-form-section{
+
+        padding:20px 16px;
+
+    }
+
+    .auth-form-container{
+
+        padding:32px 24px;
+
+        border-radius:22px;
+
+    }
+
+    .form-heading{
+
+        margin-bottom:28px;
+
+    }
+
+    .form-heading h2{
+
+        font-size:1.7rem;
+
+    }
+
+    .form-heading p{
+
+        font-size:.92rem;
+
+    }
+
+    .form-group{
+
+        gap:8px;
+
+    }
+
+    .form-group label{
+
+        font-size:.92rem;
+
+    }
+
+    .input-wrapper input,
+    .input-wrapper select{
+
+        height:54px;
+
+        font-size:.95rem;
+
+        border-radius:14px;
+
+    }
+
+    .auth-submit{
+
+        height:54px;
+
+    }
+
+    .checkbox-label{
+
+        font-size:.9rem;
+
+    }
+
+    .auth-switch{
+
+        margin-top:28px;
+
+    }
+
+    .back-home{
+
+        margin-top:24px;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   SMALL PHONES
+================================================== */
+
+@media (max-width:480px){
+
+    body{
+
+        background:#fafafa;
+
+    }
+
+    .auth-form-section{
+
+        padding:14px;
+
+    }
+
+    .auth-form-container{
+
+        padding:26px 18px;
+
+        border-radius:18px;
+
+        box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    }
+
+    .mobile-logo{
+
+        margin-bottom:22px;
+
+    }
+
+    .mobile-logo img{
+
+        width:56px;
+
+        height:56px;
+
+        border-radius:16px;
+
+    }
+
+    .form-tag{
+
+        font-size:.74rem;
+
+        letter-spacing:1.5px;
+
+        padding:7px 14px;
+
+    }
+
+    .form-heading h2{
+
+        font-size:1.45rem;
+
+    }
+
+    .form-heading p{
+
+        font-size:.88rem;
+
+    }
+
+    .input-wrapper input,
+    .input-wrapper select{
+
+        padding-left:50px;
+
+        font-size:.92rem;
+
+    }
+
+    .input-icon{
+
+        left:16px;
+
+    }
+
+    .password-toggle{
+
+        right:12px;
+
+    }
+
+    .checkbox-label{
+
+        gap:10px;
+
+        font-size:.88rem;
+
+    }
+
+    .checkbox-label input{
+
+        width:20px;
+
+        height:20px;
+
+    }
+
+    .checkbox-label input::after{
+
+        left:4px;
+
+        top:1px;
+
+    }
+
+    .auth-submit{
+
+        font-size:.95rem;
+
+    }
+
+    .auth-switch p{
+
+        font-size:.9rem;
+
+    }
+
+    .back-home a{
+
+        font-size:.9rem;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   VERY SHORT SCREENS
+================================================== */
+
+@media (max-height:700px){
+
+    .auth-form-section{
+
+        padding-top:18px;
+
+        padding-bottom:18px;
+
+    }
+
+    .form-heading{
+
+        margin-bottom:22px;
+
+    }
+
+    .form-tag{
+
+        margin-bottom:14px;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   HOVER DEVICES ONLY
+================================================== */
+
+@media (hover:hover){
+
+    .input-wrapper:hover .input-icon{
+
+        color:var(--primary);
+
+    }
+
+}
+
+
+
+/* ==================================================
+   AUTOFILL FIX
+================================================== */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+select:-webkit-autofill{
+
+    -webkit-text-fill-color:var(--text);
+
+    -webkit-box-shadow:0 0 0 1000px #ffffff inset;
+
+    transition:background-color 9999s ease-in-out;
+
+}
+
+
+
+/* ==================================================
+   REDUCED MOTION
+================================================== */
+
+@media (prefers-reduced-motion:reduce){
+
+    *{
+
+        animation:none !important;
+
+        transition:none !important;
+
+        scroll-behavior:auto !important;
+
+    }
+
+}
+
+
+
+/* ==================================================
+   PLACEHOLDER COLOR
+================================================== */
+
+::placeholder{
+
+    color:#9ca3af;
+
+    opacity:1;
+
+}
+
+
+
+/* ==================================================
+   SELECTION
+================================================== */
+
+::-moz-selection{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+::selection{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+
+
+/* ==================================================
+   FINAL POLISH
+================================================== */
+
+.auth-form-container,
+.auth-submit,
+.input-wrapper input,
+.input-wrapper select,
+.checkbox-label input,
+.visual-stats div,
+.back-home a,
+.auth-switch a{
+
+    will-change:transform;
+
+}
+

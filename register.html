@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Account | Aplus Tutors</title>
+    
+        <!-- FONT AWESOME -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="register.css"
+    >
+
+</head>
+
+
+<body>
+
+    <main class="auth-page">
+
+        <!-- LEFT SIDE -->
+        <section class="auth-visual">
+
+            <div class="visual-overlay"></div>
+
+            <div class="visual-content">
+
+                <a href="index.html" class="auth-logo">
+
+                    <img
+                        src="assets/logo Aplus tutors.png"
+                        alt="Aplus Tutors"
+                    >
+
+                </a>
+
+                <div class="visual-text">
+
+                    <span class="eyebrow">
+                        WELCOME TO APLUS TUTORS
+                    </span>
+
+                    <h1>
+                        Your journey to
+                        <span>academic excellence</span>
+                        starts here.
+                    </h1>
+
+                    <p>
+                        Prepare smarter for JAMB, WAEC and NECO
+                        with interactive learning, expert guidance
+                        and powerful CBT practice.
+                    </p>
+
+                </div>
+
+                <div class="visual-stats">
+
+                    <div>
+                        <strong>JAMB</strong>
+                        <span>Exam Prep</span>
+                    </div>
+
+                    <div>
+                        <strong>WAEC</strong>
+                        <span>Exam Prep</span>
+                    </div>
+
+                    <div>
+                        <strong>CBT</strong>
+                        <span>Practice</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT SIDE -->
+        <section class="auth-form-section">
+
+            <div class="auth-form-container">
+
+                <div class="mobile-logo">
+
+                    <a href="index.html">
+
+                        <img
+                            src="assets/logo Aplus tutors.JPG"
+                            alt="Aplus Tutors"
+                        >
+
+                    </a>
+
+                </div>
+
+
+                <div class="form-heading">
+
+                    <span class="form-tag">
+                        GET STARTED
+                    </span>
+
+                    <h2>
+                        Create your account
+                    </h2>
+
+                    <p>
+                        Join Aplus Tutors and start your
+                        journey toward exam success.
+                    </p>
+
+                </div>
+
+
+                <!-- SUCCESS / ERROR MESSAGE -->
+
+                <div
+                    id="authMessage"
+                    class="auth-message"
+                ></div>
+
+
+                <!-- REGISTRATION FORM -->
+
+                <form
+                    id="registerForm"
+                    class="auth-form"
+                >
+
+                    <!-- FULL NAME -->
+
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            Full Name
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                placeholder="Enter your full name"
+                                required
+                                autocomplete="name"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Enter your email address"
+                                required
+                                autocomplete="email"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                <i class="fa-solid fa-phone"></i>
+                            </span>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                placeholder="Enter your phone number"
+                                required
+                                autocomplete="tel"
+                            >
+
+                        </div>
+
+                    </div>
+                    
+                    <!-- DEPARTMENT -->
+
+<div class="form-group">
+
+    <label for="department">
+        Department
+    </label>
+
+    <div class="input-wrapper">
+
+        <span class="input-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+        </span>
+
+        <select
+            id="department"
+            required
+        >
+
+            <option value="">
+                Select Department
+            </option>
+
+            <option value="Science">
+                Science
+            </option>
+
+            <option value="Commercial">
+                Commercial
+            </option>
+
+            <option value="Arts">
+                Arts
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Create a password"
+                                required
+                                autocomplete="new-password"
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="password"
+                                aria-label="Show password"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                placeholder="Confirm your password"
+                                required
+                                autocomplete="new-password"
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="confirmPassword"
+                                aria-label="Show password"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TERMS -->
+
+                    <div class="terms-row">
+
+                        <label class="checkbox-label">
+
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                required
+                            >
+
+                            <span>
+                                I agree to the
+                                <a href="#">
+                                    Terms of Service
+                                </a>
+                                and
+                                <a href="#">
+                                    Privacy Policy
+                                </a>
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        type="submit"
+                        id="registerBtn"
+                        class="auth-submit"
+                    >
+
+                        <span class="btn-text">
+                            Create Account
+                        </span>
+
+                        <span class="btn-loader"></span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- LOGIN LINK -->
+
+                <div class="auth-switch">
+
+                    <p>
+                        Already have an account?
+                        <a href="login.html">
+                            Login
+                        </a>
+                    </p>
+
+                </div>
+
+
+                <div class="back-home">
+
+                    <a href="index.html">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back to homepage
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- APPWRITE SDK -->
+
+<script src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"></script>
+
+
+    <!-- APPWRITE CONFIG -->
+
+    <script src="appwrite.js"></script>
+
+
+    <!-- AUTH SCRIPT -->
+
+    <script src="auth.js"></script>
+
+</body>
+
+</html>
