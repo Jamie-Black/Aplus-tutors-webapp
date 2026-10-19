@@ -1,0 +1,1834 @@
+/* ==================================================
+   APLUS TUTORS
+   SUBJECTS PAGE
+   ================================================== */
+
+
+/* ==================================================
+   PAGE
+   ================================================== */
+
+.subjects-page {
+    padding-bottom: 40px;
+}
+
+
+/* ==================================================
+   PAGE HEADER
+   ================================================== */
+
+.subjects-page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 25px;
+
+    margin-bottom: 30px;
+}
+
+.subjects-page-title {
+    min-width: 0;
+}
+
+.subjects-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 7px;
+
+    color: #b00020;
+
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.subjects-page-header h1 {
+    margin: 0;
+
+    color: #171717;
+
+    font-size: 2rem;
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+.subjects-page-header p {
+    margin: 8px 0 0;
+
+    color: #777;
+
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+
+/* ==================================================
+   ADD SUBJECT BUTTON
+   ================================================== */
+
+.subjects-add-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 44px;
+
+    padding: 10px 17px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #b00020;
+    color: #ffffff;
+
+    font-size: 0.86rem;
+    font-weight: 650;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.subjects-add-btn:hover {
+    background: #92001b;
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 6px 18px rgba(176, 0, 32, 0.2);
+}
+
+.subjects-add-btn:active {
+    transform: translateY(0);
+}
+
+.subjects-add-btn i {
+    font-size: 0.78rem;
+}
+
+
+/* ==================================================
+   STATISTICS
+   ================================================== */
+
+.subjects-statistics {
+    margin-bottom: 32px;
+}
+
+.subject-stat-card {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 104px;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+    border-radius: 15px;
+
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.035);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.subject-stat-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+
+/* STAT ICON */
+
+.subject-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 50px;
+    height: 50px;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    background: #f8e8ec;
+    color: #b00020;
+
+    font-size: 1.1rem;
+}
+
+.subject-stat-icon.active {
+    background: #e9f7ef;
+    color: #198754;
+}
+
+.subject-stat-icon.inactive {
+    background: #f1f1f1;
+    color: #707070;
+}
+
+
+/* STAT CONTENT */
+
+.subject-stat-content {
+    min-width: 0;
+}
+
+.subject-stat-label {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #777;
+
+    font-size: 0.78rem;
+    line-height: 1.3;
+}
+
+.subject-stat-card strong {
+    display: block;
+
+    color: #171717;
+
+    font-size: 1.55rem;
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+
+/* ==================================================
+   SUBJECT LIST SECTION
+   ================================================== */
+
+.subjects-list-section {
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+    border-radius: 17px;
+
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.025);
+}
+
+
+/* ==================================================
+   SECTION HEADER
+   ================================================== */
+
+.subjects-section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.subjects-section-eyebrow {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #b00020;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.subjects-section-header h2 {
+    margin: 0;
+
+    color: #171717;
+
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.subjects-section-header p {
+    margin: 5px 0 0;
+
+    color: #777;
+
+    font-size: 0.84rem;
+    line-height: 1.5;
+}
+
+
+/* ==================================================
+   SUBJECT CARD
+   ================================================== */
+
+.subject-card-wrapper {
+    height: 100%;
+}
+
+.subject-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+
+    padding: 20px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e8e8;
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.subject-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+
+    background: #b00020;
+
+    opacity: 0;
+
+    transition: opacity 0.2s ease;
+}
+
+.subject-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #d8b0b8;
+
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.065);
+}
+
+.subject-card:hover::before {
+    opacity: 1;
+}
+
+
+/* ==================================================
+   SUBJECT CARD TOP
+   ================================================== */
+
+.subject-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 17px;
+}
+
+
+/* ==================================================
+   SUBJECT ICON
+   ================================================== */
+
+.subject-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    background: #f8e8ec;
+    color: #b00020;
+
+    font-size: 1.05rem;
+}
+
+
+/* ==================================================
+   SUBJECT STATUS
+   ================================================== */
+
+.subject-status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 5px 9px;
+
+    border-radius: 30px;
+
+    font-size: 0.7rem;
+    font-weight: 650;
+
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+.subject-status.active {
+    background: #e9f7ef;
+    color: #198754;
+}
+
+.subject-status.inactive {
+    background: #f1f1f1;
+    color: #707070;
+}
+
+.subject-status i {
+    font-size: 0.55rem;
+}
+
+
+/* ==================================================
+   SUBJECT NAME
+   ================================================== */
+
+.subject-card h3 {
+    margin: 0;
+
+    color: #171717;
+
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+
+/* ==================================================
+   SUBJECT CODE
+   ================================================== */
+
+.subject-code {
+    display: inline-block;
+
+    margin-top: 4px;
+
+    color: #b00020;
+
+    font-size: 0.72rem;
+    font-weight: 750;
+
+    letter-spacing: 0.8px;
+}
+
+
+/* ==================================================
+   SUBJECT DESCRIPTION
+   ================================================== */
+
+.subject-description {
+    flex: 1;
+
+    margin: 13px 0 17px;
+
+    color: #707070;
+
+    font-size: 0.83rem;
+    line-height: 1.55;
+}
+
+
+/* ==================================================
+   SUBJECT DEPARTMENT
+   ================================================== */
+
+.subject-department {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    margin-top: auto;
+    padding-top: 13px;
+
+    border-top: 1px solid #eeeeee;
+
+    color: #555;
+
+    font-size: 0.78rem;
+}
+
+.subject-department i {
+    color: #b00020;
+
+    font-size: 0.75rem;
+}
+
+.subject-department span {
+    font-weight: 550;
+}
+
+
+/* ==================================================
+   LOADING / EMPTY / ERROR STATES
+   ================================================== */
+
+.subjects-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 260px;
+
+    padding: 45px 20px;
+
+    text-align: center;
+}
+
+.subjects-state-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 62px;
+    height: 62px;
+
+    margin-bottom: 16px;
+
+    border-radius: 50%;
+
+    background: #f8e8ec;
+    color: #b00020;
+
+    font-size: 1.25rem;
+}
+
+.subjects-state h3 {
+    margin: 0 0 7px;
+
+    color: #222;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.subjects-state p {
+    max-width: 420px;
+
+    margin: 0;
+
+    color: #777;
+
+    font-size: 0.84rem;
+    line-height: 1.55;
+}
+
+
+/* ==================================================
+   RESPONSIVE — TABLET
+   ================================================== */
+
+@media (max-width: 991.98px) {
+
+    .subjects-page-header {
+        align-items: flex-start;
+    }
+
+    .subjects-page-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .subject-stat-card {
+        padding: 17px;
+    }
+
+    .subjects-list-section {
+        padding: 21px;
+    }
+
+}
+
+
+/* ==================================================
+   RESPONSIVE — MOBILE
+   ================================================== */
+
+@media (max-width: 767.98px) {
+
+    .subjects-page {
+        padding-bottom: 25px;
+    }
+
+
+    .subjects-page-header {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 18px;
+
+        margin-bottom: 24px;
+    }
+
+
+    .subjects-page-header h1 {
+        font-size: 1.65rem;
+    }
+
+
+    .subjects-page-header p {
+        font-size: 0.85rem;
+    }
+
+
+    .subjects-add-btn {
+        width: 100%;
+    }
+
+
+    .subjects-statistics {
+        margin-bottom: 25px;
+    }
+
+
+    .subject-stat-card {
+        min-height: 88px;
+    }
+
+
+    .subjects-list-section {
+        padding: 17px;
+
+        border-radius: 14px;
+    }
+
+
+    .subjects-section-header {
+        margin-bottom: 19px;
+        padding-bottom: 15px;
+    }
+
+
+    .subjects-section-header h2 {
+        font-size: 1.1rem;
+    }
+
+
+    .subjects-section-header p {
+        font-size: 0.8rem;
+    }
+
+
+    .subject-card {
+        padding: 18px;
+    }
+
+}
+
+
+/* ==================================================
+   VERY SMALL SCREENS
+   ================================================== */
+
+@media (max-width: 380px) {
+
+    .subjects-page-header h1 {
+        font-size: 1.5rem;
+    }
+
+
+    .subject-card-top {
+        gap: 10px;
+    }
+
+
+    .subject-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+
+    .subject-status {
+        padding: 5px 7px;
+        font-size: 0.65rem;
+    }
+
+}
+
+
+
+/* ==================================================
+APLUS TUTORS
+SUBJECTS PAGE
+PHASE 2B — SUBJECT MANAGEMENT MODALS
+================================================== */
+
+/* ==================================================
+SUBJECT MODAL
+================================================== */
+
+.subject-modal {
+
+border: none;
+
+border-radius: 18px;
+
+overflow: hidden;
+
+box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.15);
+
+}
+
+/* ==================================================
+MODAL HEADER
+================================================== */
+
+.subject-modal .modal-header {
+
+padding: 1.5rem 1.5rem 1.25rem;
+
+border-bottom: 1px solid #eeeeee;
+
+background: #ffffff;
+
+}
+
+.subject-modal-eyebrow {
+
+display: block;
+
+margin-bottom: 0.25rem;
+
+color: #b00020;
+
+font-size: 0.72rem;
+
+font-weight: 700;
+
+letter-spacing: 0.08em;
+
+text-transform: uppercase;
+
+}
+
+.subject-modal .modal-title {
+
+margin: 0;
+
+color: #171717;
+
+font-size: 1.35rem;
+
+font-weight: 700;
+
+}
+
+/* ==================================================
+MODAL BODY
+================================================== */
+
+.subject-modal .modal-body {
+
+padding: 1.5rem;
+
+background: #ffffff;
+
+}
+
+/* ==================================================
+FORM LABELS
+================================================== */
+
+.subject-modal .form-label {
+
+margin-bottom: 0.45rem;
+
+color: #252525;
+
+font-size: 0.9rem;
+
+font-weight: 600;
+
+}
+
+.subject-modal .form-label .text-danger {
+
+font-weight: 700;
+
+}
+
+/* ==================================================
+FORM CONTROLS
+================================================== */
+
+.subject-modal .form-control,
+.subject-modal .form-select {
+
+min-height: 46px;
+
+padding: 0.7rem 0.85rem;
+
+border: 1px solid #dddddd;
+
+border-radius: 10px;
+
+color: #222222;
+
+background-color: #ffffff;
+
+font-size: 0.92rem;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+
+}
+
+.subject-modal textarea.form-control {
+
+min-height: 110px;
+
+resize: vertical;
+
+}
+
+.subject-modal .form-control::placeholder {
+
+color: #a0a0a0;
+
+}
+
+.subject-modal .form-control:focus,
+.subject-modal .form-select:focus {
+
+border-color: #b00020;
+
+box-shadow:
+    0 0 0 3px rgba(176, 0, 32, 0.08);
+
+}
+
+.subject-modal .form-text {
+
+margin-top: 0.4rem;
+
+color: #888888;
+
+font-size: 0.78rem;
+
+}
+
+/* ==================================================
+MODAL FOOTER
+================================================== */
+
+.subject-modal .modal-footer {
+
+padding: 1rem 1.5rem;
+
+border-top: 1px solid #eeeeee;
+
+background: #fafafa;
+
+}
+
+.subject-modal .modal-footer .btn {
+
+min-height: 42px;
+
+padding: 0.55rem 1rem;
+
+border-radius: 9px;
+
+font-size: 0.88rem;
+
+font-weight: 600;
+
+}
+
+.subject-modal .modal-footer .btn-primary {
+
+border-color: #b00020;
+
+background: #b00020;
+
+}
+
+.subject-modal .modal-footer .btn-primary:hover {
+
+border-color: #8f001a;
+
+background: #8f001a;
+
+}
+
+.subject-modal .modal-footer .btn-light {
+
+border: 1px solid #dddddd;
+
+color: #444444;
+
+background: #ffffff;
+
+}
+
+.subject-modal .modal-footer .btn-light:hover {
+
+border-color: #cccccc;
+
+color: #222222;
+
+background: #f4f4f4;
+
+}
+
+/* ==================================================
+DISABLED BUTTON
+================================================== */
+
+.subject-modal .btn:disabled {
+
+cursor: not-allowed;
+
+opacity: 0.65;
+
+}
+
+/* ==================================================
+VIEW SUBJECT — HEADER
+================================================== */
+
+.view-subject-heading {
+
+display: flex;
+
+align-items: center;
+
+gap: 1rem;
+
+margin-bottom: 1.5rem;
+
+padding-bottom: 1.25rem;
+
+border-bottom: 1px solid #eeeeee;
+
+}
+
+.view-subject-icon {
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+flex-shrink: 0;
+
+width: 58px;
+
+height: 58px;
+
+border-radius: 14px;
+
+color: #b00020;
+
+background: rgba(176, 0, 32, 0.08);
+
+font-size: 1.35rem;
+
+}
+
+.view-subject-heading h3 {
+
+margin: 0 0 0.2rem;
+
+color: #171717;
+
+font-size: 1.25rem;
+
+font-weight: 700;
+
+word-break: break-word;
+
+}
+
+.view-subject-heading > div:last-child span {
+
+display: inline-block;
+
+color: #888888;
+
+font-size: 0.82rem;
+
+font-weight: 600;
+
+letter-spacing: 0.04em;
+
+}
+
+/* ==================================================
+VIEW SUBJECT — INFORMATION ROW
+================================================== */
+
+.view-subject-row {
+
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+gap: 1rem;
+
+padding: 0.9rem 0;
+
+border-bottom: 1px solid #f0f0f0;
+
+}
+
+.view-subject-label {
+
+color: #777777;
+
+font-size: 0.82rem;
+
+font-weight: 600;
+
+}
+
+.view-subject-row > span:last-child {
+
+color: #292929;
+
+font-size: 0.88rem;
+
+font-weight: 600;
+
+text-align: right;
+
+}
+
+/* ==================================================
+VIEW SUBJECT — DESCRIPTION
+================================================== */
+
+.view-subject-detail {
+
+padding: 1rem 0;
+
+border-bottom: 1px solid #f0f0f0;
+
+}
+
+.view-subject-detail .view-subject-label {
+
+display: block;
+
+margin-bottom: 0.45rem;
+
+}
+
+.view-subject-detail p {
+
+margin: 0;
+
+color: #555555;
+
+font-size: 0.9rem;
+
+line-height: 1.7;
+
+}
+
+/* ==================================================
+VIEW SUBJECT — STATUS
+================================================== */
+
+#viewSubjectStatus {
+
+display: inline-flex;
+
+align-items: center;
+
+gap: 0.35rem;
+
+padding: 0.35rem 0.65rem;
+
+border-radius: 50px;
+
+font-size: 0.75rem;
+
+font-weight: 700;
+
+}
+
+#viewSubjectStatus.active {
+
+color: #18794e;
+
+background: rgba(24, 121, 78, 0.1);
+
+}
+
+#viewSubjectStatus.inactive {
+
+color: #9a6700;
+
+background: rgba(154, 103, 0, 0.1);
+
+}
+
+/* ==================================================
+CONFIRMATION ICON
+================================================== */
+
+.subject-confirm-icon {
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+width: 64px;
+
+height: 64px;
+
+margin: 0 auto;
+
+border-radius: 50%;
+
+color: #b00020;
+
+background: rgba(176, 0, 32, 0.08);
+
+font-size: 1.5rem;
+
+}
+
+.subject-confirm-icon.warning {
+
+color: #b7791f;
+
+background: rgba(183, 121, 31, 0.1);
+
+}
+
+.subject-confirm-icon.success {
+
+color: #18794e;
+
+background: rgba(24, 121, 78, 0.1);
+
+}
+
+/* ==================================================
+CONFIRMATION MODAL
+================================================== */
+
+#subjectStatusModal .modal-body h5 {
+
+color: #222222;
+
+font-weight: 700;
+
+}
+
+#subjectStatusModal .modal-body p {
+
+margin-bottom: 0;
+
+font-size: 0.88rem;
+
+line-height: 1.6;
+
+}
+
+#subjectStatusModal .modal-footer {
+
+padding-top: 0;
+
+border-top: none;
+
+background: #ffffff;
+
+}
+
+/* ==================================================
+CONFIRMATION BUTTON STATES
+================================================== */
+
+#confirmSubjectStatusBtn {
+
+min-width: 105px;
+
+}
+
+#confirmSubjectStatusBtn.deactivate {
+
+border-color: #b7791f;
+
+background: #b7791f;
+
+}
+
+#confirmSubjectStatusBtn.deactivate:hover {
+
+border-color: #996515;
+
+background: #996515;
+
+}
+
+#confirmSubjectStatusBtn.activate {
+
+border-color: #18794e;
+
+background: #18794e;
+
+}
+
+#confirmSubjectStatusBtn.activate:hover {
+
+border-color: #12603e;
+
+background: #12603e;
+
+}
+
+/* ==================================================
+MODAL BACKDROP
+================================================== */
+
+.modal-backdrop.show {
+
+opacity: 0.55;
+
+}
+
+/* ==================================================
+MODAL ANIMATION
+================================================== */
+
+.subject-modal {
+
+animation:
+    subjectModalIn 0.2s ease-out;
+
+}
+
+@keyframes subjectModalIn {
+
+from {
+
+    opacity: 0;
+
+    transform: translateY(10px) scale(0.98);
+
+}
+
+to {
+
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+
+}
+
+}
+
+/* ==================================================
+FORM VALIDATION
+================================================== */
+
+.subject-modal .form-control.is-invalid,
+.subject-modal .form-select.is-invalid {
+
+border-color: #dc3545;
+
+}
+
+.subject-modal .form-control.is-invalid:focus,
+.subject-modal .form-select.is-invalid:focus {
+
+border-color: #dc3545;
+
+box-shadow:
+    0 0 0 3px rgba(220, 53, 69, 0.08);
+
+}
+
+.subject-modal .invalid-feedback {
+
+font-size: 0.78rem;
+
+}
+
+/* ==================================================
+LOADING BUTTON
+================================================== */
+
+.subject-modal .btn-loading {
+
+pointer-events: none;
+
+}
+
+.subject-modal .btn-loading .fa-spinner {
+
+margin-right: 0.35rem;
+
+}
+
+/* ==================================================
+RESPONSIVE — TABLET
+================================================== */
+
+@media (max-width: 767.98px) {
+
+.subject-modal .modal-header {
+
+    padding: 1.25rem;
+
+}
+
+
+.subject-modal .modal-body {
+
+    padding: 1.25rem;
+
+}
+
+
+.subject-modal .modal-footer {
+
+    padding: 0.9rem 1.25rem;
+
+}
+
+
+.subject-modal .modal-title {
+
+    font-size: 1.2rem;
+
+}
+
+
+.view-subject-heading {
+
+    gap: 0.8rem;
+
+}
+
+
+.view-subject-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+}
+
+}
+
+/* ==================================================
+RESPONSIVE — SMALL MOBILE
+================================================== */
+
+@media (max-width: 575.98px) {
+
+.subject-modal {
+
+    margin: 0.75rem;
+
+    border-radius: 15px;
+
+}
+
+
+.subject-modal .modal-header {
+
+    padding: 1rem;
+
+}
+
+
+.subject-modal .modal-body {
+
+    padding: 1rem;
+
+}
+
+
+.subject-modal .modal-footer {
+
+    display: flex;
+
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+
+    gap: 0.5rem;
+
+    padding: 1rem;
+
+}
+
+
+.subject-modal .modal-footer .btn {
+
+    width: 100%;
+
+}
+
+
+.view-subject-row {
+
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 0.35rem;
+
+}
+
+
+.view-subject-row > span:last-child {
+
+    text-align: left;
+
+}
+
+
+.view-subject-heading h3 {
+
+    font-size: 1.1rem;
+
+}
+
+
+#subjectStatusModal .modal-footer {
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+#subjectStatusModal .modal-footer .btn {
+
+    width: auto;
+
+}
+
+}
+
+/* ==================================================
+DARK MODE SUPPORT
+================================================== */
+
+[data-theme="dark"] .subject-modal {
+
+color: #eeeeee;
+
+background: #1c1c1c;
+
+}
+
+[data-theme="dark"] .subject-modal .modal-header,
+[data-theme="dark"] .subject-modal .modal-body {
+
+background: #1c1c1c;
+
+}
+
+[data-theme="dark"] .subject-modal .modal-footer {
+
+border-color: #333333;
+
+background: #181818;
+
+}
+
+[data-theme="dark"] .subject-modal .modal-header {
+
+border-color: #333333;
+
+}
+
+[data-theme="dark"] .subject-modal .modal-title,
+[data-theme="dark"] .view-subject-heading h3,
+[data-theme="dark"] #subjectStatusModal .modal-body h5 {
+
+color: #ffffff;
+
+}
+
+[data-theme="dark"] .subject-modal .form-label {
+
+color: #eeeeee;
+
+}
+
+[data-theme="dark"] .subject-modal .form-control,
+[data-theme="dark"] .subject-modal .form-select {
+
+border-color: #444444;
+
+color: #eeeeee;
+
+background-color: #242424;
+
+}
+
+[data-theme="dark"] .subject-modal .form-control::placeholder {
+
+color: #777777;
+
+}
+
+[data-theme="dark"] .subject-modal .form-text,
+[data-theme="dark"] .view-subject-label {
+
+color: #999999;
+
+}
+
+[data-theme="dark"] .view-subject-heading,
+[data-theme="dark"] .view-subject-row,
+[data-theme="dark"] .view-subject-detail {
+
+border-color: #333333;
+
+}
+
+[data-theme="dark"] .view-subject-heading > div:last-child span,
+[data-theme="dark"] .view-subject-row > span:last-child {
+
+color: #cccccc;
+
+}
+
+[data-theme="dark"] .view-subject-detail p {
+
+color: #bbbbbb;
+
+}
+
+[data-theme="dark"] .subject-modal .modal-footer .btn-light {
+
+border-color: #444444;
+
+color: #eeeeee;
+
+background: #242424;
+
+}
+
+[data-theme="dark"] .subject-modal .modal-footer .btn-light:hover {
+
+background: #303030;
+
+}
+
+/* ==================================================
+END PHASE 2B
+================================================== */
+
+
+/* ==================================================
+PHASE 2C — SUBJECT CARD ACTIONS
+================================================== */
+
+.subject-card-actions {
+
+display: flex;
+
+align-items: center;
+
+gap: 0.45rem;
+
+margin-top: 1.15rem;
+
+padding-top: 1rem;
+
+border-top: 1px solid #eeeeee;
+
+}
+
+.subject-card-action {
+
+display: inline-flex;
+
+align-items: center;
+
+justify-content: center;
+
+gap: 0.35rem;
+
+min-height: 36px;
+
+padding: 0.45rem 0.65rem;
+
+border: 1px solid #e5e5e5;
+
+border-radius: 8px;
+
+color: #555555;
+
+background: #ffffff;
+
+font-size: 0.76rem;
+
+font-weight: 600;
+
+cursor: pointer;
+
+transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+.subject-card-action:hover {
+
+transform: translateY(-1px);
+
+}
+
+.subject-card-action.view:hover {
+
+border-color: #b00020;
+
+color: #b00020;
+
+background: rgba(176, 0, 32, 0.05);
+
+}
+
+.subject-card-action.edit:hover {
+
+border-color: #2563eb;
+
+color: #2563eb;
+
+background: rgba(37, 99, 235, 0.05);
+
+}
+
+.subject-card-action.status:hover {
+
+border-color: #18794e;
+
+color: #18794e;
+
+background: rgba(24, 121, 78, 0.05);
+
+}
+
+/* ==================================================
+SUBJECT NOTIFICATION
+================================================== */
+
+.subject-notification {
+
+position: fixed;
+
+top: 85px;
+
+right: 20px;
+
+z-index: 1090;
+
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+gap: 1rem;
+
+min-width: 280px;
+
+max-width: 420px;
+
+margin: 0;
+
+padding: 0.85rem 1rem;
+
+border-radius: 10px;
+
+box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.12);
+
+animation:
+    subjectNotificationIn 0.25s ease;
+
+}
+
+.subject-notification-content {
+
+display: flex;
+
+align-items: center;
+
+gap: 0.65rem;
+
+font-size: 0.86rem;
+
+font-weight: 600;
+
+}
+
+.subject-notification-content i {
+
+font-size: 1rem;
+
+}
+
+@keyframes subjectNotificationIn {
+
+from {
+
+    opacity: 0;
+
+    transform: translateY(-10px);
+
+}
+
+to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+}
+
+/* ==================================================
+DARK MODE
+================================================== */
+
+[data-theme="dark"] .subject-card-actions {
+
+border-color: #333333;
+
+}
+
+[data-theme="dark"] .subject-card-action {
+
+border-color: #444444;
+
+color: #cccccc;
+
+background: #242424;
+
+}
+
+[data-theme="dark"] .subject-card-action.view:hover {
+
+background: rgba(176, 0, 32, 0.12);
+
+}
+
+[data-theme="dark"] .subject-card-action.edit:hover {
+
+background: rgba(37, 99, 235, 0.12);
+
+}
+
+[data-theme="dark"] .subject-card-action.status:hover {
+
+background: rgba(24, 121, 78, 0.12);
+
+}
+
+/* ==================================================
+MOBILE
+================================================== */
+
+@media (max-width: 575.98px) {
+
+.subject-card-actions {
+
+    flex-wrap: wrap;
+
+}
+
+
+.subject-card-action {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+.subject-card-action span {
+
+    display: none;
+
+}
+
+
+.subject-card-action {
+
+    min-width: 38px;
+
+}
+
+
+.subject-notification {
+
+    top: 75px;
+
+    right: 12px;
+
+    left: 12px;
+
+    min-width: 0;
+
+    max-width: none;
+
+}
+
+}
+
+/* ==================================================
+END PHASE 2C SUPPORTING CSS
+================================================== */

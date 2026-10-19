@@ -1,0 +1,841 @@
+
+/* =====================================================
+   APLUS TUTORS — TEAM PAGE
+   Designed to match the Aplus Tutors home-page system
+   ===================================================== */
+
+:root {
+    --team-black: #050505;
+    --team-black-soft: #0c0c0c;
+    --team-card: #111111;
+    --team-crimson: #dc143c;
+    --team-crimson-dark: #a80f2e;
+    --team-crimson-light: #ff3157;
+    --team-white: #ffffff;
+    --team-off-white: #f7f7f7;
+    --team-gray: #444444;
+    --team-muted: #777777;
+    --team-border: #e7e7e7;
+    --team-transition: .35s ease;
+}
+
+/* =====================================================
+   HERO
+   ===================================================== */
+
+.team-hero {
+    min-height: 78vh;
+    padding: 150px 0 100px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    color: var(--team-white);
+    background:
+        radial-gradient(circle at 82% 25%, rgba(220,20,60,.18), transparent 30%),
+        linear-gradient(120deg, #050505 0%, #0b0b0b 55%, #15030a 100%);
+}
+
+.team-hero::before,
+.team-hero::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+}
+
+.team-hero::before {
+    width: 420px;
+    height: 420px;
+    right: -180px;
+    top: 90px;
+    border: 1px solid rgba(220,20,60,.22);
+    transform: rotate(45deg);
+}
+
+.team-hero::after {
+    width: 220px;
+    height: 220px;
+    right: 80px;
+    bottom: -130px;
+    border: 50px solid rgba(255,255,255,.025);
+    transform: rotate(45deg);
+}
+
+.team-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(5,5,5,.98), rgba(5,5,5,.82) 55%, rgba(5,5,5,.35)),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 79px,
+            rgba(255,255,255,.025) 80px
+        );
+}
+
+.team-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.team-hero-content {
+    max-width: 850px;
+}
+
+.team-hero .section-label {
+    color: #ff8da2;
+    margin-bottom: 22px;
+}
+
+.team-hero h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(3rem, 7vw, 6.2rem);
+    line-height: .98;
+    letter-spacing: -.055em;
+    margin-bottom: 30px;
+}
+
+.team-hero h1 span {
+    display: block;
+    color: var(--team-crimson);
+}
+
+.team-hero p {
+    max-width: 650px;
+    color: rgba(255,255,255,.68);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    margin-bottom: 36px;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.team-hero .btn,
+.team-cta .btn,
+.founder-content .btn {
+    min-height: 50px;
+}
+
+/* =====================================================
+   FOUNDER
+   ===================================================== */
+
+.founder-section {
+    padding: 120px 0;
+    background: var(--team-off-white);
+}
+
+.founder-grid {
+    display: grid;
+    grid-template-columns: .9fr 1.1fr;
+    gap: 90px;
+    align-items: center;
+}
+
+.founder-image {
+    position: relative;
+    padding-right: 28px;
+    padding-bottom: 28px;
+}
+
+.founder-image::before {
+    content: "";
+    position: absolute;
+    width: 105px;
+    height: 105px;
+    left: -20px;
+    top: -20px;
+    border: 8px solid var(--team-crimson);
+    z-index: 0;
+}
+
+.founder-image::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 80%;
+    height: 80%;
+    background: var(--team-black);
+    z-index: 0;
+}
+
+.founder-image img {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    min-height: 560px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 2px;
+    filter: grayscale(12%);
+}
+
+.experience-badge {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
+    min-width: 145px;
+    padding: 20px 24px;
+    background: var(--team-crimson);
+    color: white;
+    box-shadow: 0 20px 50px rgba(0,0,0,.2);
+}
+
+.experience-badge strong,
+.experience-badge span {
+    display: block;
+}
+
+.experience-badge strong {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.experience-badge span {
+    margin-top: 6px;
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: .85;
+}
+
+.founder-content .section-label {
+    margin-bottom: 10px;
+}
+
+.founder-content h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -.05em;
+    margin-bottom: 12px;
+}
+
+.founder-content h4 {
+    color: var(--team-crimson);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.founder-content > p {
+    color: var(--team-gray);
+    max-width: 620px;
+    line-height: 1.85;
+    margin-bottom: 17px;
+}
+
+.founder-highlights {
+    margin: 30px 0 34px;
+    display: grid;
+    gap: 15px;
+}
+
+.founder-highlights > div {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--team-gray);
+    font-size: .9rem;
+}
+
+.founder-highlights i {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    display: grid;
+    place-items: center;
+    background: rgba(220,20,60,.08);
+    color: var(--team-crimson);
+}
+
+/* =====================================================
+   TEAM MEMBERS
+   ===================================================== */
+
+.team-section {
+    padding: 120px 0;
+    background: white;
+}
+
+.team-section .section-heading,
+.why-team-section .section-heading {
+    margin-bottom: 60px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/*
+   These styles support dynamically generated team cards
+   from team.js without forcing a specific data structure.
+*/
+
+.team-card,
+.team-member,
+.member-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--team-off-white);
+    border: 1px solid transparent;
+    transition: var(--team-transition);
+    padding: 10px;
+}
+
+.team-card:hover,
+.team-member:hover,
+.member-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(220,20,60,.15);
+    box-shadow: 0 25px 60px rgba(0,0,0,.12);
+}
+
+.team-card img,
+.team-member img,
+.member-card img {
+    width: 100%;
+    height: 330px;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .7s ease;
+}
+
+.team-card:hover img,
+.team-member:hover img,
+.member-card:hover img {
+    transform: scale(1.05);
+}
+
+.team-card-content,
+.team-member-content,
+.member-content {
+    padding: 25px;
+}
+
+.team-card h3,
+.team-member h3,
+.member-card h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+
+.team-card .role,
+.team-member .role,
+.member-card .role,
+.team-card .member-role,
+.team-member .member-role,
+.member-card .member-role {
+    color: var(--team-crimson);
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.team-card p,
+.team-member p,
+.member-card p {
+    color: var(--team-muted);
+    font-size: .86rem;
+    line-height: 1.75;
+    margin-top: 13px;
+}
+
+.team-card .social-links,
+.team-member .social-links,
+.member-card .social-links {
+    margin-top: 18px;
+}
+
+/* Alternate common structures for team.js */
+.team-card .member-image,
+.team-member .member-image,
+.member-card .member-image {
+    overflow: hidden;
+    position: relative;
+}
+
+.team-card .member-image img,
+.team-member .member-image img,
+.member-card .member-image img {
+    display: block;
+}
+
+.team-card .member-info,
+.team-member .member-info,
+.member-card .member-info {
+    padding: 25px;
+}
+
+.team-card .member-info h3,
+.team-member .member-info h3,
+.member-card .member-info h3 {
+    margin-bottom: 5px;
+}
+
+/* =====================================================
+   WHY CHOOSE US
+   ===================================================== */
+
+.why-team-section {
+    padding: 120px 0;
+    background: var(--team-black);
+    color: white;
+}
+
+.why-team-section .section-heading > p {
+    color: #999;
+}
+
+.why-team-section .section-label {
+    color: var(--team-crimson);
+}
+
+.why-team-section .section-heading h2 {
+    color: white;
+}
+
+.why-team-section .section-heading h2 span {
+    color: var(--team-crimson);
+}
+
+.why-team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,.1);
+}
+
+.why-card {
+    min-height: 255px;
+    padding: 35px;
+    background: var(--team-black);
+    border: 1px solid rgba(255,255,255,.06);
+    transition: var(--team-transition);
+}
+
+.why-card.large {
+    grid-row: span 2;
+    min-height: 511px;
+}
+
+.why-card:hover {
+    background: var(--team-crimson);
+}
+
+.why-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 30px;
+    background: rgba(220,20,60,.14);
+    color: var(--team-crimson);
+    transition: var(--team-transition);
+}
+
+.why-card:hover .why-icon {
+    background: white;
+    color: var(--team-crimson);
+}
+
+.why-card h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.25rem;
+    margin-bottom: 13px;
+}
+
+.why-card p {
+    color: #929292;
+    font-size: .86rem;
+    line-height: 1.8;
+    max-width: 360px;
+}
+
+.why-card:hover p {
+    color: rgba(255,255,255,.82);
+}
+
+/* =====================================================
+   ACHIEVEMENTS
+   ===================================================== */
+
+.achievement-section {
+    padding: 0;
+    background: var(--team-crimson);
+    color: white;
+}
+
+.achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.achievement-item {
+    min-height: 165px;
+    padding: 35px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,.2);
+}
+
+.achievement-item:last-child {
+    border-right: none;
+}
+
+.achievement-item h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 2.3rem;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.achievement-item span {
+    font-size: .74rem;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    opacity: .8;
+}
+
+/* =====================================================
+   JOURNEY
+   ===================================================== */
+
+.journey-section {
+    padding: 120px 0;
+    background: var(--team-off-white);
+}
+
+.journey-section .section-heading {
+    margin-bottom: 70px;
+}
+
+.timeline {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 11px;
+    height: 2px;
+    background: #ddd;
+}
+
+.timeline-item {
+    position: relative;
+    z-index: 1;
+    padding-top: 45px;
+}
+
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    border: 6px solid var(--team-off-white);
+    border-radius: 50%;
+    background: var(--team-crimson);
+    box-shadow: 0 0 0 1px var(--team-crimson);
+}
+
+.timeline-item h3 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.45rem;
+    margin-bottom: 10px;
+}
+
+.timeline-item p {
+    max-width: 320px;
+    color: var(--team-gray);
+    font-size: .9rem;
+    line-height: 1.8;
+}
+
+/* =====================================================
+   CTA
+   ===================================================== */
+
+.team-cta {
+    padding: 95px 0;
+    position: relative;
+    overflow: hidden;
+    background: var(--team-crimson);
+    color: white;
+    text-align: center;
+}
+
+.team-cta::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border: 70px solid rgba(0,0,0,.08);
+    border-radius: 50%;
+    left: -180px;
+    top: -220px;
+}
+
+.team-cta::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 1px solid rgba(255,255,255,.14);
+    right: -100px;
+    bottom: -150px;
+    transform: rotate(35deg);
+}
+
+.team-cta .container {
+    position: relative;
+    z-index: 2;
+}
+
+.team-cta h2 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(2.3rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -.045em;
+    margin-bottom: 20px;
+}
+
+.team-cta h2 span {
+    display: block;
+}
+
+.team-cta p {
+    max-width: 650px;
+    margin: 0 auto 30px;
+    color: rgba(255,255,255,.8);
+    line-height: 1.8;
+}
+
+.team-cta .btn-light {
+    padding: 15px 25px;
+}
+
+/* =====================================================
+   SMALL ENHANCEMENTS
+   ===================================================== */
+
+.team-section .section-heading h2,
+.why-team-section .section-heading h2,
+.journey-section .section-heading h2 {
+    max-width: 760px;
+}
+
+.journey-section .section-heading.centered {
+    text-align: center;
+}
+
+.journey-section .section-heading.centered h2 {
+    margin-inline: auto;
+}
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 1000px) {
+    .founder-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+    }
+
+    .founder-image img {
+        min-height: 480px;
+    }
+
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-card.large {
+        grid-row: auto;
+        min-height: 255px;
+    }
+
+    .achievement-item h2 {
+        font-size: 2rem;
+    }
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 700px) {
+    .team-hero {
+        min-height: 720px;
+        padding: 135px 0 80px;
+    }
+
+    .team-hero h1 {
+        font-size: clamp(2.7rem, 14vw, 4.2rem);
+    }
+
+    .team-hero p {
+        font-size: .95rem;
+    }
+
+    .founder-section,
+    .team-section,
+    .why-team-section,
+    .journey-section {
+        padding: 80px 0;
+    }
+
+    .founder-grid {
+        grid-template-columns: 1fr;
+        gap: 55px;
+    }
+
+    .founder-image {
+        max-width: 600px;
+        margin-inline: auto;
+        padding-right: 15px;
+        padding-bottom: 15px;
+    }
+
+    .founder-image::before {
+        width: 65px;
+        height: 65px;
+        left: -8px;
+        top: -8px;
+        border-width: 5px;
+    }
+
+    .founder-image img {
+        min-height: 430px;
+    }
+
+    .experience-badge {
+        right: 5px;
+        bottom: 5px;
+    }
+
+    .team-grid,
+    .why-team-grid,
+    .timeline {
+        grid-template-columns: 1fr;
+    }
+
+    .why-card,
+    .why-card.large {
+        min-height: auto;
+    }
+
+    .achievement-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .achievement-item {
+        min-height: 135px;
+        padding: 25px 10px;
+    }
+
+    .achievement-item:nth-child(2) {
+        border-right: none;
+    }
+
+    .achievement-item:nth-child(-n+2) {
+        border-bottom: 1px solid rgba(255,255,255,.2);
+    }
+
+    .achievement-item h2 {
+        font-size: 1.8rem;
+    }
+
+    .achievement-item span {
+        font-size: .62rem;
+    }
+
+    .timeline {
+        gap: 35px;
+        padding-left: 35px;
+    }
+
+    .timeline::before {
+        left: 11px;
+        right: auto;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        height: auto;
+    }
+
+    .timeline-item {
+        padding-top: 0;
+        padding-left: 5px;
+    }
+
+    .timeline-item::before {
+        left: -35px;
+        top: 0;
+    }
+
+    .team-cta {
+        padding: 75px 0;
+    }
+}
+
+@media (max-width: 450px) {
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .team-hero .btn {
+        width: 100%;
+    }
+
+    .team-grid {
+        gap: 18px;
+    }
+
+    .team-card img,
+    .team-member img,
+    .member-card img {
+        height: 290px;
+    }
+
+    .founder-image img {
+        min-height: 380px;
+    }
+
+    .experience-badge {
+        min-width: 125px;
+        padding: 15px 17px;
+    }
+
+    .experience-badge strong {
+        font-size: 1.7rem;
+    }
+}

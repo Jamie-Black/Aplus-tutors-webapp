@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Manage subjects on the Aplus Tutors platform."
+    >
+
+    <title>Subjects | Aplus Tutors</title>
+
+
+    <!--==================================================
+    BOOTSTRAP
+    ==================================================-->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!--==================================================
+    FONT AWESOME
+    ==================================================-->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+
+    <!--==================================================
+    DASHBOARD CSS
+    ==================================================-->
+
+    <link
+        rel="stylesheet"
+        href="admin-dashboard.css"
+    >
+
+
+    <!--==================================================
+    SUBJECTS PAGE CSS
+    ==================================================-->
+
+    <link
+        rel="stylesheet"
+        href="subjects.css"
+    >
+
+</head>
+
+
+<body data-role="admin">
+
+
+    <!--==================================================
+    PAGE LOADER
+    ==================================================-->
+
+    <div id="pageLoader">
+
+        <div class="loader-content">
+
+            <div class="loader-spinner"></div>
+
+            <h3>Aplus Tutors</h3>
+
+            <p>Loading subjects page...</p>
+
+        </div>
+
+    </div>
+
+
+
+    <!--==================================================
+    OVERLAY
+    ==================================================-->
+
+    <div
+        id="overlay"
+        class="overlay"
+    ></div>
+
+
+
+    <!--==================================================
+    DASHBOARD LAYOUT
+    ==================================================-->
+
+    <div class="dashboard">
+
+
+        <!--==================================================
+        SIDEBAR
+        ==================================================-->
+
+        <aside id="sidebar"></aside>
+
+
+
+        <!--==================================================
+        MAIN CONTENT
+        ==================================================-->
+
+        <main class="main-content">
+
+
+            <!--==================================================
+            TOPBAR
+            ==================================================-->
+
+            <header id="topbar"></header>
+
+
+
+            <!--==================================================
+            SUBJECTS CONTENT
+            ==================================================-->
+
+            <section
+                id="subjectsContent"
+                class="page-content subjects-page"
+            >
+
+
+                <!--==================================================
+                PAGE HEADER
+                ==================================================-->
+
+                <div class="subjects-page-header">
+
+                    <div class="subjects-page-title">
+
+                        <span class="subjects-eyebrow">
+                            Academic Management
+                        </span>
+
+                        <h1>
+                            Subjects
+                        </h1>
+
+                        <p>
+                            Manage the subjects available on Aplus Tutors.
+                        </p>
+
+                    </div>
+
+
+                    <!--
+                    Add Subject button will be activated
+                    in a later phase.
+                    -->
+
+                    <button
+                        type="button"
+                        id="addSubjectBtn"
+                        class="btn btn-primary subjects-add-btn"
+                    >
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        <span>
+                            Add Subject
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!--==================================================
+                SUBJECT STATISTICS
+                ==================================================-->
+
+                <div class="row g-3 subjects-statistics">
+
+
+                    <!-- TOTAL SUBJECTS -->
+
+                    <div class="col-12 col-md-4">
+
+                        <div class="subject-stat-card">
+
+                            <div class="subject-stat-icon">
+
+                                <i class="fa-solid fa-book"></i>
+
+                            </div>
+
+                            <div class="subject-stat-content">
+
+                                <span class="subject-stat-label">
+                                    Total Subjects
+                                </span>
+
+                                <strong id="totalSubjects">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ACTIVE SUBJECTS -->
+
+                    <div class="col-12 col-md-4">
+
+                        <div class="subject-stat-card">
+
+                            <div class="subject-stat-icon active">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                            </div>
+
+                            <div class="subject-stat-content">
+
+                                <span class="subject-stat-label">
+                                    Active Subjects
+                                </span>
+
+                                <strong id="activeSubjects">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- INACTIVE SUBJECTS -->
+
+                    <div class="col-12 col-md-4">
+
+                        <div class="subject-stat-card">
+
+                            <div class="subject-stat-icon inactive">
+
+                                <i class="fa-solid fa-circle-pause"></i>
+
+                            </div>
+
+                            <div class="subject-stat-content">
+
+                                <span class="subject-stat-label">
+                                    Inactive Subjects
+                                </span>
+
+                                <strong id="inactiveSubjects">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!--==================================================
+                SUBJECTS LIST
+                ==================================================-->
+
+                <div class="subjects-list-section">
+
+
+                    <!-- SECTION HEADER -->
+
+                    <div class="subjects-section-header">
+
+                        <div>
+
+                            <span class="subjects-section-eyebrow">
+                                Subject Directory
+                            </span>
+
+                            <h2>
+                                All Subjects
+                            </h2>
+
+                            <p>
+                                View and manage subjects registered
+                                in the Aplus Tutors system.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!--==================================================
+                    SUBJECTS GRID
+                    ==================================================-->
+
+                    <div
+                        id="subjectsGrid"
+                        class="row g-4"
+                    >
+
+                        <!--
+                        Subject cards will be generated
+                        here by subjects.js.
+                        -->
+
+
+                        <!-- INITIAL LOADING STATE -->
+
+                        <div class="col-12">
+
+                            <div class="subjects-state">
+
+                                <div class="subjects-state-icon">
+
+                                    <i class="fa-solid fa-spinner fa-spin"></i>
+
+                                </div>
+
+                                <h3>
+                                    Loading subjects...
+                                </h3>
+
+                                <p>
+                                    Please wait while we load the
+                                    subjects.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+
+
+<!--==================================================
+PHASE 2A
+SUBJECT MANAGEMENT MODALS
+==================================================--><!--==================================================
+ADD SUBJECT MODAL
+==================================================--><div
+    class="modal fade"
+    id="addSubjectModal"
+    tabindex="-1"
+    aria-labelledby="addSubjectModalLabel"
+    aria-hidden="true"
+><div class="modal-dialog modal-dialog-centered modal-lg">
+
+    <div class="modal-content subject-modal">
+
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="subject-modal-eyebrow">
+                    Academic Management
+                </span>
+
+                <h5
+                    class="modal-title"
+                    id="addSubjectModalLabel"
+                >
+                    Add New Subject
+                </h5>
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+
+        </div>
+
+
+
+        <!-- MODAL BODY -->
+
+        <div class="modal-body">
+
+            <form id="addSubjectForm" novalidate>
+
+
+                <!-- SUBJECT NAME -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="subjectName"
+                        class="form-label"
+                    >
+                        Subject Name
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="subjectName"
+                        name="name"
+                        class="form-control"
+                        placeholder="e.g. Mathematics"
+                        maxlength="100"
+                        required
+                    >
+
+                    <div class="invalid-feedback">
+                        Please enter the subject name.
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUBJECT CODE -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="subjectCode"
+                        class="form-label"
+                    >
+                        Subject Code
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="subjectCode"
+                        name="code"
+                        class="form-control"
+                        placeholder="e.g. MATH"
+                        maxlength="20"
+                        required
+                    >
+
+                    <div class="form-text">
+                        Use a short unique code for the subject.
+                    </div>
+
+                    <div class="invalid-feedback">
+                        Please enter the subject code.
+                    </div>
+
+                </div>
+                
+                <!-- DEPARTMENT -->
+<div class="mb-3">
+    <label for="subjectDepartment" class="form-label">
+        Department
+        <span class="text-danger">*</span>
+    </label>
+    <select id="subjectDepartment" name="department" class="form-select" required>
+        <option value="" disabled selected>Select Department</option>
+        <option value="Science">Science</option>
+        <option value="Commercial">Commercial</option>
+        <option value="Arts">Arts</option>
+        <option value="General">General</option>
+    </select>
+    <div class="invalid-feedback">
+        Please select a department.
+    </div>
+</div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="subjectDescription"
+                        class="form-label"
+                    >
+                        Description
+                    </label>
+
+                    <textarea
+                        id="subjectDescription"
+                        name="description"
+                        class="form-control"
+                        rows="4"
+                        maxlength="500"
+                        placeholder="Brief description of the subject..."
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- STATUS -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="subjectStatus"
+                        class="form-label"
+                    >
+                        Status
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <select
+                        id="subjectStatus"
+                        name="status"
+                        class="form-select"
+                        required
+                    >
+
+                        <option value="active" selected>
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+
+
+        <!-- MODAL FOOTER -->
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="submit"
+                form="addSubjectForm"
+                id="saveSubjectBtn"
+                class="btn btn-primary"
+            >
+
+                <i class="fa-solid fa-plus"></i>
+
+                <span>
+                    Add Subject
+                </span>
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</div><!--==================================================
+VIEW SUBJECT MODAL
+==================================================--><div
+    class="modal fade"
+    id="viewSubjectModal"
+    tabindex="-1"
+    aria-labelledby="viewSubjectModalLabel"
+    aria-hidden="true"
+><div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content subject-modal">
+
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="subject-modal-eyebrow">
+                    Subject Details
+                </span>
+
+                <h5
+                    class="modal-title"
+                    id="viewSubjectModalLabel"
+                >
+                    View Subject
+                </h5>
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+
+        </div>
+
+
+
+        <!-- MODAL BODY -->
+
+        <div class="modal-body">
+
+
+            <!-- SUBJECT ICON / NAME -->
+
+            <div class="view-subject-heading">
+
+                <div class="view-subject-icon">
+
+                    <i class="fa-solid fa-book-open"></i>
+
+                </div>
+
+                <div>
+
+                    <h3 id="viewSubjectName">
+                        —
+                    </h3>
+
+                    <span id="viewSubjectCode">
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div class="view-subject-row">
+
+                <span class="view-subject-label">
+                    Status
+                </span>
+
+                <span
+                    id="viewSubjectStatus"
+                    class="subject-status"
+                >
+                    —
+                </span>
+
+            </div>
+
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="view-subject-detail">
+
+                <span class="view-subject-label">
+                    Description
+                </span>
+
+                <p id="viewSubjectDescription">
+                    —
+                </p>
+
+            </div>
+
+
+
+            <!-- CREATED DATE -->
+
+            <div class="view-subject-row">
+
+                <span class="view-subject-label">
+                    Created
+                </span>
+
+                <span id="viewSubjectCreated">
+                    —
+                </span>
+
+            </div>
+
+
+
+            <!-- UPDATED DATE -->
+
+            <div class="view-subject-row">
+
+                <span class="view-subject-label">
+                    Last Updated
+                </span>
+
+                <span id="viewSubjectUpdated">
+                    —
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- MODAL FOOTER -->
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+            >
+                Close
+            </button>
+
+            <button
+                type="button"
+                id="viewEditSubjectBtn"
+                class="btn btn-primary"
+            >
+
+                <i class="fa-solid fa-pen"></i>
+
+                Edit Subject
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</div><!--==================================================
+EDIT SUBJECT MODAL
+==================================================--><div
+    class="modal fade"
+    id="editSubjectModal"
+    tabindex="-1"
+    aria-labelledby="editSubjectModalLabel"
+    aria-hidden="true"
+><div class="modal-dialog modal-dialog-centered modal-lg">
+
+    <div class="modal-content subject-modal">
+
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="subject-modal-eyebrow">
+                    Academic Management
+                </span>
+
+                <h5
+                    class="modal-title"
+                    id="editSubjectModalLabel"
+                >
+                    Edit Subject
+                </h5>
+
+            </div>
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+
+        </div>
+
+
+
+        <!-- MODAL BODY -->
+
+        <div class="modal-body">
+
+            <form id="editSubjectForm" novalidate>
+
+
+                <!-- HIDDEN SUBJECT ID -->
+
+                <input
+                    type="hidden"
+                    id="editSubjectId"
+                    name="subjectId"
+                >
+
+
+
+                <!-- SUBJECT NAME -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="editSubjectName"
+                        class="form-label"
+                    >
+                        Subject Name
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editSubjectName"
+                        name="name"
+                        class="form-control"
+                        maxlength="100"
+                        required
+                    >
+
+                    <div class="invalid-feedback">
+                        Please enter the subject name.
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUBJECT CODE -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="editSubjectCode"
+                        class="form-label"
+                    >
+                        Subject Code
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editSubjectCode"
+                        name="code"
+                        class="form-control"
+                        maxlength="20"
+                        required
+                    >
+
+                    <div class="invalid-feedback">
+                        Please enter the subject code.
+                    </div>
+
+                </div>
+                
+                <!-- DEPARTMENT -->
+<div class="mb-3">
+    <label for="editSubjectDepartment" class="form-label">
+        Department
+        <span class="text-danger">*</span>
+    </label>
+    <select id="editSubjectDepartment" name="department" class="form-select" required>
+        <option value="Science">Science</option>
+        <option value="Commercial">Commercial</option>
+        <option value="Arts">Arts</option>
+        <option value="General">General</option>
+    </select>
+    <div class="invalid-feedback">
+        Please select a department.
+    </div>
+</div>
+
+                <!-- DESCRIPTION -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="editSubjectDescription"
+                        class="form-label"
+                    >
+                        Description
+                    </label>
+
+                    <textarea
+                        id="editSubjectDescription"
+                        name="description"
+                        class="form-control"
+                        rows="4"
+                        maxlength="500"
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- STATUS -->
+
+                <div class="mb-3">
+
+                    <label
+                        for="editSubjectStatus"
+                        class="form-label"
+                    >
+                        Status
+                        <span class="text-danger">*</span>
+                    </label>
+
+                    <select
+                        id="editSubjectStatus"
+                        name="status"
+                        class="form-select"
+                        required
+                    >
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+
+
+        <!-- MODAL FOOTER -->
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="submit"
+                form="editSubjectForm"
+                id="updateSubjectBtn"
+                class="btn btn-primary"
+            >
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                <span>
+                    Save Changes
+                </span>
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</div><!--==================================================
+ACTIVATE / DEACTIVATE CONFIRMATION MODAL
+==================================================--><div
+    class="modal fade"
+    id="subjectStatusModal"
+    tabindex="-1"
+    aria-labelledby="subjectStatusModalLabel"
+    aria-hidden="true"
+><div class="modal-dialog modal-dialog-centered modal-sm">
+
+    <div class="modal-content subject-modal">
+
+
+        <!-- MODAL BODY -->
+
+        <div class="modal-body text-center p-4">
+
+
+            <!-- ICON -->
+
+            <div
+                id="subjectStatusModalIcon"
+                class="subject-confirm-icon"
+            >
+
+                <i class="fa-solid fa-circle-question"></i>
+
+            </div>
+
+
+
+            <!-- TITLE -->
+
+            <h5
+                id="subjectStatusModalLabel"
+                class="mt-3"
+            >
+                Change Subject Status?
+            </h5>
+
+
+
+            <!-- MESSAGE -->
+
+            <p
+                id="subjectStatusModalMessage"
+                class="text-muted"
+            >
+                Are you sure you want to change this
+                subject's status?
+            </p>
+
+
+
+            <!-- HIDDEN SUBJECT ID -->
+
+            <input
+                type="hidden"
+                id="statusSubjectId"
+            >
+
+
+
+            <!-- HIDDEN NEW STATUS -->
+
+            <input
+                type="hidden"
+                id="statusSubjectValue"
+            >
+
+
+        </div>
+
+
+
+        <!-- MODAL FOOTER -->
+
+        <div class="modal-footer justify-content-center">
+
+            <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="confirmSubjectStatusBtn"
+                class="btn btn-primary"
+            >
+
+                <i class="fa-solid fa-check"></i>
+
+                Confirm
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</div>
+<!--==================================================
+END PHASE 2A
+==================================================-->
+
+    <!--==================================================
+    JAVASCRIPT
+    ==================================================-->
+
+
+    <!-- Appwrite SDK -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"
+    ></script>
+
+
+
+    <!-- Bootstrap -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+
+    <!-- Chart.js -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/chart.js"
+    ></script>
+
+
+
+    <!-- Appwrite Configuration -->
+
+    <script
+        src="appwrite.js"
+    ></script>
+
+
+
+    <!-- Authentication Guard -->
+
+    <script
+        src="guard.js"
+    ></script>
+
+
+
+    <!-- Admin Dashboard -->
+
+    <script
+        src="admin-dashboard.js"
+    ></script>
+
+
+
+    <!-- Subjects JavaScript -->
+
+    <script
+        src="subjects.js"
+    ></script>
+
+
+</body>
+
+</html>

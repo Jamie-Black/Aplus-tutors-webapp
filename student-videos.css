@@ -1,0 +1,1374 @@
+/* =========================================================
+   APLUS TUTORS
+   STUDENT VIDEO LESSONS
+
+   PHASE 1
+   FOUNDATION STYLES
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.videos-page-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 28px;
+
+}
+
+
+.videos-page-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+}
+
+
+.videos-page-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    flex: 0 0 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #b00020;
+
+    color: #ffffff;
+
+    font-size: 21px;
+
+}
+
+
+.videos-page-heading h1 {
+
+    margin: 0 0 5px;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    color: #111111;
+
+    letter-spacing: -0.5px;
+
+}
+
+
+.videos-page-heading p {
+
+    margin: 0;
+
+    color: #666666;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   SUBJECT FILTER
+   ========================================================= */
+
+.videos-filter-wrapper {
+
+    flex-shrink: 0;
+
+}
+
+
+.videos-subject-filter {
+
+    min-width: 190px;
+
+    height: 44px;
+
+    padding: 0 38px 0 14px;
+
+    border: 1px solid #dddddd;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #222222;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    outline: none;
+
+    cursor: pointer;
+
+}
+
+
+.videos-subject-filter:focus {
+
+    border-color: #b00020;
+
+    box-shadow: 0 0 0 3px rgba(176, 0, 32, 0.08);
+
+}
+
+
+/* =========================================================
+   PAGE MESSAGE
+   ========================================================= */
+
+.video-page-message {
+
+    padding: 12px 15px;
+
+    margin-bottom: 20px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+}
+
+
+.video-page-message.error {
+
+    background: #fff0f2;
+
+    border: 1px solid #f1b5bf;
+
+    color: #9b001c;
+
+}
+
+
+.video-page-message.success {
+
+    background: #edf9f1;
+
+    border: 1px solid #b8dfc4;
+
+    color: #176b2d;
+
+}
+
+
+.video-page-message.info {
+
+    background: #f3f4f6;
+
+    border: 1px solid #dddddd;
+
+    color: #444444;
+
+}
+
+
+/* =========================================================
+   VIDEO COUNT
+   ========================================================= */
+
+.video-lesson-count {
+
+    margin-bottom: 16px;
+
+    color: #777777;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   VIDEO GRID
+   ========================================================= */
+
+.student-video-lessons {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(
+                280px,
+                1fr
+            )
+        );
+
+    gap: 22px;
+
+}
+
+
+/* =========================================================
+   VIDEO CARD
+   ========================================================= */
+
+.student-video-card {
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e8e8e8;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 16px
+        rgba(0, 0, 0, 0.05);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.student-video-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, 0.09);
+
+}
+
+
+/* =========================================================
+   THUMBNAIL
+   ========================================================= */
+
+.student-video-thumbnail {
+
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    overflow: hidden;
+
+    background: #111111;
+
+}
+
+
+.student-video-thumbnail-image {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+}
+
+
+.student-video-placeholder {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #151515;
+
+    color: #b00020;
+
+    font-size: 44px;
+
+}
+
+
+/* =========================================================
+   PLAY OVERLAY
+   ========================================================= */
+
+.student-video-play {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    border-radius: 50%;
+
+    background: #b00020;
+
+    color: #ffffff;
+
+    font-size: 16px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0, 0, 0, 0.25);
+
+}
+
+
+.student-video-play i {
+
+    margin-left: 2px;
+
+}
+
+
+/* =========================================================
+   LESSON NUMBER
+   ========================================================= */
+
+.student-video-lesson-number {
+
+    position: absolute;
+
+    left: 10px;
+
+    bottom: 10px;
+
+    padding: 5px 8px;
+
+    border-radius: 6px;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.72
+        );
+
+    color: #ffffff;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.student-video-card-content {
+
+    padding: 17px;
+
+}
+
+
+.student-video-meta {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-bottom: 9px;
+
+}
+
+
+.student-video-meta span {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 4px 7px;
+
+    border-radius: 5px;
+
+    background: #f5f5f5;
+
+    color: #666666;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+}
+
+
+.student-video-title {
+
+    margin: 0 0 8px;
+
+    color: #151515;
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    line-height: 1.35;
+
+}
+
+
+.student-video-description {
+
+    display: -webkit-box;
+
+    margin: 0 0 17px;
+
+    overflow: hidden;
+
+    color: #6a6a6a;
+
+    font-size: 13px;
+
+    line-height: 1.55;
+
+    -webkit-line-clamp: 3;
+
+    -webkit-box-orient: vertical;
+
+}
+
+
+/* =========================================================
+   WATCH BUTTON
+   ========================================================= */
+
+.student-watch-video-btn {
+
+    width: 100%;
+
+    min-height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: #b00020;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.student-watch-video-btn:hover {
+
+    background: #92001b;
+
+}
+
+
+.student-watch-video-btn:active {
+
+    transform:
+        scale(0.98);
+
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.student-video-loading {
+
+    min-height: 260px;
+
+    grid-column: 1 / -1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    color: #777777;
+
+}
+
+
+.student-video-loading p {
+
+    margin: 0;
+
+    font-size: 14px;
+
+}
+
+
+.video-loading-spinner {
+
+    width: 34px;
+
+    height: 34px;
+
+    border: 3px solid #eeeeee;
+
+    border-top-color: #b00020;
+
+    border-radius: 50%;
+
+    animation:
+        studentVideoSpin
+        0.8s linear infinite;
+
+}
+
+
+@keyframes studentVideoSpin {
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.student-video-empty {
+
+    min-height: 300px;
+
+    grid-column: 1 / -1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 35px 20px;
+
+    text-align: center;
+
+    border: 1px dashed #dddddd;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+}
+
+
+.student-video-empty-icon {
+
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-bottom: 15px;
+
+    border-radius: 50%;
+
+    background: #fff0f2;
+
+    color: #b00020;
+
+    font-size: 21px;
+
+}
+
+
+.student-video-empty h2 {
+
+    margin: 0 0 7px;
+
+    color: #222222;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+}
+
+
+.student-video-empty p {
+
+    max-width: 430px;
+
+    margin: 0;
+
+    color: #777777;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   RETRY BUTTON
+   ========================================================= */
+
+.student-video-retry-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 18px;
+
+    padding: 10px 16px;
+
+    border: 0;
+
+    border-radius: 7px;
+
+    background: #b00020;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+}
+
+
+.student-video-retry-btn:hover {
+
+    background: #92001b;
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    .videos-page-header {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+        gap: 16px;
+
+    }
+
+
+    .videos-page-heading {
+
+        align-items: flex-start;
+
+    }
+
+
+    .videos-page-icon {
+
+        width: 44px;
+
+        height: 44px;
+
+        flex-basis: 44px;
+
+        border-radius: 11px;
+
+        font-size: 18px;
+
+    }
+
+
+    .videos-page-heading h1 {
+
+        font-size: 23px;
+
+    }
+
+
+    .videos-page-heading p {
+
+        font-size: 13px;
+
+    }
+
+
+    .videos-filter-wrapper {
+
+        width: 100%;
+
+    }
+
+
+    .videos-subject-filter {
+
+        width: 100%;
+
+    }
+
+
+    .student-video-lessons {
+
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+
+    }
+
+
+    .student-video-card-content {
+
+        padding: 15px;
+
+    }
+
+
+    .student-video-title {
+
+        font-size: 16px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+    .videos-page-heading {
+
+        gap: 11px;
+
+    }
+
+
+    .videos-page-icon {
+
+        width: 40px;
+
+        height: 40px;
+
+        flex-basis: 40px;
+
+    }
+
+
+    .videos-page-heading h1 {
+
+        font-size: 21px;
+
+    }
+
+
+    .videos-page-heading p {
+
+        font-size: 12px;
+
+    }
+
+}
+
+
+
+
+/* =========================================================
+   PHASE 2
+   STUDENT VIDEO PLAYER
+   ========================================================= */
+
+
+/* =========================================================
+   PREVENT BACKGROUND SCROLL
+   ========================================================= */
+
+body.student-video-player-open {
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   PLAYER CONTAINER
+   ========================================================= */
+
+.student-video-player {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+
+}
+
+
+.student-video-player.visible {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+/* =========================================================
+   BACKDROP
+   ========================================================= */
+
+.student-video-player-backdrop {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.82
+        );
+
+}
+
+
+/* =========================================================
+   PLAYER DIALOG
+   ========================================================= */
+
+.student-video-player-dialog {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: min(
+        100%,
+        1050px
+    );
+
+    max-height: calc(
+        100vh - 40px
+    );
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(
+            0,
+            0,
+            0,
+            0.35
+        );
+
+    transform:
+        translateY(15px)
+        scale(0.98);
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+
+.student-video-player.visible
+.student-video-player-dialog {
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+
+/* =========================================================
+   PLAYER HEADER
+   ========================================================= */
+
+.student-video-player-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 16px 20px;
+
+    border-bottom:
+        1px solid #eeeeee;
+
+    background: #ffffff;
+
+}
+
+
+.student-video-player-heading {
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.student-video-player-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #b00020;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+}
+
+
+.student-video-player-label {
+
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #888888;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.7px;
+
+}
+
+
+.student-video-player-heading h2 {
+
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #171717;
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    line-height: 1.35;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.student-video-player-close {
+
+    width: 40px;
+
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 0;
+
+    border-radius: 9px;
+
+    background: #f4f4f4;
+
+    color: #333333;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+
+}
+
+
+.student-video-player-close:hover {
+
+    background: #b00020;
+
+    color: #ffffff;
+
+}
+
+
+/* =========================================================
+   VIDEO AREA
+   ========================================================= */
+
+.student-video-player-video-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+    background: #000000;
+
+}
+
+
+.student-video-element {
+
+    width: 100%;
+
+    max-height: 68vh;
+
+    display: block;
+
+    background: #000000;
+
+}
+
+
+/* =========================================================
+   PLAYER INFORMATION
+   ========================================================= */
+
+.student-video-player-information {
+
+    padding: 20px;
+
+    background: #ffffff;
+
+}
+
+
+/* =========================================================
+   META
+   ========================================================= */
+
+.student-video-player-meta {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 16px;
+
+}
+
+
+.student-video-player-meta span {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 9px;
+
+    border-radius: 6px;
+
+    background: #f5f5f5;
+
+    color: #555555;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+.student-video-player-meta i {
+
+    color: #b00020;
+
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.student-video-player-description h3 {
+
+    margin: 0 0 7px;
+
+    color: #222222;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+}
+
+
+.student-video-player-description p {
+
+    max-width: 850px;
+
+    margin: 0;
+
+    color: #666666;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+
+}
+
+
+/* =========================================================
+   MOBILE PLAYER
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    .student-video-player {
+
+        padding: 0;
+
+        align-items: stretch;
+
+    }
+
+
+    .student-video-player-dialog {
+
+        width: 100%;
+
+        height: 100%;
+
+        max-height: 100%;
+
+        border-radius: 0;
+
+    }
+
+
+    .student-video-player-header {
+
+        padding: 13px 14px;
+
+    }
+
+
+    .student-video-player-icon {
+
+        width: 36px;
+
+        height: 36px;
+
+        flex-basis: 36px;
+
+    }
+
+
+    .student-video-player-heading h2 {
+
+        max-width: 220px;
+
+        font-size: 15px;
+
+    }
+
+
+    .student-video-player-close {
+
+        width: 36px;
+
+        height: 36px;
+
+        flex-basis: 36px;
+
+    }
+
+
+    .student-video-element {
+
+        max-height: none;
+
+    }
+
+
+    .student-video-player-information {
+
+        padding: 16px;
+
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .student-video-player-heading h2 {
+
+        max-width: 170px;
+
+        font-size: 14px;
+
+    }
+
+
+    .student-video-player-meta {
+
+        gap: 5px;
+
+    }
+
+
+    .student-video-player-meta span {
+
+        font-size: 10px;
+
+        padding: 5px 7px;
+
+    }
+
+}

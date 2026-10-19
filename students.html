@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Students | Aplus Tutors</title>
+
+    <link
+        rel="stylesheet"
+        href="admin-dashboard.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="students.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+</head>
+
+<body data-role="admin">
+
+    <!-- Overlay -->
+
+    <div
+        class="overlay"
+        id="overlay"
+    ></div>
+
+
+    <!-- Dashboard -->
+
+    <div class="dashboard">
+
+        <aside id="sidebar"></aside>
+
+        <main class="main-content">
+
+            <header id="topbar"></header>
+
+            <section
+                class="page-content"
+                id="studentsPage"
+            >
+
+                <!-- Page Header -->
+
+                <div class="page-header">
+
+                    <div>
+
+                        <h2>
+
+                            Student Management
+
+                        </h2>
+
+                        <p>
+
+                            Manage registered students,
+                            activate accounts,
+                            suspend,
+                            edit and delete.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Summary Cards -->
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-users"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3 id="totalStudents">
+
+                                0
+
+                            </h3>
+
+                            <span>
+
+                                Registered
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-clock"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3 id="pendingStudents">
+
+                                0
+
+                            </h3>
+
+                            <span>
+
+                                Pending
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-circle-check"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3 id="activeStudents">
+
+                                0
+
+                            </h3>
+
+                            <span>
+
+                                Active
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+
+                            <i class="fa-solid fa-ban"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3 id="suspendedStudents">
+
+                                0
+
+                            </h3>
+
+                            <span>
+
+                                Suspended
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Search -->
+
+                <div class="toolbar">
+
+                    <div class="search-box">
+
+                        <i class="fa-solid fa-search"></i>
+
+                        <input
+                            id="studentSearch"
+                            type="text"
+                            placeholder="Search name, email or phone..."
+                        >
+
+                    </div>
+
+                    <select id="departmentFilter">
+
+                        <option value="">
+
+                            All Departments
+
+                        </option>
+
+                        <option>
+
+                            Science
+
+                        </option>
+
+                        <option>
+
+                            Commercial
+
+                        </option>
+
+                        <option>
+
+                            Arts
+
+                        </option>
+
+                    </select>
+
+                    <select id="statusFilter">
+
+                        <option value="">
+
+                            All Status
+
+                        </option>
+
+                        <option value="pending">
+
+                            Pending
+
+                        </option>
+
+                        <option value="active">
+
+                            Active
+
+                        </option>
+
+                        <option value="suspended">
+
+                            Suspended
+
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Tabs -->
+
+                <div class="student-tabs">
+
+                    <button
+                        class="tab-btn active"
+                        data-tab="all"
+                    >
+
+                        All Students
+
+                    </button>
+
+                    <button
+                        class="tab-btn"
+                        data-tab="pending"
+                    >
+
+                        Pending
+
+                    </button>
+
+                    <button
+                        class="tab-btn"
+                        data-tab="active"
+                    >
+
+                        Active
+
+                    </button>
+
+                    <button
+                        class="tab-btn"
+                        data-tab="suspended"
+                    >
+
+                        Suspended
+
+                    </button>
+
+                </div>
+
+
+                <!-- Bulk Action -->
+
+                <div
+                    class="bulk-bar"
+                    id="bulkBar"
+                >
+
+                    <button id="activateSelected">
+
+                        Activate
+
+                    </button>
+
+                    <button id="suspendSelected">
+
+                        Suspend
+
+                    </button>
+
+                    <button id="deleteSelected">
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+
+                <!-- Student Table -->
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+
+                                    <input
+                                        type="checkbox"
+                                        id="selectAll"
+                                    >
+
+                                </th>
+
+                                <th>
+
+                                    Student
+
+                                </th>
+
+                                <th>
+
+                                    Email
+
+                                </th>
+
+                                <th>
+
+                                    Phone
+
+                                </th>
+
+                                <th>
+
+                                    Department
+
+                                </th>
+
+                                <th>
+
+                                    Status
+
+                                </th>
+
+                                <th>
+
+                                    Actions
+
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="studentsTable">
+
+                            <tr>
+
+                                <td
+                                    colspan="7"
+                                    class="empty-state"
+                                >
+
+                                    Loading students...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- Pagination -->
+
+                <div id="pagination"></div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- ==================================================
+     VIEW STUDENT MODAL
+================================================== --><div
+    class="modal student-modal"
+    id="viewStudentModal"
+    aria-hidden="true"
+><div class="student-modal-dialog">
+
+    <div class="student-modal-header">
+
+        <div>
+            <span class="student-modal-eyebrow">
+                Student Management
+            </span>
+
+            <h3>Student Profile</h3>
+        </div>
+
+        <button
+            type="button"
+            class="student-modal-close"
+            id="closeViewModal"
+            aria-label="Close student profile"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+    </div>
+
+
+    <div class="student-modal-body">
+
+        <div class="student-profile-heading">
+
+            <img
+                id="viewPhoto"
+                src="assets/Screenshot_20260806-223602.png"
+                alt="Student photo"
+                class="student-profile-photo"
+            >
+
+            <div class="student-profile-identity">
+
+                <h4 id="viewName">
+                    Student Name
+                </h4>
+
+                <p id="viewEmail">
+                    student@example.com
+                </p>
+
+                <span
+                    id="viewStatus"
+                    class="student-profile-status"
+                >
+                    pending
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="student-details-list">
+
+            <div class="student-detail-row">
+
+                <span class="student-detail-label">
+                    Phone Number
+                </span>
+
+                <span
+                    class="student-detail-value"
+                    id="viewPhone"
+                >
+                    Not provided
+                </span>
+
+            </div>
+
+
+            <div class="student-detail-row">
+
+                <span class="student-detail-label">
+                    Department
+                </span>
+
+                <span
+                    class="student-detail-value"
+                    id="viewDepartment"
+                >
+                    Not assigned
+                </span>
+
+            </div>
+
+
+            <div class="student-detail-row">
+
+                <span class="student-detail-label">
+                    Appwrite Row ID
+                </span>
+
+                <span
+                    class="student-detail-value student-id-value"
+                    id="viewUserId"
+                >
+                    Not available
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="student-modal-footer">
+
+        <button
+            type="button"
+            class="student-btn student-btn-light"
+            id="closeViewModalFooter"
+        >
+            Close
+        </button>
+
+        <button
+            type="button"
+            class="student-btn student-btn-primary"
+            id="editFromViewBtn"
+        >
+            <i class="fa-solid fa-pen-to-square"></i>
+            Edit Student
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+
+    <!-- ==================================================
+     EDIT STUDENT MODAL
+================================================== --><div
+    class="modal student-modal"
+    id="editStudentModal"
+    aria-hidden="true"
+>
+    
+    
+    <div class="student-modal-dialog">
+        
+    <div
+    id="editStudentMessage"
+    class="student-form-message"
+    role="status"
+    aria-live="polite"
+></div>
+
+    <form id="editStudentForm">
+
+        <div class="student-modal-header">
+
+            <div>
+                <span class="student-modal-eyebrow">
+                    Student Management
+                </span>
+
+                <h3>Edit Student</h3>
+
+                <p>
+                    Update the student's information below.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="student-modal-close"
+                id="closeEditModal"
+                aria-label="Close edit form"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="student-modal-body">
+
+            <input
+                type="hidden"
+                id="editRowId"
+            >
+
+
+            <div class="student-form-group">
+
+                <label for="editFullName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="editFullName"
+                    class="student-form-control"
+                    placeholder="Enter student's full name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="student-form-group">
+
+                <label for="editEmail">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="editEmail"
+                    class="student-form-control"
+                    placeholder="Enter email address"
+                    required
+                >
+
+            </div>
+
+
+            <div class="student-form-group">
+
+                <label for="editPhone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="editPhone"
+                    class="student-form-control"
+                    placeholder="Enter phone number"
+                >
+
+            </div>
+
+
+            <div class="student-form-group">
+
+                <label for="editDepartment">
+                    Department
+                </label>
+
+                <select
+                    id="editDepartment"
+                    class="student-form-control"
+                    required
+                >
+
+                    <option value="">
+                        Select department
+                    </option>
+
+                    <option value="Science">
+                        Science
+                    </option>
+
+                    <option value="Sciences">
+                        Sciences
+                    </option>
+
+                    <option value="Commercial">
+                        Commercial
+                    </option>
+
+                    <option value="Arts">
+                        Arts
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="student-form-group">
+
+                <label for="editStatus">
+                    Account Status
+                </label>
+
+                <select
+                    id="editStatus"
+                    class="student-form-control"
+                    required
+                >
+
+                    <option value="pending">
+                        Pending
+                    </option>
+
+                    <option value="active">
+                        Active
+                    </option>
+
+                    <option value="suspended">
+                        Suspended
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                id="editStudentMessage"
+                class="student-form-message"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+        </div>
+
+
+        <div class="student-modal-footer">
+
+            <button
+                type="button"
+                class="student-btn student-btn-light"
+                id="cancelEditModal"
+            >
+                Cancel
+            </button>
+
+            <button
+    type="submit"
+    id="saveStudentBtn"
+    class="btn btn-primary"
+>
+    <i class="fa-solid fa-floppy-disk"></i>
+    <span>Save Changes</span>
+</button>
+
+        </div>
+
+    </form>
+
+</div>
+
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"></script>
+
+    <script src="appwrite.js"></script>
+
+    <script src="guard.js"></script>
+
+    <script src="admin-dashboard.js"></script>
+
+    <script src="students.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Aplus Tutors Student Dashboard - Learn, practice, test yourself and track your progress."
+    >
+
+    <meta
+        name="theme-color"
+        content="#b00020"
+    >
+
+    <title>Student Progress | Aplus Tutors</title>
+
+
+    <!-- ==================================================
+         GOOGLE FONT
+    =================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- ==================================================
+         FONT AWESOME
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+
+    <!-- ==================================================
+         BOOTSTRAP
+    =================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- ==================================================
+         STUDENT DASHBOARD CSS
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="student-dashboard.css"
+    >
+
+
+    <!-- ==================================================
+         STUDENT SUBJECTS CSS
+    =================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="student-progress.css"
+    >
+
+</head>
+
+
+<body data-role="student">
+
+
+    <!-- ==================================================
+         PAGE LOADER
+    =================================================== -->
+
+    <div
+        id="pageLoader"
+        class="page-loader"
+    >
+
+        <div class="loader-wrapper">
+
+            <div class="loader"></div>
+
+            <div class="loader-brand">
+                Aplus Tutors
+            </div>
+
+            <p>
+                Loading your progress page...
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         MOBILE SIDEBAR OVERLAY
+    =================================================== -->
+
+    <div
+        id="overlay"
+        class="overlay"
+    ></div>
+
+
+
+    <!-- ==================================================
+         DASHBOARD APP
+    =================================================== -->
+
+    <div class="dashboard-app">
+
+
+        <!-- ==================================================
+             SIDEBAR
+        =================================================== -->
+
+        <aside
+            id="sidebar"
+            class="sidebar"
+        >
+
+            <!--
+                The sidebar content is generated
+                by student-dashboard.js
+            -->
+
+        </aside>
+
+
+
+        <!-- ==================================================
+             MAIN AREA
+        =================================================== -->
+
+        <div class="dashboard-main">
+
+
+            <!-- ==================================================
+                 TOP NAVIGATION
+            =================================================== -->
+
+            <header
+                id="topbar"
+                class="topbar"
+            >
+
+                <!--
+                    The topbar is generated
+                    by student-dashboard.js
+                -->
+
+            </header>
+
+
+
+            <!-- ==================================================
+                 PAGE CONTENT
+            =================================================== -->
+
+<main class="dashboard-content student-progress-page">
+
+    <!-- ================================================
+         PAGE HEADER
+    ================================================= -->
+
+    <section class="progress-page-header">
+
+        <div class="progress-header-text">
+
+            <span class="progress-eyebrow">
+                <i class="fa-solid fa-chart-line"></i>
+                YOUR LEARNING JOURNEY
+            </span>
+
+            <h1>My Progress</h1>
+
+            <p>
+                Track your academic performance, review your
+                results, and discover where you can improve.
+            </p>
+
+        </div>
+
+        <div class="progress-header-actions">
+
+            <button
+                type="button"
+                class="progress-refresh-btn"
+                id="refreshProgressBtn"
+            >
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Refresh</span>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================
+         PAGE STATUS
+    ================================================= -->
+
+    <div
+        id="progressMessage"
+        class="progress-message"
+        role="status"
+        aria-live="polite"
+        hidden
+    ></div>
+
+
+    <!-- ================================================
+         ACADEMIC OVERVIEW
+    ================================================= -->
+
+    <section
+        class="progress-overview"
+        aria-labelledby="progressOverviewTitle"
+    >
+
+        <div class="progress-section-heading">
+
+            <div>
+
+                <h2 id="progressOverviewTitle">
+                    Academic Overview
+                </h2>
+
+                <p>
+                    A summary of your learning and assessment activity.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="progress-overview-grid">
+
+
+            <!-- QUIZZES -->
+
+            <article class="progress-stat-card">
+
+                <div class="progress-stat-top">
+
+                    <div class="progress-stat-icon icon-crimson">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </div>
+
+                    <span class="progress-stat-label">
+                        QUIZZES
+                    </span>
+
+                </div>
+
+                <div
+                    class="progress-stat-value"
+                    id="progressQuizCount"
+                >
+                    --
+                </div>
+
+                <p class="progress-stat-description">
+                    Completed quizzes
+                </p>
+
+            </article>
+
+
+            <!-- CBT -->
+
+            <article class="progress-stat-card">
+
+                <div class="progress-stat-top">
+
+                    <div class="progress-stat-icon icon-purple">
+                        <i class="fa-solid fa-laptop-file"></i>
+                    </div>
+
+                    <span class="progress-stat-label">
+                        CBT EXAMS
+                    </span>
+
+                </div>
+
+                <div
+                    class="progress-stat-value"
+                    id="progressCbtCount"
+                >
+                    --
+                </div>
+
+                <p class="progress-stat-description">
+                    Completed examinations
+                </p>
+
+            </article>
+
+
+            <!-- AVERAGE SCORE -->
+
+            <article class="progress-stat-card">
+
+                <div class="progress-stat-top">
+
+                    <div class="progress-stat-icon icon-green">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+
+                    <span class="progress-stat-label">
+                        AVERAGE SCORE
+                    </span>
+
+                </div>
+
+                <div
+                    class="progress-stat-value"
+                    id="progressAverageScore"
+                >
+                    --%
+                </div>
+
+                <p class="progress-stat-description">
+                    Across completed assessments
+                </p>
+
+            </article>
+
+
+            <!-- STUDY NOTES -->
+
+            <article class="progress-stat-card">
+
+                <div class="progress-stat-top">
+
+                    <div class="progress-stat-icon icon-blue">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+
+                    <span class="progress-stat-label">
+                        STUDY NOTES
+                    </span>
+
+                </div>
+
+                <div
+                    class="progress-stat-value"
+                    id="progressNotesPercent"
+                >
+                    --%
+                </div>
+
+                <p class="progress-stat-description">
+                    Notes completion
+                </p>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================
+         PERFORMANCE AND ASSESSMENT BREAKDOWN
+    ================================================= -->
+
+    <section class="progress-main-grid">
+
+
+        <!-- PERFORMANCE SUMMARY -->
+
+        <article class="progress-panel performance-panel">
+
+            <div class="progress-panel-heading">
+
+                <div>
+
+                    <h2>Performance Summary</h2>
+
+                    <p>
+                        Your overall assessment performance.
+                    </p>
+
+                </div>
+
+                <span class="progress-panel-icon">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </span>
+
+            </div>
+
+
+            <div class="performance-summary-content">
+
+                <div class="performance-score-ring" id="performanceScoreRing">
+
+                    <div class="performance-score-inner">
+
+                        <strong id="performanceRingScore">
+                            --%
+                        </strong>
+
+                        <span>
+                            Average score
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="performance-summary-details">
+
+                    <div class="performance-detail-row">
+
+                        <span class="performance-detail-dot dot-green"></span>
+
+                        <span>Correct answers</span>
+
+                        <strong id="progressCorrectAnswers">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="performance-detail-row">
+
+                        <span class="performance-detail-dot dot-red"></span>
+
+                        <span>Incorrect answers</span>
+
+                        <strong id="progressIncorrectAnswers">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="performance-detail-row">
+
+                        <span class="performance-detail-dot dot-grey"></span>
+
+                        <span>Total assessments</span>
+
+                        <strong id="progressTotalAssessments">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="performance-panel-footer">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                <p id="progressPerformanceTip">
+                    Complete an assessment to start tracking
+                    your academic performance.
+                </p>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- STUDY PROGRESS -->
+
+        <article class="progress-panel study-progress-panel">
+
+            <div class="progress-panel-heading">
+
+                <div>
+
+                    <h2>Study Progress</h2>
+
+                    <p>
+                        Keep moving towards your learning goals.
+                    </p>
+
+                </div>
+
+                <span class="progress-panel-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </span>
+
+            </div>
+
+
+            <div class="study-progress-summary">
+
+                <div>
+
+                    <span class="study-summary-label">
+                        Notes completed
+                    </span>
+
+                    <strong id="progressCompletedNotes">
+                        --
+                    </strong>
+
+                </div>
+
+                <div class="study-summary-right">
+
+                    <span class="study-summary-label">
+                        Total notes
+                    </span>
+
+                    <strong id="progressTotalNotes">
+                        --
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="study-progress-track">
+
+                <div
+                    class="study-progress-fill"
+                    id="progressNotesBar"
+                    role="progressbar"
+                    aria-label="Study notes completion"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="0"
+                    style="width: 0%;"
+                ></div>
+
+            </div>
+
+
+            <p
+                class="study-progress-caption"
+                id="progressNotesCaption"
+            >
+                Your study completion statistics will appear here.
+            </p>
+
+
+            <div class="study-progress-actions">
+
+                <a
+                    href="study-notes.html"
+                    class="progress-action-btn"
+                >
+                    <i class="fa-solid fa-book-open"></i>
+                    Continue Studying
+                </a>
+
+            </div>
+
+        </article>
+
+
+    </section>
+
+
+    <!-- ================================================
+         SUBJECT PERFORMANCE
+    ================================================= -->
+
+    <section class="progress-panel subject-performance-panel">
+
+        <div class="progress-panel-heading">
+
+            <div>
+
+                <h2>Subject Performance</h2>
+
+                <p>
+                    Review your performance in each subject.
+                </p>
+
+            </div>
+
+            <span class="progress-panel-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </span>
+
+        </div>
+
+
+        <div
+            id="progressSubjectsContainer"
+            class="progress-subjects-container"
+        >
+
+            <div class="progress-empty-state">
+
+                <div class="progress-empty-icon">
+                    <i class="fa-solid fa-chart-column"></i>
+                </div>
+
+                <h3>Loading subject performance</h3>
+
+                <p>
+                    Your subject statistics will appear here.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================
+         RECENT ASSESSMENTS
+    ================================================= -->
+
+    <section class="progress-panel recent-assessments-panel">
+
+        <div class="progress-panel-heading">
+
+            <div>
+
+                <h2>Recent Assessments</h2>
+
+                <p>
+                    Your latest quizzes and CBT examinations.
+                </p>
+
+            </div>
+
+            <span class="progress-panel-icon">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </span>
+
+        </div>
+
+
+        <div class="progress-table-wrapper">
+
+            <table class="progress-assessments-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th scope="col">
+                            Assessment
+                        </th>
+
+                        <th scope="col">
+                            Subject
+                        </th>
+
+                        <th scope="col">
+                            Score
+                        </th>
+
+                        <th scope="col">
+                            Date
+                        </th>
+
+                        <th scope="col">
+                            Result
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="progressAssessmentsBody">
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="progress-table-loading"
+                        >
+
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+
+                            Loading your assessment history...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div
+            id="progressAssessmentsEmpty"
+            class="progress-empty-state"
+            hidden
+        >
+
+            <div class="progress-empty-icon">
+                <i class="fa-solid fa-clipboard-list"></i>
+            </div>
+
+            <h3>No assessments yet</h3>
+
+            <p>
+                Your completed quizzes and CBT examinations
+                will appear here.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================
+         PERFORMANCE GUIDANCE
+    ================================================= -->
+
+    <section class="progress-guidance-card">
+
+        <div class="progress-guidance-icon">
+
+            <i class="fa-solid fa-bullseye"></i>
+
+        </div>
+
+
+        <div class="progress-guidance-content">
+
+            <h2>Keep improving</h2>
+
+            <p>
+                Consistent practice, regular revision, and
+                reviewing your mistakes can help you prepare
+                more effectively for your examinations.
+            </p>
+
+        </div>
+
+
+        <a
+            href="student-quiz.html"
+            class="progress-guidance-btn"
+        >
+
+            Practice Now
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </section>
+
+
+</main>
+
+
+
+            <!-- ==================================================
+                 FOOTER
+            =================================================== -->
+
+            <footer
+                id="dashboardFooter"
+                class="dashboard-footer"
+            >
+
+                <div class="footer-brand">
+
+                    <strong>
+                        Aplus Tutors
+                    </strong>
+
+                    <span>
+                        Your smarter path to exam success.
+                    </span>
+
+                </div>
+
+
+                <div class="footer-meta">
+
+                    <span>
+                        © 2026 Aplus Tutors
+                    </span>
+
+                    <span class="footer-divider">
+                        •
+                    </span>
+
+                    <span>
+                        Student Portal v2.0
+                    </span>
+
+                </div>
+
+            </footer>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         APPWRITE SDK
+    =================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"
+    ></script>
+
+
+
+    <!-- ==================================================
+         BOOTSTRAP JS
+    =================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         APPWRITE CONFIGURATION
+    =================================================== -->
+
+    <script
+        src="appwrite.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         AUTHENTICATION GUARD
+    =================================================== -->
+
+    <script
+        src="guard.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         STUDENT DASHBOARD SCRIPT
+    =================================================== -->
+
+    <script
+        src="student-dashboard.js"
+    ></script>
+
+
+
+    <!-- ==================================================
+         STUDENTS Progress SCRIPT
+    =================================================== -->
+
+    <script
+        src="student-progress.js"
+    ></script>
+
+
+</body>
+
+</html>

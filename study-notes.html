@@ -1,0 +1,982 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Study Notes | Aplus Tutors</title>
+
+<!-- Bootstrap -->
+
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+>
+
+<!-- Font Awesome -->
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+<!-- Dashboard CSS -->
+
+<link
+    rel="stylesheet"
+    href="admin-dashboard.css"
+>
+
+<!-- Study Notes CSS -->
+
+<link
+    rel="stylesheet"
+    href="study-notes.css"
+>
+
+</head><body data-role="admin"><!--==================================================
+PAGE LOADER
+==================================================-->
+
+<div id="pageLoader">
+
+    <div class="loader-content">
+
+        <div class="loader-spinner"></div>
+
+        <h3>Aplus Tutors</h3>
+
+        <p>Loading study notes...</p>
+
+    </div>
+
+</div>
+
+
+<!--==================================================
+OVERLAY
+==================================================-->
+
+<div
+    id="overlay"
+    class="overlay"
+></div>
+
+
+<!--==================================================
+DASHBOARD LAYOUT
+==================================================-->
+
+<div class="dashboard">
+
+
+    <!--==================================================
+    SIDEBAR
+    ==================================================-->
+
+    <aside id="sidebar"></aside>
+
+
+    <!--==================================================
+    MAIN CONTENT
+    ==================================================-->
+
+    <main class="main-content">
+
+
+        <!--==================================================
+        TOPBAR
+        ==================================================-->
+
+        <header id="topbar"></header>
+
+
+        <!--==================================================
+        STUDY NOTES CONTENT
+        ==================================================-->
+
+        <section
+            id="studyNotesContent"
+            class="page-content"
+        >
+
+
+            <!--==================================================
+            PAGE HEADER
+            ==================================================-->
+
+            <div class="study-notes-header">
+
+                <div>
+
+                    <h1 class="page-title">
+                        Study Notes
+                    </h1>
+
+                    <p class="page-subtitle">
+                        Create and manage study materials for students.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    id="addNoteBtn"
+                >
+
+                    <i class="fa-solid fa-plus"></i>
+
+                    Add New Note
+
+                </button>
+
+            </div>
+
+
+            <!--==================================================
+            NOTES TOOLBAR
+            ==================================================-->
+
+            <div class="study-notes-toolbar">
+
+                <!-- Search -->
+
+                <div class="notes-search">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="search"
+                        id="notesSearch"
+                        class="form-control"
+                        placeholder="Search notes..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <!-- Subject Filter -->
+
+                <div class="notes-filter">
+
+                    <select
+                        id="subjectFilter"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Subjects
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Status Filter -->
+
+                <div class="notes-filter">
+
+                    <select
+                        id="statusFilter"
+                        class="form-select"
+                    >
+
+                        <option value="">
+                            All Status
+                        </option>
+
+                        <option value="published">
+                            Published
+                        </option>
+
+                        <option value="draft">
+                            Draft
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!--==================================================
+            NOTES CARD
+            ==================================================-->
+
+            <div class="card study-notes-card">
+
+
+                <!-- Card Header -->
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h5>
+                            Study Notes
+                        </h5>
+
+                        <span id="notesCount">
+                            0 notes
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Card Body -->
+
+                <div class="card-body p-0">
+
+
+                    <!--==================================================
+                    LOADING STATE
+                    ==================================================-->
+
+                    <div
+                        id="notesLoading"
+                        class="notes-state"
+                    >
+
+                        <div
+                            class="spinner-border"
+                            role="status"
+                        ></div>
+
+                        <p>
+                            Loading study notes...
+                        </p>
+
+                    </div>
+
+
+                    <!--==================================================
+                    EMPTY STATE
+                    ==================================================-->
+
+                    <div
+                        id="notesEmpty"
+                        class="notes-state d-none"
+                    >
+
+                        <div class="empty-icon">
+
+                            <i class="fa-solid fa-book-open"></i>
+
+                        </div>
+
+                        <h5>
+                            No study notes found
+                        </h5>
+
+                        <p>
+                            You haven't added any study notes yet.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="emptyAddNoteBtn"
+                        >
+
+                            <i class="fa-solid fa-plus"></i>
+
+                            Add Your First Note
+
+                        </button>
+
+                    </div>
+
+
+                    <!--==================================================
+                    NOTES TABLE
+                    ==================================================-->
+
+                    <div
+                        id="notesTableContainer"
+                        class="table-responsive d-none"
+                    >
+
+                        <table
+                            class="table study-notes-table mb-0"
+                        >
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        #
+                                    </th>
+
+                                    <th>
+                                        Note
+                                    </th>
+
+                                    <th>
+                                        Subject
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Updated
+                                    </th>
+
+                                    <th class="text-end">
+                                        Actions
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="notesTableBody">
+
+                                <!-- Notes will be loaded here -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!--==================================================
+ADD / EDIT NOTE MODAL
+==================================================-->
+
+<div
+    class="modal fade"
+    id="noteModal"
+    tabindex="-1"
+    aria-labelledby="noteModalLabel"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-dialog modal-xl modal-dialog-scrollable"
+    >
+
+        <div class="modal-content">
+
+
+            <!-- Modal Header -->
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h5
+                        class="modal-title"
+                        id="noteModalLabel"
+                    >
+                        Add Study Note
+                    </h5>
+
+                    <small class="text-muted">
+                        Create educational content for your students.
+                    </small>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!-- Modal Body -->
+
+            <div class="modal-body">
+
+                <form id="noteForm">
+
+                    <!-- Hidden note ID -->
+
+                    <input
+                        type="hidden"
+                        id="noteId"
+                    >
+
+
+                    <!-- Note Title -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="noteTitle"
+                            class="form-label"
+                        >
+                            Note Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="noteTitle"
+                            class="form-control"
+                            placeholder="e.g. Introduction to Cell Biology"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Subject -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="noteSubject"
+                            class="form-label"
+                        >
+                            Subject
+                        </label>
+
+                        <select
+                            id="noteSubject"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select subject
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Status -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="noteStatus"
+                            class="form-label"
+                        >
+                            Status
+                        </label>
+
+                        <select
+                            id="noteStatus"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="draft">
+                                Draft
+                            </option>
+
+                            <option value="published">
+                                Published
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Note Content -->
+                    
+                    <!--==================================================
+NOTE CONTENT EDITOR
+==================================================--><div class="mb-3"><label class="form-label">
+    Note Content
+</label>
+
+
+<!--==================================================
+EDITOR
+==================================================-->
+
+<div
+    id="noteEditor"
+    class="note-editor"
+>
+
+
+    <!--==================================================
+    EDITOR TOOLBAR
+    ==================================================-->
+
+    <div
+        id="editorToolbar"
+        class="editor-toolbar"
+    >
+
+        <!-- Bold -->
+
+        <button
+            type="button"
+            class="editor-btn"
+            data-command="bold"
+            title="Bold"
+        >
+
+            <i class="fa-solid fa-bold"></i>
+
+        </button>
+
+
+        <!-- Italic -->
+
+        <button
+            type="button"
+            class="editor-btn"
+            data-command="italic"
+            title="Italic"
+        >
+
+            <i class="fa-solid fa-italic"></i>
+
+        </button>
+
+
+        <!-- Underline -->
+
+        <button
+            type="button"
+            class="editor-btn"
+            data-command="underline"
+            title="Underline"
+        >
+
+            <i class="fa-solid fa-underline"></i>
+
+        </button>
+        
+        <button
+    type="button"
+    class="editor-btn"
+    data-command="insertMath"
+    title="Insert mathematical expression"
+>
+    <i class="fa-solid fa-square-root-variable"></i>
+</button>
+
+
+        <span class="editor-divider"></span>
+
+
+        <!-- Heading -->
+
+        <select
+            id="formatBlock"
+            class="editor-select"
+            title="Text format"
+        >
+
+            <option value="p">
+                Paragraph
+            </option>
+
+            <option value="h2">
+                Heading 2
+            </option>
+
+            <option value="h3">
+                Heading 3
+            </option>
+
+            <option value="h4">
+                Heading 4
+            </option>
+
+        </select>
+
+
+        <span class="editor-divider"></span>
+
+
+        <!-- Unordered List -->
+
+        <button
+            type="button"
+            class="editor-btn"
+            data-command="insertUnorderedList"
+            title="Bullet list"
+        >
+
+            <i class="fa-solid fa-list-ul"></i>
+
+        </button>
+
+
+        <!-- Ordered List -->
+
+        <button
+            type="button"
+            class="editor-btn"
+            data-command="insertOrderedList"
+            title="Numbered list"
+        >
+
+            <i class="fa-solid fa-list-ol"></i>
+
+        </button>
+
+
+        <span class="editor-divider"></span>
+
+
+        <!-- Align Left -->
+
+        <button
+            type="button"
+            class="editor-btn"
+            data-command="justifyLeft"
+            title="Align left"
+        >
+
+            <i class="fa-solid fa-align-left"></i>
+
+        </button>
+
+
+        <!-- Align Center -->
+
+        <button
+            type="button"
+            class="editor-btn"
+            data-command="justifyCenter"
+            title="Align center"
+        >
+
+            <i class="fa-solid fa-align-center"></i>
+
+        </button>
+
+
+        <!-- Align Right -->
+
+        <button
+            type="button"
+            class="editor-btn"
+            data-command="justifyRight"
+            title="Align right"
+        >
+
+            <i class="fa-solid fa-align-right"></i>
+
+        </button>
+
+
+        <span class="editor-divider"></span>
+
+
+        <!-- Horizontal Line -->
+
+        <button
+            type="button"
+            class="editor-btn"
+            data-command="insertHorizontalRule"
+            title="Horizontal line"
+        >
+
+            <i class="fa-solid fa-minus"></i>
+
+        </button>
+
+
+        <!-- Clear Formatting -->
+
+        <button
+            type="button"
+            class="editor-btn"
+            data-command="removeFormat"
+            title="Clear formatting"
+        >
+
+            <i class="fa-solid fa-eraser"></i>
+
+        </button>
+
+    </div>
+
+
+    <!--==================================================
+    EDITABLE AREA
+    ==================================================-->
+
+    <div
+        id="noteContent"
+        class="note-editor-content"
+        contenteditable="true"
+        data-placeholder="Start writing your study note here..."
+    ></div>
+
+
+</div>
+
+
+<!--==================================================
+EDITOR HELP TEXT
+==================================================-->
+
+<div class="editor-help">
+
+    <i class="fa-solid fa-circle-info"></i>
+
+    You can format your note using the toolbar above.
+
+</div>
+
+</div>
+
+
+                </form>
+
+            </div>
+
+
+            <!-- Modal Footer -->
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="saveNoteBtn"
+                >
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Note
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!--==================================================
+VIEW STUDY NOTE MODAL
+==================================================-->
+
+<div
+    class="modal fade"
+    id="viewNoteModal"
+    tabindex="-1"
+    aria-labelledby="viewNoteModalLabel"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-dialog modal-xl modal-dialog-scrollable"
+    >
+
+        <div class="modal-content">
+
+
+            <!--==================================================
+            MODAL HEADER
+            ==================================================-->
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span
+                        id="viewNoteSubject"
+                        class="note-view-subject"
+                    >
+                        Subject
+                    </span>
+
+                    <h2
+                        class="modal-title note-view-title"
+                        id="viewNoteTitle"
+                    >
+                        Study Note
+                    </h2>
+
+                    <div
+                        class="note-view-meta"
+                    >
+
+                        <span id="viewNoteStatus"></span>
+
+                        <span class="meta-separator">
+                            •
+                        </span>
+
+                        <span>
+                            Updated
+                        </span>
+
+                        <span id="viewNoteDate">
+                            —
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!--==================================================
+            MODAL BODY
+            ==================================================-->
+
+            <div class="modal-body">
+
+                <article
+                    id="viewNoteContent"
+                    class="study-note-reader"
+                >
+
+                    <!-- Note content will be inserted here -->
+
+                </article>
+
+            </div>
+
+
+            <!--==================================================
+            MODAL FOOTER
+            ==================================================-->
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Close
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!--==================================================
+JAVASCRIPT
+==================================================-->
+
+<!-- Appwrite SDK -->
+
+<script src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"></script>
+
+
+<!-- Bootstrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<!-- Appwrite Configuration -->
+
+<script src="appwrite.js"></script>
+
+
+<!-- Authentication Guard -->
+
+<script src="guard.js"></script>
+
+
+<script>
+window.MathJax = {
+    tex: {
+        inlineMath: [
+            ['\\(', '\\)']
+        ],
+        displayMath: [
+            ['\\[', '\\]']
+        ]
+    },
+
+    options: {
+        skipHtmlTags: [
+            'script',
+            'noscript',
+            'style',
+            'textarea',
+            'pre',
+            'code'
+        ]
+    }
+};
+</script>
+
+<script
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+
+<!-- Admin Dashboard -->
+
+<script src="admin-dashboard.js"></script>
+
+
+<!-- Study Notes -->
+
+<script src="study-notes.js"></script>
+
+</body></html>

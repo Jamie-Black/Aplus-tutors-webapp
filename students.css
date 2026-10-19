@@ -1,0 +1,2018 @@
+/* =========================================================
+APLUS TUTORS
+STUDENTS MANAGEMENT PAGE
+
+IMPORTANT:
+This stylesheet is intentionally scoped.
+
+It is designed to work alongside:
+css/admin-dashboard.css
+
+without changing the Admin Dashboard styling.
+========================================================= */
+
+/* =========================================================
+STUDENTS PAGE VARIABLES
+========================================================= */
+
+#studentsPage {
+--student-primary: #8b0000;
+--student-primary-dark: #650000;
+--student-primary-soft: #f9e8e8;
+
+--student-white: #ffffff;
+--student-black: #181818;
+--student-text: #202124;
+--student-muted: #6b7280;
+
+--student-border: #e5e7eb;
+--student-background: #f4f6fb;
+
+--student-success: #16a34a;
+--student-warning: #f59e0b;
+--student-danger: #dc2626;
+
+width: 100%;
+max-width: 100%;
+min-width: 0;
+
+overflow-x: hidden;
+
+}
+
+/* =========================================================
+CRITICAL LAYOUT FIX
+Prevents the student table from forcing the
+entire admin page wider than the screen.
+========================================================= */
+
+body:has(#studentsPage) .main-content {
+min-width: 0;
+width: 0;
+max-width: 100%;
+}
+
+body:has(#studentsPage) .page-content {
+min-width: 0;
+max-width: 100%;
+width: 100%;
+overflow-x: hidden;
+}
+
+/* =========================================================
+STUDENTS PAGE BOX SIZING
+========================================================= */
+
+#studentsPage,
+#studentsPage *,
+#studentsPage *::before,
+#studentsPage *::after {
+box-sizing: border-box;
+}
+
+/* =========================================================
+PAGE HEADER
+========================================================= */
+
+#studentsPage .page-header {
+width: 100%;
+min-width: 0;
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+gap: 20px;
+
+margin-bottom: 24px;
+
+}
+
+#studentsPage .page-header h2 {
+margin: 0 0 7px;
+
+color: var(--student-black);
+
+font-size: 28px;
+line-height: 1.25;
+font-weight: 700;
+
+letter-spacing: -.4px;
+
+}
+
+#studentsPage .page-header p {
+margin: 0;
+
+max-width: 700px;
+
+color: var(--student-muted);
+
+font-size: 14px;
+line-height: 1.6;
+
+}
+
+/* =========================================================
+STATISTICS GRID
+========================================================= */
+
+#studentsPage .stats-grid {
+width: 100%;
+max-width: 100%;
+min-width: 0;
+
+display: grid;
+
+grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+gap: 18px;
+
+margin-bottom: 26px;
+
+}
+
+/* =========================================================
+STAT CARD
+========================================================= */
+
+#studentsPage .stat-card {
+min-width: 0;
+
+background: var(--student-white);
+
+border: 1px solid var(--student-border);
+
+border-radius: 16px;
+
+padding: 20px;
+
+display: flex;
+align-items: center;
+
+gap: 15px;
+
+box-shadow:
+    0 6px 20px rgba(0, 0, 0, .05);
+
+transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    border-color .25s ease;
+
+}
+
+#studentsPage .stat-card:hover {
+transform: translateY(-3px);
+
+box-shadow:
+    0 12px 28px rgba(0, 0, 0, .08);
+
+border-color: #d7d9dd;
+
+}
+
+/* =========================================================
+STAT ICON
+========================================================= */
+
+#studentsPage .stat-icon {
+width: 50px;
+height: 50px;
+
+min-width: 50px;
+
+border-radius: 13px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+background: var(--student-primary-soft);
+
+color: var(--student-primary);
+
+font-size: 19px;
+
+}
+
+/* =========================================================
+STAT TEXT
+========================================================= */
+
+#studentsPage .stat-card h3 {
+margin: 0 0 4px;
+
+color: var(--student-black);
+
+font-size: 26px;
+line-height: 1.1;
+font-weight: 700;
+
+}
+
+#studentsPage .stat-card span {
+color: var(--student-muted);
+
+font-size: 12px;
+font-weight: 500;
+
+}
+
+/* =========================================================
+STUDENTS TOOLBAR
+========================================================= */
+
+#studentsPage .toolbar {
+width: 100%;
+max-width: 100%;
+min-width: 0;
+
+display: grid;
+
+grid-template-columns:
+    minmax(0, 1fr)
+    190px
+    170px;
+
+gap: 12px;
+
+margin-bottom: 16px;
+
+}
+
+/* =========================================================
+STUDENT SEARCH BOX
+
+NOTE:
+This is deliberately more specific than the
+global .search-box in admin-dashboard.css.
+========================================================= */
+
+#studentsPage .search-box {
+width: 100%;
+max-width: none;
+min-width: 0;
+
+height: 46px;
+
+display: flex;
+align-items: center;
+
+position: relative;
+
+padding: 0;
+
+gap: 0;
+
+background: var(--student-white);
+
+border: 1px solid var(--student-border);
+
+border-radius: 10px;
+
+}
+
+#studentsPage .search-box i {
+position: absolute;
+
+left: 15px;
+
+color: #9ca3af;
+
+font-size: 14px;
+
+pointer-events: none;
+
+}
+
+#studentsPage .search-box input {
+width: 100%;
+min-width: 0;
+
+height: 100%;
+
+flex: 1;
+
+padding: 0 14px 0 42px;
+
+border: none !important;
+
+outline: none !important;
+
+background: transparent !important;
+
+box-shadow: none !important;
+
+border-radius: 10px;
+
+color: var(--student-text);
+
+font-size: 13px;
+
+}
+
+#studentsPage .search-box input:focus {
+border: none !important;
+
+outline: none !important;
+
+box-shadow: none !important;
+
+}
+
+/* =========================================================
+FILTER SELECTS
+========================================================= */
+
+#studentsPage .toolbar > select {
+width: 100%;
+min-width: 0;
+
+height: 46px;
+
+padding: 0 12px;
+
+border: 1px solid var(--student-border);
+
+border-radius: 10px;
+
+outline: none;
+
+background: var(--student-white);
+
+color: var(--student-text);
+
+font-family: inherit;
+
+font-size: 13px;
+
+cursor: pointer;
+
+}
+
+#studentsPage .toolbar > select:focus {
+border-color: var(--student-primary);
+
+box-shadow:
+    0 0 0 3px rgba(139, 0, 0, .10);
+
+}
+
+/* =========================================================
+STUDENT TABS
+========================================================= */
+
+#studentsPage .student-tabs {
+width: 100%;
+max-width: 100%;
+
+min-width: 0;
+
+display: flex;
+align-items: center;
+
+gap: 6px;
+
+margin-bottom: 14px;
+
+overflow-x: auto;
+
+scrollbar-width: thin;
+
+padding-bottom: 3px;
+
+}
+
+#studentsPage .student-tabs::-webkit-scrollbar {
+height: 4px;
+}
+
+#studentsPage .student-tabs::-webkit-scrollbar-thumb {
+background: #ccc;
+
+border-radius: 20px;
+
+}
+
+#studentsPage .student-tabs .tab-btn {
+flex: 0 0 auto;
+
+padding: 10px 16px;
+
+border: none;
+
+border-radius: 9px;
+
+background: transparent;
+
+color: #6b7280;
+
+font-family: inherit;
+
+font-size: 13px;
+
+font-weight: 600;
+
+white-space: nowrap;
+
+cursor: pointer;
+
+transition:
+    background .2s ease,
+    color .2s ease;
+
+}
+
+#studentsPage .student-tabs .tab-btn:hover {
+background: #eeeeee;
+
+color: var(--student-black);
+
+}
+
+#studentsPage .student-tabs .tab-btn.active {
+background: var(--student-primary);
+
+color: #ffffff;
+
+box-shadow:
+    0 5px 14px rgba(139, 0, 0, .18);
+
+}
+
+/* =========================================================
+BULK BAR
+========================================================= */
+
+#studentsPage .bulk-bar {
+width: 100%;
+max-width: 100%;
+
+display: none;
+
+align-items: center;
+
+flex-wrap: wrap;
+
+gap: 8px;
+
+margin-bottom: 14px;
+
+padding: 10px 12px;
+
+border: 1px solid #edd0d0;
+
+border-radius: 10px;
+
+background: #fff8f8;
+
+}
+
+#studentsPage .bulk-bar.show {
+display: flex;
+}
+
+#studentsPage .bulk-bar button {
+padding: 8px 14px;
+
+border: none;
+
+border-radius: 7px;
+
+background: var(--student-primary);
+
+color: #ffffff;
+
+font-family: inherit;
+
+font-size: 12px;
+
+font-weight: 600;
+
+cursor: pointer;
+
+transition:
+    background .2s ease,
+    transform .2s ease;
+
+}
+
+#studentsPage .bulk-bar button:hover {
+background: var(--student-primary-dark);
+
+transform: translateY(-1px);
+
+}
+
+/* =========================================================
+STUDENT TABLE OUTER CONTAINER
+========================================================= */
+
+#studentsPage .table-container {
+width: 100%;
+max-width: 100%;
+
+min-width: 0;
+
+overflow-x: auto;
+overflow-y: hidden;
+
+-webkit-overflow-scrolling: touch;
+
+background: var(--student-white);
+
+border: 1px solid var(--student-border);
+
+border-radius: 15px;
+
+box-shadow:
+    0 6px 20px rgba(0, 0, 0, .045);
+
+}
+
+/* =========================================================
+STUDENT TABLE
+
+The table itself is allowed to be wider than the
+phone. The container handles the horizontal scroll.
+========================================================= */
+
+#studentsPage .table-container > table {
+width: 100%;
+
+min-width: 850px;
+
+border-collapse: separate;
+
+border-spacing: 0;
+
+table-layout: auto;
+
+}
+
+/* =========================================================
+TABLE HEADER
+========================================================= */
+
+#studentsPage .table-container > table > thead > tr > th {
+padding: 15px;
+
+height: 50px;
+
+background: #f8fafc;
+
+color: #374151;
+
+border-bottom: 1px solid var(--student-border);
+
+font-size: 11px;
+
+font-weight: 700;
+
+text-transform: uppercase;
+
+letter-spacing: .35px;
+
+text-align: left;
+
+white-space: nowrap;
+
+}
+
+#studentsPage .table-container > table > thead > tr > th:first-child {
+width: 48px;
+
+text-align: center;
+
+}
+
+/* =========================================================
+TABLE CELLS
+========================================================= */
+
+#studentsPage .table-container > table > tbody > tr > td {
+padding: 13px 15px;
+
+border-bottom: 1px solid #edf0f2;
+
+color: var(--student-text);
+
+font-size: 13px;
+
+vertical-align: middle;
+
+white-space: nowrap;
+
+}
+
+#studentsPage .table-container > table > tbody > tr:last-child > td {
+border-bottom: none;
+}
+
+#studentsPage .table-container > table > tbody > tr:hover > td {
+background: #fffafa;
+}
+
+/* =========================================================
+TABLE CHECKBOX
+========================================================= */
+
+#studentsPage .table-container input[type="checkbox"] {
+width: 16px;
+height: 16px;
+
+margin: 0;
+
+accent-color: var(--student-primary);
+
+cursor: pointer;
+
+}
+
+/* =========================================================
+STUDENT INFORMATION
+========================================================= */
+
+#studentsPage .student-name {
+display: flex;
+align-items: center;
+
+gap: 10px;
+
+min-width: 180px;
+
+}
+
+#studentsPage .student-avatar {
+width: 38px;
+height: 38px;
+
+min-width: 38px;
+
+overflow: hidden;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+border-radius: 50%;
+
+background: var(--student-primary-soft);
+
+color: var(--student-primary);
+
+font-size: 13px;
+
+font-weight: 700;
+
+}
+
+#studentsPage .student-avatar img {
+width: 100%;
+height: 100%;
+
+object-fit: cover;
+
+}
+
+#studentsPage .student-info {
+min-width: 0;
+
+display: flex;
+flex-direction: column;
+
+gap: 2px;
+
+}
+
+#studentsPage .student-info strong {
+color: var(--student-black);
+
+font-size: 13px;
+
+font-weight: 650;
+
+}
+
+#studentsPage .student-info small {
+color: #9ca3af;
+
+font-size: 10px;
+
+}
+
+/* =========================================================
+STATUS BADGES
+========================================================= */
+
+#studentsPage .status-badge {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+padding: 6px 10px;
+
+border-radius: 50px;
+
+font-size: 10px;
+
+font-weight: 700;
+
+line-height: 1;
+
+white-space: nowrap;
+
+}
+
+#studentsPage .status-badge.pending {
+background: #fef3c7;
+
+color: #92400e;
+
+}
+
+#studentsPage .status-badge.active {
+background: #dcfce7;
+
+color: #166534;
+
+}
+
+#studentsPage .status-badge.suspended {
+background: #fee2e2;
+
+color: #991b1b;
+
+}
+
+/* =========================================================
+ACTION BUTTONS
+========================================================= */
+
+#studentsPage .action-buttons {
+display: flex;
+align-items: center;
+
+gap: 5px;
+
+}
+
+#studentsPage .action-btn {
+width: 32px;
+height: 32px;
+
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+padding: 0;
+
+border: 1px solid #e5e7eb;
+
+border-radius: 7px;
+
+background: #ffffff;
+
+color: #6b7280;
+
+font-size: 12px;
+
+cursor: pointer;
+
+transition:
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease,
+    transform .2s ease;
+
+}
+
+#studentsPage .action-btn:hover {
+transform: translateY(-1px);
+
+background: var(--student-primary-soft);
+
+border-color: #d9aaaa;
+
+color: var(--student-primary);
+
+}
+
+/* =========================================================
+PAGINATION
+========================================================= */
+
+#studentsPage #pagination {
+width: 100%;
+max-width: 100%;
+
+min-width: 0;
+
+display: flex;
+align-items: center;
+justify-content: flex-end;
+
+flex-wrap: wrap;
+
+gap: 5px;
+
+margin-top: 16px;
+
+}
+
+#studentsPage #pagination button {
+min-width: 34px;
+height: 34px;
+
+padding: 0 10px;
+
+border: 1px solid var(--student-border);
+
+border-radius: 7px;
+
+background: #ffffff;
+
+color: #555;
+
+font-family: inherit;
+
+font-size: 12px;
+
+font-weight: 600;
+
+cursor: pointer;
+
+}
+
+#studentsPage #pagination button:hover {
+background: var(--student-primary-soft);
+
+border-color: #d9aaaa;
+
+color: var(--student-primary);
+
+}
+
+#studentsPage #pagination button.active {
+background: var(--student-primary);
+
+border-color: var(--student-primary);
+
+color: #ffffff;
+
+}
+
+/* =========================================================
+EMPTY STATE
+
+More specific than admin-dashboard.css .empty-state
+========================================================= */
+
+#studentsPage .table-container .empty-state {
+height: 180px;
+
+padding: 40px 20px;
+
+text-align: center;
+
+color: var(--student-muted);
+
+font-size: 13px;
+
+}
+
+/* =========================================================
+MODALS
+========================================================= */
+
+#viewStudentModal,
+#editStudentModal {
+position: fixed;
+
+inset: 0;
+
+z-index: 2000;
+
+display: none;
+
+align-items: center;
+justify-content: center;
+
+padding: 20px;
+
+background: rgba(0, 0, 0, .55);
+
+overflow-y: auto;
+
+}
+
+#viewStudentModal.show,
+#editStudentModal.show {
+display: flex;
+}
+
+/* =========================================================
+MODAL CONTENT
+========================================================= */
+
+#viewStudentModal .modal-content,
+#editStudentModal .modal-content {
+width: 100%;
+max-width: 560px;
+
+max-height: calc(100vh - 40px);
+
+overflow-y: auto;
+
+background: #ffffff;
+
+border-radius: 16px;
+
+box-shadow:
+    0 20px 60px rgba(0, 0, 0, .22);
+
+}
+
+/* =========================================================
+MODAL HEADER
+========================================================= */
+
+#viewStudentModal .modal-header,
+#editStudentModal .modal-header {
+padding: 18px 20px;
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+gap: 15px;
+
+border-bottom: 1px solid var(--student-border);
+
+}
+
+#viewStudentModal .modal-header h3,
+#editStudentModal .modal-header h3 {
+margin: 0;
+
+color: var(--student-black);
+
+font-size: 18px;
+
+font-weight: 700;
+
+}
+
+/* =========================================================
+MODAL BODY
+========================================================= */
+
+#viewStudentModal .modal-body,
+#editStudentModal .modal-body {
+padding: 20px;
+}
+
+/* =========================================================
+MODAL FOOTER
+========================================================= */
+
+#viewStudentModal .modal-footer,
+#editStudentModal .modal-footer {
+padding: 15px 20px;
+
+display: flex;
+justify-content: flex-end;
+
+flex-wrap: wrap;
+
+gap: 8px;
+
+border-top: 1px solid var(--student-border);
+
+}
+
+/* =========================================================
+MODAL FORM
+========================================================= */
+
+#editStudentModal .form-group {
+margin-bottom: 15px;
+}
+
+#editStudentModal label {
+display: block;
+
+margin-bottom: 6px;
+
+color: #444;
+
+font-size: 12px;
+
+font-weight: 650;
+
+}
+
+#editStudentModal input:not([type="checkbox"]),
+#editStudentModal select,
+#editStudentModal textarea {
+width: 100%;
+min-width: 0;
+
+padding: 11px 12px;
+
+border: 1px solid #dedede;
+
+border-radius: 8px;
+
+outline: none;
+
+background: #ffffff;
+
+color: var(--student-text);
+
+font-family: inherit;
+
+font-size: 13px;
+
+}
+
+#editStudentModal input:not([type="checkbox"]):focus,
+#editStudentModal select:focus,
+#editStudentModal textarea:focus {
+border-color: var(--student-primary);
+
+box-shadow:
+    0 0 0 3px rgba(139, 0, 0, .10);
+
+}
+
+/* =========================================================
+MOBILE / TABLET
+========================================================= */
+
+@media (max-width: 991px) {
+
+body:has(#studentsPage) .main-content {
+    width: 100%;
+    max-width: 100%;
+}
+
+#studentsPage .stats-grid {
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+}
+
+#studentsPage .toolbar {
+    grid-template-columns:
+        minmax(0, 1fr)
+        180px
+        160px;
+}
+
+}
+
+/* =========================================================
+SMALL TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+#studentsPage .toolbar {
+    grid-template-columns:
+        1fr 1fr;
+}
+
+#studentsPage .toolbar .search-box {
+    grid-column: 1 / -1;
+}
+
+#studentsPage .page-header h2 {
+    font-size: 24px;
+}
+
+}
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media (max-width: 576px) {
+
+body:has(#studentsPage) .main-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+body:has(#studentsPage) .page-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    padding: 16px;
+
+    overflow-x: hidden;
+}
+
+
+/* PAGE HEADER */
+
+#studentsPage .page-header {
+    display: block;
+
+    margin-bottom: 18px;
+}
+
+#studentsPage .page-header h2 {
+    font-size: 21px;
+
+    letter-spacing: -.2px;
+}
+
+#studentsPage .page-header p {
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* STATS */
+
+#studentsPage .stats-grid {
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+}
+
+#studentsPage .stat-card {
+    padding: 13px 11px;
+
+    gap: 9px;
+
+    border-radius: 12px;
+}
+
+#studentsPage .stat-icon {
+    width: 36px;
+    height: 36px;
+
+    min-width: 36px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+}
+
+#studentsPage .stat-card h3 {
+    font-size: 19px;
+}
+
+#studentsPage .stat-card span {
+    font-size: 10px;
+}
+
+
+/* TOOLBAR */
+
+#studentsPage .toolbar {
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    gap: 8px;
+}
+
+#studentsPage .search-box {
+    height: 43px;
+}
+
+#studentsPage .toolbar > select {
+    height: 43px;
+
+    font-size: 11px;
+}
+
+#studentsPage .search-box input {
+    font-size: 12px;
+}
+
+
+/* TABS */
+
+#studentsPage .student-tabs {
+    gap: 4px;
+
+    margin-bottom: 12px;
+}
+
+#studentsPage .student-tabs .tab-btn {
+    padding: 8px 11px;
+
+    font-size: 11px;
+}
+
+
+/* BULK BAR */
+
+#studentsPage .bulk-bar {
+    padding: 8px;
+
+    gap: 6px;
+}
+
+#studentsPage .bulk-bar button {
+    padding: 7px 10px;
+
+    font-size: 10px;
+}
+
+
+/* TABLE */
+
+#studentsPage .table-container {
+    border-radius: 10px;
+
+    width: 100%;
+    max-width: 100%;
+}
+
+#studentsPage .table-container > table {
+    min-width: 780px;
+}
+
+#studentsPage .table-container > table > thead > tr > th {
+    height: 43px;
+
+    padding: 10px;
+
+    font-size: 9px;
+}
+
+#studentsPage .table-container > table > tbody > tr > td {
+    padding: 10px;
+
+    font-size: 11px;
+}
+
+#studentsPage .student-avatar {
+    width: 32px;
+    height: 32px;
+
+    min-width: 32px;
+}
+
+#studentsPage .student-info strong {
+    font-size: 11px;
+}
+
+#studentsPage .student-info small {
+    font-size: 9px;
+}
+
+
+/* PAGINATION */
+
+#studentsPage #pagination {
+    justify-content: center;
+
+    margin-top: 13px;
+}
+
+#studentsPage #pagination button {
+    min-width: 30px;
+    height: 30px;
+
+    padding: 0 8px;
+
+    font-size: 10px;
+}
+
+/* MODALS */
+
+#viewStudentModal,
+#editStudentModal {
+padding: 10px;
+}
+
+#viewStudentModal .modal-content,
+#editStudentModal .modal-content {
+max-height: calc(100vh - 20px);
+
+border-radius: 13px;
+
+}
+
+#viewStudentModal .modal-header,
+#editStudentModal .modal-header {
+padding: 15px;
+}
+
+#viewStudentModal .modal-body,
+#editStudentModal .modal-body {
+padding: 15px;
+}
+
+#viewStudentModal .modal-footer,
+#editStudentModal .modal-footer {
+padding: 12px 15px;
+}
+
+}
+
+/* =========================================================
+VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+body:has(#studentsPage) .page-content {
+    padding: 12px;
+}
+
+#studentsPage .stats-grid {
+    gap: 7px;
+}
+
+#studentsPage .stat-card {
+    padding: 11px 8px;
+
+    gap: 7px;
+}
+
+#studentsPage .stat-icon {
+    width: 32px;
+    height: 32px;
+
+    min-width: 32px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+}
+
+#studentsPage .stat-card h3 {
+    font-size: 17px;
+}
+
+#studentsPage .stat-card span {
+    font-size: 9px;
+}
+
+#studentsPage .student-tabs .tab-btn {
+    padding: 7px 9px;
+
+    font-size: 10px;
+}
+
+#studentsPage .toolbar > select {
+    padding-left: 8px;
+    padding-right: 6px;
+
+    font-size: 10px;
+}
+
+}
+
+/* =========================================================
+EXTRA SMALL PHONES
+========================================================= */
+
+@media (max-width: 340px) {
+
+body:has(#studentsPage) .page-content {
+    padding: 10px;
+}
+
+#studentsPage .stats-grid {
+    gap: 6px;
+}
+
+#studentsPage .stat-card {
+    padding: 10px 7px;
+
+    gap: 6px;
+}
+
+#studentsPage .stat-icon {
+    width: 29px;
+    height: 29px;
+
+    min-width: 29px;
+
+    font-size: 11px;
+}
+
+#studentsPage .stat-card h3 {
+    font-size: 16px;
+}
+
+#studentsPage .stat-card span {
+    font-size: 8px;
+}
+
+}
+
+/* =========================================================
+ACCESSIBILITY
+========================================================= */
+
+#studentsPage button:focus-visible,
+#studentsPage input:focus-visible,
+#studentsPage select:focus-visible,
+#studentsPage textarea:focus-visible {
+outline: 2px solid var(--student-primary);
+
+outline-offset: 2px;
+
+}
+
+/* =========================================================
+REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+#studentsPage *,
+#studentsPage *::before,
+#studentsPage *::after {
+    animation: none !important;
+
+    transition: none !important;
+
+    scroll-behavior: auto !important;
+}
+
+}
+
+/* =========================================================
+PRINT
+========================================================= */
+
+@media print {
+
+#studentsPage .toolbar,
+#studentsPage .student-tabs,
+#studentsPage .bulk-bar,
+#studentsPage #pagination,
+#studentsPage .action-buttons,
+#studentsPage input[type="checkbox"] {
+    display: none !important;
+}
+
+#studentsPage .table-container {
+    overflow: visible;
+
+    box-shadow: none;
+
+    border: 1px solid #ccc;
+}
+
+#studentsPage .table-container > table {
+    min-width: 0;
+}
+
+}
+
+
+
+
+
+/* ==================================================
+APLUS TUTORS
+STUDENT MANAGEMENT MODALS
+================================================== */
+
+.student-modal {
+position: fixed;
+inset: 0;
+z-index: 1200;
+
+display: none;
+align-items: center;
+justify-content: center;
+
+padding: 20px;
+
+background: rgba(0, 0, 0, 0.58);
+
+overflow-y: auto;
+
+}
+
+.student-modal.show {
+display: flex;
+}
+
+.student-modal-dialog {
+width: 100%;
+max-width: 540px;
+
+margin: auto;
+
+background: #ffffff;
+
+border: 1px solid #eeeeee;
+border-radius: 18px;
+
+box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+
+animation: studentModalIn 0.22s ease;
+
+}
+
+.student-modal-header {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+
+gap: 18px;
+
+padding: 24px;
+
+border-bottom: 1px solid #eeeeee;
+
+}
+
+.student-modal-eyebrow {
+display: block;
+
+margin-bottom: 6px;
+
+color: #b00020;
+
+font-size: 0.72rem;
+font-weight: 750;
+
+letter-spacing: 1px;
+text-transform: uppercase;
+
+}
+
+.student-modal-header h3 {
+margin: 0;
+
+color: #171717;
+
+font-size: 1.35rem;
+font-weight: 750;
+
+}
+
+.student-modal-header p {
+margin: 7px 0 0;
+
+color: #777777;
+
+font-size: 0.84rem;
+line-height: 1.5;
+
+}
+
+.student-modal-close {
+display: flex;
+align-items: center;
+justify-content: center;
+
+flex-shrink: 0;
+
+width: 38px;
+height: 38px;
+
+border: 1px solid #eeeeee;
+border-radius: 10px;
+
+color: #555555;
+background: #ffffff;
+
+cursor: pointer;
+
+}
+
+.student-modal-close:hover {
+color: #b00020;
+background: #fff1f3;
+border-color: #f1c5ce;
+}
+
+.student-modal-body {
+padding: 24px;
+}
+
+.student-profile-heading {
+display: flex;
+align-items: center;
+
+gap: 16px;
+
+margin-bottom: 24px;
+padding-bottom: 22px;
+
+border-bottom: 1px solid #eeeeee;
+
+}
+
+.student-profile-photo {
+width: 78px;
+height: 78px;
+
+flex-shrink: 0;
+
+object-fit: cover;
+
+border: 3px solid #f5e2e6;
+border-radius: 50%;
+
+background: #f5f5f5;
+
+}
+
+.student-profile-identity {
+min-width: 0;
+}
+
+.student-profile-identity h4 {
+margin: 0 0 5px;
+
+color: #171717;
+
+font-size: 1.1rem;
+font-weight: 750;
+
+overflow-wrap: anywhere;
+
+}
+
+.student-profile-identity p {
+margin: 0 0 10px;
+
+color: #777777;
+
+font-size: 0.84rem;
+
+overflow-wrap: anywhere;
+
+}
+
+.student-profile-status {
+display: inline-block;
+
+padding: 5px 10px;
+
+border-radius: 30px;
+
+background: #f2f2f2;
+color: #555555;
+
+font-size: 0.72rem;
+font-weight: 750;
+
+text-transform: capitalize;
+
+}
+
+.student-profile-status.active {
+background: #e7f7ed;
+color: #18794e;
+}
+
+.student-profile-status.pending {
+background: #fff5d9;
+color: #946200;
+}
+
+.student-profile-status.suspended {
+background: #fde8e8;
+color: #b42318;
+}
+
+.student-details-list {
+display: flex;
+flex-direction: column;
+}
+
+.student-detail-row {
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+
+gap: 20px;
+
+padding: 14px 0;
+
+border-bottom: 1px solid #f0f0f0;
+
+}
+
+.student-detail-row:last-child {
+border-bottom: none;
+}
+
+.student-detail-label {
+color: #777777;
+
+font-size: 0.82rem;
+font-weight: 600;
+
+}
+
+.student-detail-value {
+max-width: 65%;
+
+color: #222222;
+
+font-size: 0.86rem;
+font-weight: 600;
+
+text-align: right;
+overflow-wrap: anywhere;
+
+}
+
+.student-id-value {
+font-size: 0.75rem;
+font-weight: 500;
+}
+
+.student-modal-footer {
+display: flex;
+justify-content: flex-end;
+align-items: center;
+
+gap: 10px;
+
+padding: 18px 24px;
+
+border-top: 1px solid #eeeeee;
+
+background: #fafafa;
+
+border-radius: 0 0 18px 18px;
+
+}
+
+.student-btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+
+gap: 8px;
+
+min-height: 42px;
+
+padding: 10px 16px;
+
+border: 1px solid transparent;
+border-radius: 9px;
+
+font-size: 0.85rem;
+font-weight: 650;
+
+cursor: pointer;
+
+transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+
+}
+
+.student-btn:hover {
+transform: translateY(-1px);
+}
+
+.student-btn-light {
+border-color: #dddddd;
+
+color: #444444;
+background: #ffffff;
+
+}
+
+.student-btn-light:hover {
+background: #f4f4f4;
+}
+
+.student-btn-primary {
+border-color: #b00020;
+
+color: #ffffff;
+background: #b00020;
+
+}
+
+.student-btn-primary:hover {
+border-color: #92001b;
+background: #92001b;
+}
+
+.student-btn:disabled {
+opacity: 0.65;
+cursor: not-allowed;
+transform: none;
+}
+
+.student-form-group {
+margin-bottom: 19px;
+}
+
+.student-form-group:last-of-type {
+margin-bottom: 0;
+}
+
+.student-form-group label {
+display: block;
+
+margin-bottom: 7px;
+
+color: #252525;
+
+font-size: 0.86rem;
+font-weight: 650;
+
+}
+
+.student-form-control {
+display: block;
+
+width: 100%;
+min-height: 46px;
+
+padding: 11px 13px;
+
+border: 1px solid #dddddd;
+border-radius: 9px;
+
+color: #222222;
+background: #ffffff;
+
+font: inherit;
+font-size: 0.88rem;
+
+outline: none;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+.student-form-control:focus {
+border-color: #b00020;
+
+box-shadow: 0 0 0 3px rgba(176, 0, 32, 0.08);
+
+}
+
+.student-form-message {
+margin-top: 15px;
+
+font-size: 0.83rem;
+line-height: 1.5;
+
+}
+
+.student-form-message:empty {
+display: none;
+}
+
+.student-form-message.error {
+color: #b42318;
+}
+
+.student-form-message.success {
+color: #18794e;
+}
+
+@keyframes studentModalIn {
+from {
+opacity: 0;
+transform: translateY(10px) scale(0.98);
+}
+
+to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+}
+
+@media (max-width: 575.98px) {
+.student-modal {
+align-items: flex-start;
+padding: 12px;
+}
+
+.student-modal-dialog {
+    margin: auto 0;
+    border-radius: 14px;
+}
+
+.student-modal-header,
+.student-modal-body {
+    padding: 19px;
+}
+
+.student-modal-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+
+    padding: 16px 19px;
+}
+
+.student-btn {
+    width: 100%;
+}
+
+.student-profile-photo {
+    width: 64px;
+    height: 64px;
+}
+
+.student-detail-row {
+    flex-direction: column;
+    gap: 6px;
+}
+
+.student-detail-value {
+    max-width: 100%;
+    text-align: left;
+}
+
+}
+
+[data-theme="dark"] .student-modal-dialog {
+border-color: #333333;
+background: #1c1c1c;
+}
+
+[data-theme="dark"] .student-modal-header,
+[data-theme="dark"] .student-profile-heading,
+[data-theme="dark"] .student-detail-row {
+border-color: #333333;
+}
+
+[data-theme="dark"] .student-modal-header h3,
+[data-theme="dark"] .student-profile-identity h4,
+[data-theme="dark"] .student-detail-value,
+[data-theme="dark"] .student-form-group label {
+color: #eeeeee;
+}
+
+[data-theme="dark"] .student-modal-header p,
+[data-theme="dark"] .student-profile-identity p,
+[data-theme="dark"] .student-detail-label {
+color: #aaaaaa;
+}
+
+[data-theme="dark"] .student-modal-close,
+[data-theme="dark"] .student-btn-light {
+border-color: #444444;
+color: #eeeeee;
+background: #242424;
+}
+
+[data-theme="dark"] .student-modal-footer {
+border-color: #333333;
+background: #181818;
+}
+
+[data-theme="dark"] .student-form-control {
+border-color: #444444;
+color: #eeeeee;
+background: #242424;
+}
+
+
+/* =========================================
+   STUDENT SAVE CONFIRMATION
+========================================= */
+
+.student-form-message {
+    display: none;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.student-form-message.success {
+    display: block !important;
+    background: #e8f8ef;
+    color: #176b3a;
+    border: 1px solid #a7e3bf;
+}
+
+.student-form-message.error {
+    display: block !important;
+    background: #fff0f0;
+    color: #b42332;
+    border: 1px solid #f2b8bd;
+}
