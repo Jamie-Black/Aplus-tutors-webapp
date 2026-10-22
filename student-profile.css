@@ -1,0 +1,2369 @@
+/* =========================================================
+APLUS TUTORS
+STUDENT PROFILE PAGE
+========================================================= */
+
+/* =========================================================
+ROOT VARIABLES
+========================================================= */
+
+:root {
+
+--profile-primary: #8b0000;
+--profile-primary-dark: #650000;
+--profile-primary-light: #b00020;
+--profile-accent: #dc143c;
+
+--profile-black: #0b0b0b;
+--profile-black-soft: #161616;
+
+--profile-bg: #f5f6f8;
+--profile-white: #ffffff;
+
+--profile-text: #181818;
+--profile-text-soft: #606060;
+--profile-text-muted: #858585;
+
+--profile-border: #e6e6e6;
+
+--profile-success: #198754;
+--profile-danger: #dc3545;
+--profile-warning: #b7791f;
+
+--profile-radius-sm: 10px;
+--profile-radius: 16px;
+--profile-radius-lg: 20px;
+
+--profile-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.05);
+
+--profile-shadow-hover:
+    0 14px 35px rgba(0, 0, 0, 0.09);
+
+--profile-transition:
+    all 0.25s ease;
+
+}
+
+/* =========================================================
+PAGE
+========================================================= */
+
+.student-profile-page {
+
+width: 100%;
+max-width: 1450px;
+
+margin: 0 auto;
+
+padding: 30px 32px 60px;
+
+color: var(--profile-text);
+
+}
+
+/* =========================================================
+PAGE HEADER
+========================================================= */
+
+.profile-page-header {
+
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+
+margin-bottom: 25px;
+
+}
+
+.profile-eyebrow,
+.profile-card-eyebrow,
+.profile-overview-label {
+
+display: block;
+
+font-size: 11px;
+font-weight: 800;
+
+letter-spacing: 0.12em;
+
+color: var(--profile-primary-light);
+
+margin-bottom: 7px;
+
+}
+
+.profile-page-header h1 {
+
+margin: 0;
+
+font-size: clamp(27px, 3vw, 36px);
+
+font-weight: 800;
+
+line-height: 1.15;
+
+color: var(--profile-black);
+
+}
+
+.profile-page-header p {
+
+margin: 9px 0 0;
+
+max-width: 650px;
+
+font-size: 14px;
+line-height: 1.6;
+
+color: var(--profile-text-soft);
+
+}
+
+/* =========================================================
+PROFILE MESSAGE
+========================================================= */
+
+.profile-message,
+.password-message {
+
+display: none;
+
+padding: 12px 15px;
+
+border-radius: 10px;
+
+margin-bottom: 20px;
+
+font-size: 13px;
+font-weight: 600;
+
+}
+
+.profile-message.show,
+.password-message.show {
+
+display: block;
+
+}
+
+.profile-message.success,
+.password-message.success {
+
+background: #eaf7ef;
+
+color: #176b3a;
+
+border: 1px solid #c8ecd6;
+
+}
+
+.profile-message.error,
+.password-message.error {
+
+background: #fff0f1;
+
+color: #a71d2a;
+
+border: 1px solid #f5c6cb;
+
+}
+
+/* =========================================================
+PROFILE OVERVIEW
+========================================================= */
+
+.profile-overview-card {
+
+display: flex;
+align-items: center;
+
+gap: 24px;
+
+padding: 26px;
+
+margin-bottom: 24px;
+
+background: var(--profile-white);
+
+border: 1px solid var(--profile-border);
+
+border-radius: var(--profile-radius-lg);
+
+box-shadow: var(--profile-shadow);
+
+}
+
+/* =========================================================
+OVERVIEW PHOTO
+========================================================= */
+
+.profile-overview-photo {
+
+position: relative;
+
+width: 105px;
+height: 105px;
+
+flex: 0 0 105px;
+
+}
+
+.profile-overview-photo img {
+
+width: 100%;
+height: 100%;
+
+object-fit: cover;
+
+border-radius: 50%;
+
+border: 4px solid #fff;
+
+box-shadow:
+    0 0 0 2px var(--profile-primary-light),
+    0 8px 20px rgba(0, 0, 0, 0.12);
+
+}
+
+.profile-photo-edit {
+
+position: absolute;
+
+right: -3px;
+bottom: 1px;
+
+width: 34px;
+height: 34px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+border: 3px solid #fff;
+
+border-radius: 50%;
+
+background: var(--profile-primary);
+
+color: #fff;
+
+font-size: 13px;
+
+cursor: pointer;
+
+transition: var(--profile-transition);
+
+}
+
+.profile-photo-edit:hover {
+
+background: var(--profile-primary-dark);
+
+transform: scale(1.06);
+
+}
+
+/* =========================================================
+OVERVIEW INFO
+========================================================= */
+
+.profile-overview-info {
+
+min-width: 0;
+
+}
+
+.profile-overview-info h2 {
+
+margin: 0;
+
+font-size: 24px;
+
+font-weight: 800;
+
+color: var(--profile-black);
+
+overflow-wrap: anywhere;
+
+}
+
+.profile-overview-info p {
+
+margin: 5px 0 13px;
+
+font-size: 14px;
+
+color: var(--profile-text-soft);
+
+overflow-wrap: anywhere;
+
+}
+
+.profile-overview-meta {
+
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+
+gap: 8px;
+
+}
+
+.profile-status-badge,
+.profile-department-badge {
+
+display: inline-flex;
+align-items: center;
+
+min-height: 28px;
+
+padding: 5px 11px;
+
+border-radius: 999px;
+
+font-size: 11px;
+
+font-weight: 700;
+
+}
+
+.profile-status-badge {
+
+background: #eaf7ef;
+
+color: #18733e;
+
+}
+
+.profile-department-badge {
+
+background: #f8e8eb;
+
+color: var(--profile-primary);
+
+}
+
+/* =========================================================
+MAIN PROFILE GRID
+========================================================= */
+
+.profile-content-grid {
+
+display: grid;
+
+grid-template-columns:
+    minmax(0, 1.45fr)
+    minmax(300px, 0.75fr);
+
+gap: 24px;
+
+align-items: start;
+
+}
+
+.profile-side-column {
+
+display: flex;
+flex-direction: column;
+
+gap: 24px;
+
+}
+
+/* =========================================================
+GENERAL CARD
+========================================================= */
+
+.profile-card {
+
+background: var(--profile-white);
+
+border: 1px solid var(--profile-border);
+
+border-radius: var(--profile-radius-lg);
+
+box-shadow: var(--profile-shadow);
+
+padding: 25px;
+
+}
+
+/* =========================================================
+CARD HEADER
+========================================================= */
+
+.profile-card-header {
+
+display: flex;
+align-items: flex-start;
+justify-content: space-between;
+
+gap: 20px;
+
+margin-bottom: 25px;
+
+}
+
+.profile-card-header h2 {
+
+margin: 0;
+
+font-size: 19px;
+
+font-weight: 800;
+
+color: var(--profile-black);
+
+}
+
+.profile-card-icon {
+
+width: 42px;
+height: 42px;
+
+flex: 0 0 42px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+border-radius: 12px;
+
+background: #f9e9ec;
+
+color: var(--profile-primary);
+
+font-size: 16px;
+
+}
+
+/* =========================================================
+FORM
+========================================================= */
+
+.profile-form-group {
+
+margin-bottom: 19px;
+
+}
+
+.profile-form-group label {
+
+display: block;
+
+margin-bottom: 7px;
+
+font-size: 13px;
+
+font-weight: 700;
+
+color: #303030;
+
+}
+
+.profile-input-wrapper {
+
+position: relative;
+
+display: flex;
+align-items: center;
+
+}
+
+.profile-input-wrapper > i {
+
+position: absolute;
+
+left: 15px;
+
+color: #929292;
+
+font-size: 14px;
+
+pointer-events: none;
+
+}
+
+.profile-input-wrapper input {
+
+width: 100%;
+
+min-height: 48px;
+
+padding:
+    11px
+    14px
+    11px
+    43px;
+
+border: 1px solid #dcdcdc;
+
+border-radius: 11px;
+
+outline: none;
+
+background: #fff;
+
+color: var(--profile-text);
+
+font-family: inherit;
+
+font-size: 14px;
+
+transition: var(--profile-transition);
+
+}
+
+.profile-input-wrapper input::placeholder {
+
+color: #aaa;
+
+}
+
+.profile-input-wrapper input:focus {
+
+border-color: var(--profile-primary-light);
+
+box-shadow:
+    0 0 0 3px rgba(176, 0, 32, 0.08);
+
+}
+
+.profile-input-wrapper input[readonly] {
+
+background: #f7f7f7;
+
+color: #666;
+
+cursor: default;
+
+}
+
+.profile-form-group small {
+
+display: block;
+
+margin-top: 6px;
+
+color: var(--profile-text-muted);
+
+font-size: 11px;
+
+line-height: 1.5;
+
+}
+
+/* =========================================================
+FORM ACTIONS
+========================================================= */
+
+.profile-form-actions {
+
+display: flex;
+
+justify-content: flex-end;
+
+padding-top: 5px;
+
+}
+
+/* =========================================================
+BUTTONS
+========================================================= */
+
+.profile-primary-btn,
+.profile-secondary-btn,
+.profile-cancel-btn {
+
+min-height: 45px;
+
+display: inline-flex;
+
+align-items: center;
+justify-content: center;
+
+gap: 8px;
+
+padding: 10px 17px;
+
+border-radius: 10px;
+
+font-family: inherit;
+
+font-size: 13px;
+
+font-weight: 700;
+
+cursor: pointer;
+
+transition: var(--profile-transition);
+
+}
+
+.profile-primary-btn {
+
+border: 1px solid var(--profile-primary);
+
+background: var(--profile-primary);
+
+color: #fff;
+
+}
+
+.profile-primary-btn:hover {
+
+background: var(--profile-primary-dark);
+
+border-color: var(--profile-primary-dark);
+
+transform: translateY(-1px);
+
+box-shadow:
+    0 7px 18px rgba(139, 0, 0, 0.18);
+
+}
+
+.profile-secondary-btn {
+
+width: 100%;
+
+border: 1px solid #d7d7d7;
+
+background: #fff;
+
+color: var(--profile-primary);
+
+}
+
+.profile-secondary-btn:hover {
+
+background: #fff6f7;
+
+border-color: var(--profile-primary-light);
+
+}
+
+.profile-cancel-btn {
+
+border: 1px solid #ddd;
+
+background: #fff;
+
+color: #555;
+
+}
+
+.profile-cancel-btn:hover {
+
+background: #f5f5f5;
+
+}
+
+/* =========================================================
+PHOTO CARD
+========================================================= */
+
+.profile-photo-card {
+
+text-align: center;
+
+}
+
+.profile-photo-card .profile-card-header {
+
+text-align: left;
+
+}
+
+.profile-photo-preview-wrapper {
+
+width: 145px;
+height: 145px;
+
+margin: 4px auto 20px;
+
+}
+
+.profile-photo-preview {
+
+width: 100%;
+height: 100%;
+
+object-fit: cover;
+
+border-radius: 50%;
+
+border: 4px solid #fff;
+
+box-shadow:
+    0 0 0 2px #ead6da,
+    0 10px 25px rgba(0, 0, 0, 0.1);
+
+}
+
+.photo-upload-status {
+
+min-height: 18px;
+
+margin: 10px 0 0;
+
+font-size: 12px;
+
+color: var(--profile-primary);
+
+}
+
+.profile-photo-help {
+
+display: block;
+
+margin-top: 8px;
+
+color: var(--profile-text-muted);
+
+font-size: 11px;
+
+line-height: 1.5;
+
+}
+
+/* =========================================================
+ACCOUNT INFORMATION
+========================================================= */
+
+.account-info-list {
+
+border-top: 1px solid var(--profile-border);
+
+}
+
+.account-info-item {
+
+display: flex;
+
+align-items: center;
+justify-content: space-between;
+
+gap: 15px;
+
+padding: 14px 0;
+
+border-bottom: 1px solid var(--profile-border);
+
+}
+
+.account-info-item:last-child {
+
+border-bottom: 0;
+
+}
+
+.account-info-item span {
+
+font-size: 12px;
+
+color: var(--profile-text-muted);
+
+}
+
+.account-info-item strong {
+
+max-width: 55%;
+
+text-align: right;
+
+font-size: 13px;
+
+color: var(--profile-text);
+
+overflow-wrap: anywhere;
+
+}
+
+/* =========================================================
+SECURITY
+========================================================= */
+
+.security-card {
+
+margin-top: 24px;
+
+}
+
+.security-content {
+
+display: flex;
+
+align-items: center;
+
+gap: 18px;
+
+}
+
+.security-icon {
+
+width: 52px;
+height: 52px;
+
+flex: 0 0 52px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+border-radius: 14px;
+
+background: #f9e9ec;
+
+color: var(--profile-primary);
+
+font-size: 19px;
+
+}
+
+.security-text {
+
+flex: 1;
+
+min-width: 0;
+
+}
+
+.security-text h2 {
+
+margin: 0;
+
+font-size: 18px;
+
+font-weight: 800;
+
+color: var(--profile-black);
+
+}
+
+.security-text p {
+
+margin: 5px 0 0;
+
+font-size: 13px;
+
+line-height: 1.55;
+
+color: var(--profile-text-soft);
+
+}
+
+.security-content .profile-secondary-btn {
+
+width: auto;
+
+flex-shrink: 0;
+
+}
+
+/* =========================================================
+QUICK ACCESS
+========================================================= */
+
+.profile-shortcuts {
+
+margin-top: 34px;
+
+}
+
+.profile-section-heading {
+
+margin-bottom: 17px;
+
+}
+
+.profile-section-heading h2 {
+
+margin: 0;
+
+font-size: 20px;
+
+font-weight: 800;
+
+color: var(--profile-black);
+
+}
+
+.profile-shortcuts-grid {
+
+display: grid;
+
+grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+gap: 15px;
+
+}
+
+.profile-shortcut-card {
+
+position: relative;
+
+min-width: 0;
+
+display: flex;
+
+align-items: center;
+
+gap: 13px;
+
+padding: 18px;
+
+border: 1px solid var(--profile-border);
+
+border-radius: 15px;
+
+background: #fff;
+
+color: var(--profile-text);
+
+text-decoration: none;
+
+box-shadow: 0 5px 18px rgba(0, 0, 0, 0.035);
+
+transition: var(--profile-transition);
+
+}
+
+.profile-shortcut-card:hover {
+
+color: var(--profile-text);
+
+border-color: #e3b8c0;
+
+transform: translateY(-3px);
+
+box-shadow: var(--profile-shadow-hover);
+
+}
+
+.shortcut-icon {
+
+width: 42px;
+height: 42px;
+
+flex: 0 0 42px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+border-radius: 11px;
+
+background: #f9e9ec;
+
+color: var(--profile-primary);
+
+font-size: 15px;
+
+}
+
+.shortcut-content {
+
+min-width: 0;
+
+flex: 1;
+
+}
+
+.shortcut-content strong {
+
+display: block;
+
+margin-bottom: 3px;
+
+font-size: 13px;
+
+font-weight: 800;
+
+color: var(--profile-black);
+
+}
+
+.shortcut-content small {
+
+display: block;
+
+color: var(--profile-text-muted);
+
+font-size: 11px;
+
+line-height: 1.45;
+
+}
+
+.shortcut-arrow {
+
+flex: 0 0 auto;
+
+color: #aaa;
+
+font-size: 12px;
+
+transition: var(--profile-transition);
+
+}
+
+.profile-shortcut-card:hover .shortcut-arrow {
+
+color: var(--profile-primary);
+
+transform: translateX(3px);
+
+}
+
+/* =========================================================
+LOGOUT
+========================================================= */
+
+.profile-logout-section {
+
+display: flex;
+
+justify-content: center;
+
+padding-top: 35px;
+
+}
+
+.profile-logout-btn {
+
+min-height: 44px;
+
+display: inline-flex;
+
+align-items: center;
+justify-content: center;
+
+gap: 8px;
+
+padding: 10px 20px;
+
+border: 1px solid #f0c5ca;
+
+border-radius: 10px;
+
+background: #fff5f6;
+
+color: #b42332;
+
+font-family: inherit;
+
+font-size: 13px;
+
+font-weight: 700;
+
+cursor: pointer;
+
+transition: var(--profile-transition);
+
+}
+
+.profile-logout-btn:hover {
+
+background: #ffe8eb;
+
+border-color: #e7aeb5;
+
+}
+
+/* =========================================================
+PASSWORD MODAL
+========================================================= */
+
+.profile-password-modal {
+
+border: 0;
+
+border-radius: 18px;
+
+overflow: hidden;
+
+box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.18);
+
+}
+
+.profile-password-modal .modal-header {
+
+padding: 22px 24px 17px;
+
+border-bottom: 1px solid var(--profile-border);
+
+background: #fff;
+
+}
+
+.profile-password-modal .modal-title {
+
+margin: 0;
+
+font-size: 20px;
+
+font-weight: 800;
+
+color: var(--profile-black);
+
+}
+
+.profile-password-modal .modal-body {
+
+padding: 24px;
+
+}
+
+.profile-password-modal .btn-close {
+
+box-shadow: none;
+
+}
+
+/* =========================================================
+PASSWORD FORM ACTIONS
+========================================================= */
+
+.password-form-actions {
+
+display: flex;
+
+align-items: center;
+
+justify-content: flex-end;
+
+gap: 10px;
+
+padding-top: 7px;
+
+}
+
+/* =========================================================
+PAGE LOADER
+========================================================= */
+
+.page-loader {
+
+position: fixed;
+
+inset: 0;
+
+z-index: 9999;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+background: #fff;
+
+}
+
+.loader-wrapper {
+
+text-align: center;
+
+}
+
+.loader {
+
+width: 42px;
+height: 42px;
+
+margin: 0 auto 15px;
+
+border: 4px solid #eee;
+
+border-top-color: var(--profile-primary);
+
+border-radius: 50%;
+
+animation:
+    profileLoaderSpin 0.8s linear infinite;
+
+}
+
+.loader-brand {
+
+margin-bottom: 5px;
+
+color: var(--profile-black);
+
+font-size: 17px;
+
+font-weight: 800;
+
+}
+
+.loader-wrapper p {
+
+margin: 0;
+
+color: #888;
+
+font-size: 12px;
+
+}
+
+@keyframes profileLoaderSpin {
+
+to {
+    transform: rotate(360deg);
+}
+
+}
+
+/* =========================================================
+LARGE TABLETS
+========================================================= */
+
+@media (max-width: 1100px) {
+
+.student-profile-page {
+
+    padding: 25px 24px 50px;
+
+}
+
+.profile-content-grid {
+
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(280px, 0.75fr);
+
+}
+
+.profile-shortcuts-grid {
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+}
+
+}
+
+/* =========================================================
+TABLETS
+========================================================= */
+
+@media (max-width: 850px) {
+
+.student-profile-page {
+
+    padding: 22px 20px 45px;
+
+}
+
+.profile-content-grid {
+
+    grid-template-columns: 1fr;
+
+}
+
+.profile-side-column {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    align-items: start;
+
+}
+
+.profile-side-column {
+
+    gap: 18px;
+
+}
+
+.profile-card {
+
+    padding: 22px;
+
+}
+
+.security-content {
+
+    align-items: flex-start;
+
+}
+
+}
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+.student-profile-page {
+
+    padding: 18px 14px 40px;
+
+}
+
+.profile-page-header {
+
+    margin-bottom: 20px;
+
+}
+
+.profile-page-header h1 {
+
+    font-size: 27px;
+
+}
+
+.profile-page-header p {
+
+    font-size: 13px;
+
+}
+
+
+/* OVERVIEW */
+
+.profile-overview-card {
+
+    align-items: flex-start;
+
+    gap: 16px;
+
+    padding: 19px;
+
+    border-radius: 16px;
+
+}
+
+.profile-overview-photo {
+
+    width: 78px;
+    height: 78px;
+
+    flex: 0 0 78px;
+
+}
+
+.profile-photo-edit {
+
+    width: 29px;
+    height: 29px;
+
+    right: -2px;
+    bottom: -1px;
+
+    font-size: 11px;
+
+}
+
+.profile-overview-info h2 {
+
+    font-size: 19px;
+
+}
+
+.profile-overview-info p {
+
+    font-size: 12px;
+
+    margin-bottom: 9px;
+
+}
+
+.profile-status-badge,
+.profile-department-badge {
+
+    min-height: 25px;
+
+    padding: 4px 9px;
+
+    font-size: 10px;
+
+}
+
+
+/* SIDE COLUMN */
+
+.profile-side-column {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+}
+
+
+/* CARDS */
+
+.profile-card {
+
+    padding: 19px;
+
+    border-radius: 15px;
+
+}
+
+.profile-card-header {
+
+    margin-bottom: 20px;
+
+    gap: 12px;
+
+}
+
+.profile-card-header h2 {
+
+    font-size: 17px;
+
+}
+
+.profile-card-icon {
+
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+}
+
+
+/* FORM */
+
+.profile-form-group {
+
+    margin-bottom: 16px;
+
+}
+
+.profile-input-wrapper input {
+
+    min-height: 46px;
+
+    font-size: 13px;
+
+}
+
+.profile-form-actions {
+
+    justify-content: stretch;
+
+}
+
+.profile-form-actions .profile-primary-btn {
+
+    width: 100%;
+
+}
+
+
+/* PHOTO */
+
+.profile-photo-preview-wrapper {
+
+    width: 125px;
+    height: 125px;
+
+}
+
+
+/* SECURITY */
+
+.security-card {
+
+    margin-top: 18px;
+
+}
+
+.security-content {
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    text-align: left;
+
+}
+
+.security-icon {
+
+    width: 45px;
+    height: 45px;
+
+    flex-basis: 45px;
+
+    font-size: 16px;
+
+}
+
+.security-text h2 {
+
+    font-size: 17px;
+
+}
+
+.security-text p {
+
+    font-size: 12px;
+
+}
+
+.security-content .profile-secondary-btn {
+
+    width: 100%;
+
+}
+
+
+/* SHORTCUTS */
+
+.profile-shortcuts {
+
+    margin-top: 28px;
+
+}
+
+.profile-shortcuts-grid {
+
+    grid-template-columns: 1fr;
+
+    gap: 11px;
+
+}
+
+.profile-shortcut-card {
+
+    padding: 15px;
+
+    border-radius: 13px;
+
+}
+
+.shortcut-icon {
+
+    width: 39px;
+    height: 39px;
+
+    flex-basis: 39px;
+
+}
+
+
+/* LOGOUT */
+
+.profile-logout-section {
+
+    padding-top: 28px;
+
+}
+
+.profile-logout-btn {
+
+    width: 100%;
+
+}
+
+
+/* PASSWORD MODAL */
+
+.profile-password-modal .modal-header {
+
+    padding: 19px;
+
+}
+
+.profile-password-modal .modal-body {
+
+    padding: 19px;
+
+}
+
+.password-form-actions {
+
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+
+}
+
+.password-form-actions button {
+
+    width: 100%;
+
+}
+
+}
+
+
+
+/* =========================================================
+SMALL PHONES
+========================================================= */
+
+@media (max-width: 420px) {
+
+.student-profile-page {
+
+padding-left: 11px;  
+padding-right: 11px;
+
+}
+
+.profile-overview-card {
+
+padding: 15px;
+
+}
+
+.profile-overview-photo {
+
+width: 66px;  
+height: 66px;  
+
+flex-basis: 66px;
+
+}
+
+.profile-overview-info h2 {
+
+font-size: 17px;
+
+}
+
+.profile-overview-info p {
+
+font-size: 11px;
+
+}
+
+.profile-card {
+
+width:100%;
+padding: 16px;
+
+}
+
+.profile-card-header h2 {
+
+font-size: 16px;
+
+}
+
+.profile-card-eyebrow {
+
+font-size: 9px;
+
+}
+
+.profile-input-wrapper input {
+
+min-height: 44px;  
+
+padding-left: 40px;  
+
+font-size: 12px;
+
+}
+
+.profile-form-group label {
+
+font-size: 12px;
+
+}
+
+.account-info-item {
+
+align-items: flex-start;  
+
+flex-direction: column;  
+
+gap: 4px;
+
+}
+
+.account-info-item strong {
+
+max-width: 100%;  
+
+text-align: left;
+
+}
+
+.profile-shortcut-card {
+
+gap: 11px;
+
+}
+
+.shortcut-content strong {
+font-size: 12px;
+
+}
+
+.shortcut-content small {
+
+font-size: 10px;
+
+}
+
+}
+
+/* =========================================================
+VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 350px) {
+
+.profile-overview-card {
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+}
+
+.profile-overview-meta {
+
+    justify-content: center;
+
+}
+
+.profile-overview-photo {
+
+    width: 80px;
+    height: 80px;
+
+    flex-basis: 80px;
+
+}
+
+.profile-overview-info {
+
+    width: 100%;
+
+}
+
+.profile-overview-info h2 {
+
+    font-size: 18px;
+
+}
+
+}
+
+/* =========================================================
+EXTRA SMALL SCREENS
+========================================================= */
+
+@media (max-width: 320px) {
+
+.student-profile-page {
+
+    padding-left: 8px;
+    padding-right: 8px;
+
+}
+
+.profile-card {
+
+    padding: 14px;
+
+}
+
+.profile-overview-card {
+
+    padding: 13px;
+
+}
+
+.profile-page-header h1 {
+
+    font-size: 24px;
+
+}
+
+.profile-page-header p {
+
+    font-size: 12px;
+
+}
+
+.profile-overview-photo {
+
+    width: 72px;
+    height: 72px;
+
+    flex-basis: 72px;
+
+}
+
+.profile-overview-info h2 {
+
+    font-size: 17px;
+
+}
+
+.profile-overview-info p {
+
+    font-size: 10px;
+
+}
+
+.profile-card-header {
+
+    margin-bottom: 17px;
+
+}
+
+.profile-card-header h2 {
+
+    font-size: 15px;
+
+}
+
+.profile-card-icon {
+
+    width: 34px;
+    height: 34px;
+
+    flex-basis: 34px;
+
+    font-size: 12px;
+
+}
+
+.profile-input-wrapper input {
+
+    min-height: 42px;
+
+    padding-left: 37px;
+
+    font-size: 11px;
+
+}
+
+.profile-input-wrapper > i {
+
+    left: 12px;
+
+    font-size: 12px;
+
+}
+
+.profile-primary-btn,
+.profile-secondary-btn,
+.profile-cancel-btn {
+
+    min-height: 42px;
+
+    padding: 9px 13px;
+
+    font-size: 12px;
+
+}
+
+.profile-photo-preview-wrapper {
+
+    width: 110px;
+    height: 110px;
+
+}
+
+.security-text h2 {
+
+    font-size: 16px;
+
+}
+
+.security-text p {
+
+    font-size: 11px;
+
+}
+
+.profile-shortcut-card {
+
+    padding: 13px;
+
+}
+
+.shortcut-icon {
+
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+
+    font-size: 13px;
+
+}
+
+.shortcut-content strong {
+
+    font-size: 11px;
+
+}
+
+.shortcut-content small {
+
+    font-size: 9px;
+
+}
+
+}
+
+/* =========================================================
+PREVENT HORIZONTAL OVERFLOW
+========================================================= */
+
+.student-profile-page,
+.profile-content-grid,
+.profile-card,
+.profile-overview-card,
+.profile-shortcuts,
+.profile-shortcuts-grid {
+
+max-width: 100%;
+
+}
+
+.profile-overview-info,
+.profile-card,
+.profile-side-column,
+.shortcut-content {
+
+min-width: 0;
+
+}
+
+/* =========================================================
+ACCESSIBILITY
+========================================================= */
+
+.profile-primary-btn:focus-visible,
+.profile-secondary-btn:focus-visible,
+.profile-cancel-btn:focus-visible,
+.profile-photo-edit:focus-visible,
+.profile-logout-btn:focus-visible,
+.profile-shortcut-card:focus-visible {
+
+outline: 3px solid rgba(176, 0, 32, 0.22);
+
+outline-offset: 2px;
+
+}
+
+/* =========================================================
+REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+.profile-primary-btn,
+.profile-secondary-btn,
+.profile-cancel-btn,
+.profile-photo-edit,
+.profile-shortcut-card,
+.shortcut-arrow {
+
+    transition: none;
+
+}
+
+.loader {
+
+    animation: none;
+
+}
+
+}
+
+
+
+
+/* =========================================================
+   APLUS TUTORS — QUICK ACCESS
+========================================================= */
+
+.profile-shortcuts {
+    position: relative;
+    width: 100%;
+    margin-bottom: 28px;
+    padding: 26px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 18px;
+    box-shadow: 0 5px 24px rgba(5, 5, 5, 0.045);
+}
+
+/* Top crimson accent */
+
+.profile-shortcuts::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(
+        90deg,
+        #a80f2e 0%,
+        #dc143c 60%,
+        #ff3157 100%
+    );
+}
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.profile-shortcuts .profile-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.profile-shortcuts .profile-card-eyebrow {
+    display: inline-block;
+    margin-bottom: 7px;
+    color: #dc143c;
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+}
+
+.profile-shortcuts .profile-section-heading h2 {
+    margin: 0;
+    color: #080808;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.6px;
+}
+
+/* =========================================================
+   SHORTCUT GRID
+========================================================= */
+
+.profile-shortcuts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+/* =========================================================
+   INDIVIDUAL SHORTCUT CARD
+========================================================= */
+
+.profile-shortcut-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    min-height: 118px;
+    padding: 19px 16px;
+    overflow: hidden;
+
+    color: #111111;
+    text-decoration: none;
+
+    background: #ffffff;
+    border: 1px solid #e9e9e9;
+    border-radius: 15px;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+/* Subtle background glow */
+
+.profile-shortcut-card::before {
+    content: "";
+    position: absolute;
+    right: -35px;
+    bottom: -45px;
+    width: 100px;
+    height: 100px;
+
+    background: rgba(220, 20, 60, 0.035);
+    border-radius: 50%;
+
+    transition:
+        transform 0.3s ease,
+        background-color 0.3s ease;
+
+    pointer-events: none;
+}
+
+/* Hover interaction */
+
+.profile-shortcut-card:hover {
+    color: #080808;
+    text-decoration: none;
+
+    background: #fffafb;
+    border-color: rgba(220, 20, 60, 0.35);
+
+    box-shadow: 0 9px 25px rgba(5, 5, 5, 0.065);
+
+    transform: translateY(-4px);
+}
+
+.profile-shortcut-card:hover::before {
+    background: rgba(220, 20, 60, 0.075);
+    transform: scale(1.5);
+}
+
+.profile-shortcut-card:focus-visible {
+    outline: 3px solid rgba(220, 20, 60, 0.4);
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   SHORTCUT ICON
+========================================================= */
+
+.profile-shortcut-icon {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+
+    color: #dc143c;
+    background: #fff0f3;
+
+    border: 1px solid #ffe0e7;
+    border-radius: 14px;
+
+    font-size: 1.2rem;
+
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.profile-shortcut-card:hover .profile-shortcut-icon {
+    color: #ffffff;
+    background: #dc143c;
+    border-color: #dc143c;
+    transform: scale(1.06);
+}
+
+/* =========================================================
+   SHORTCUT CONTENT
+========================================================= */
+
+.profile-shortcut-content {
+    position: relative;
+    z-index: 1;
+
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-shortcut-content h4 {
+    margin: 0 0 7px;
+
+    color: #111111;
+
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 0.96rem;
+    font-weight: 700;
+    line-height: 1.4;
+
+    transition: color 0.2s ease;
+}
+
+.profile-shortcut-card:hover .profile-shortcut-content h4 {
+    color: #a80f2e;
+}
+
+.profile-shortcut-content p {
+    margin: 0;
+
+    color: #777777;
+
+    font-family: "DM Sans", sans-serif;
+    font-size: 0.79rem;
+    font-weight: 400;
+    line-height: 1.65;
+}
+
+/* =========================================================
+   RIGHT ARROW
+========================================================= */
+
+.profile-shortcut-arrow {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 27px;
+    width: 27px;
+    height: 27px;
+
+    color: #999999;
+    background: #f6f6f6;
+
+    border-radius: 50%;
+    font-size: 0.7rem;
+
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.profile-shortcut-card:hover .profile-shortcut-arrow {
+    color: #ffffff;
+    background: #dc143c;
+    transform: translateX(3px);
+}
+
+/* =========================================================
+   TABLET RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 1000px) {
+    .profile-shortcuts-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .profile-shortcut-card {
+        min-height: 110px;
+    }
+}
+
+/* =========================================================
+   MOBILE RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 600px) {
+    .profile-shortcuts {
+        padding: 20px 16px;
+        margin-bottom: 22px;
+        border-radius: 15px;
+    }
+
+    .profile-shortcuts .profile-section-heading {
+        margin-bottom: 19px;
+    }
+
+    .profile-shortcuts .profile-section-heading h2 {
+        font-size: 1.25rem;
+    }
+
+    .profile-shortcuts-grid {
+        grid-template-columns: 1fr;
+        gap: 11px;
+    }
+
+    .profile-shortcut-card {
+        gap: 13px;
+        min-height: 88px;
+        padding: 15px;
+        border-radius: 13px;
+    }
+
+    .profile-shortcut-icon {
+        flex-basis: 44px;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        font-size: 1.1rem;
+    }
+
+    .profile-shortcut-content h4 {
+        margin-bottom: 4px;
+        font-size: 0.92rem;
+    }
+
+    .profile-shortcut-content p {
+        font-size: 0.78rem;
+        line-height: 1.5;
+    }
+
+    .profile-shortcut-arrow {
+        flex-basis: 25px;
+        width: 25px;
+        height: 25px;
+    }
+}
+
+/* =========================================================
+   EXTRA SMALL SCREENS
+========================================================= */
+
+@media (max-width: 360px) {
+    .profile-shortcuts {
+        padding: 17px 12px;
+    }
+
+    .profile-shortcut-card {
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .profile-shortcut-icon {
+        flex-basis: 39px;
+        width: 39px;
+        height: 39px;
+        font-size: 1rem;
+    }
+
+    .profile-shortcut-content h4 {
+        font-size: 0.87rem;
+    }
+
+    .profile-shortcut-content p {
+        font-size: 0.74rem;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .profile-shortcut-card,
+    .profile-shortcut-card::before,
+    .profile-shortcut-icon,
+    .profile-shortcut-content h4,
+    .profile-shortcut-arrow {
+        transition: none;
+    }
+
+    .profile-shortcut-card:hover {
+        transform: none;
+    }
+}

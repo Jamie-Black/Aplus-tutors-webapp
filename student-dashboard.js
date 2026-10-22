@@ -28,7 +28,9 @@ const pageLoader =
 CURRENT USER
 ==================================================*/
 
-let currentUser = null;
+let currentStudent= null;
+
+let greetingClockInterval = null;
 /* ==================================================
    PHASE 3B — DIAGNOSTIC SUBJECT LOADING
 ================================================== */
@@ -36,183 +38,101 @@ let currentUser = null;
 let studentSubjects = [];
 
 
+/* ==================================================
+STUDENT SUBJECT LOADING
+================================================== */
+
+function normalizeDepartment(value) {
+    const department = String(value || "")
+        .trim()
+        .toLowerCase();
+    
+    if (department === "science" || department === "sciences") {
+        return "science";
+    }
+    
+    return department;
+    
+}
+
 async function loadStudentSubjects() {
-
     try {
-
-        console.log(
-            "================================="
-        );
-
-        console.log(
-            "LOADING STUDENT SUBJECTS"
-        );
-
+        console.log("=================================");
+        console.log("LOADING STUDENT SUBJECTS");
+        
+        const studentDepartment =
+            currentStudent?.department || "General";
+        
         console.log(
             "Student department:",
-            currentStudentDepartment
+            studentDepartment
         );
-
-
-        if (!currentStudentDepartment) {
-
-            console.error(
-                "Student department is empty."
+        
+        const response = await tablesDB.listRows(
+            DATABASE_ID,
+            SUBJECTS_TABLE_ID,
+            [Query.limit(100)]
+        );
+        
+        const allSubjects = response.rows || [];
+        
+        console.log("ALL SUBJECT ROWS:", allSubjects);
+        
+        studentSubjects = allSubjects.filter(subject => {
+            const subjectDepartment = normalizeDepartment(
+                subject.department
             );
-
-            showSubjectsError();
-
-            return;
-
-        }
-
-
-        /* ==========================================
-           FIRST: LOAD ALL SUBJECTS
-           WITHOUT FILTERING
-        ========================================== */
-
-        const allSubjectsResponse =
-            await tablesDB.listRows(
-                DATABASE_ID,
-                SUBJECTS_TABLE_ID,
-                [
-                    Query.limit(100)
-                ]
+            
+            const studentDept = normalizeDepartment(
+                studentDepartment
             );
-
-
-        console.log(
-            "ALL SUBJECT ROWS:",
-            allSubjectsResponse.rows
-        );
-
-        console.log(
-            "TOTAL SUBJECT ROWS:",
-            allSubjectsResponse.rows.length
-        );
-
-
-        /* ==========================================
-           SECOND: SHOW DEPARTMENT VALUES
-        ========================================== */
-
-        allSubjectsResponse.rows.forEach(
-            function (subject, index) {
-
-                console.log(
-                    `Subject ${index + 1}:`,
-                    {
-                        id: subject.$id,
-                        name: subject.name,
-                        department: subject.department,
-                        status: subject.status
-                    }
-                );
-
-            }
-        );
-
-
-        /* ==========================================
-           THIRD: FILTER IN JAVASCRIPT
-           FOR DIAGNOSTIC PURPOSES
-        ========================================== */
-
-        const matchingSubjects =
-            allSubjectsResponse.rows.filter(
-                function (subject) {
-
-                    const sameDepartment =
-                        String(
-                            subject.department || ""
-                        ).trim().toLowerCase()
-                        ===
-                        String(
-                            currentStudentDepartment || ""
-                        ).trim().toLowerCase();
-
-
-                    const isActive =
-                        String(
-                            subject.status || ""
-                        ).trim().toLowerCase()
-                        === "active";
-
-
-                    return (
-                        sameDepartment &&
-                        isActive
-                    );
-
-                }
+            
+            const isActive =
+                String(subject.status || "")
+                .trim()
+                .toLowerCase() === "active";
+            
+            const isGeneralSubject =
+                subjectDepartment === "general";
+            
+            const isDepartmentMatch =
+                subjectDepartment === studentDept;
+            
+            return (
+                isActive &&
+                (isGeneralSubject || isDepartmentMatch)
             );
-
-
+        });
+        
         console.log(
             "MATCHING ACTIVE SUBJECTS:",
-            matchingSubjects
+            studentSubjects
         );
-
-
+        
         console.log(
             "MATCHING SUBJECT COUNT:",
-            matchingSubjects.length
+            studentSubjects.length
         );
-
-
-        /* ==========================================
-           STORE RESULTS
-        ========================================== */
-
-        studentSubjects =
-            matchingSubjects;
-
-
-        /* ==========================================
-           UPDATE COUNTERS
-        ========================================== */
-
-        updateSubjectCounters();
-
-
-        /* ==========================================
-           RENDER SUBJECTS
-        ========================================== */
-
-        if (
-            typeof renderStudentSubjects ===
-            "function"
-        ) {
-
-            renderStudentSubjects();
-
+        
+        if (typeof updateSubjectCounters === "function") {
+            updateSubjectCounters();
         }
-
-
-        console.log(
-            "================================="
-        );
-
-
+        
+        if (typeof renderStudentSubjects === "function") {
+            renderStudentSubjects();
+        }
+        
+        console.log("=================================");
+        
     } catch (error) {
-
-        console.error(
-            "SUBJECT LOADING ERROR:",
-            error
-        );
-
-        console.error(
-            "Error message:",
-            error.message
-        );
-
-        showSubjectsError();
-
+        console.error("SUBJECT LOADING ERROR:", error);
+        
+        if (typeof showSubjectsError === "function") {
+            showSubjectsError();
+        }
     }
-
+    
 }
-let currentStudent = null;
 
 
 /*==================================================
@@ -299,7 +219,7 @@ function initializeDashboard(event) {
 
     try {
 
-        currentUser =
+        currentStudent =
             event.detail.authUser;
 
         currentStudent =
@@ -390,54 +310,97 @@ function setImage(id, src) {
 }
 
 
-/*==================================================
-POPULATE USER
-==================================================*/
+//populate user
 
 function populateUser() {
 
-    if (!currentStudent) {
+if (!currentStudent) {
+    return;
+}
 
-        return;
+setText(
+    "sidebarName",
+    currentStudent.fullName || "Student"
+);
 
-    }
+setText(
+    "sidebarDepartment",
+    currentStudent.department || "General"
+);
 
-    setText(
-        "sidebarName",
-        currentStudent.fullName || "Student"
-    );
+setText(
+    "topbarName",
+    currentStudent.fullName || "Student"
+);
 
-    setText(
-        "sidebarDepartment",
-        currentStudent.department || "General"
-    );
+setText(
+    "topbarDepartment",
+    currentStudent.department || "General"
+);
 
-    setText(
-        "topbarName",
-        currentStudent.fullName || "Student"
-    );
-
-    setText(
-        "topbarDepartment",
-        currentStudent.department || "General"
-    );
-
-    if (currentStudent.photoUrl) {
-
-        setImage(
-            "sidebarPhoto",
-            currentStudent.photoUrl
-        );
-
-        setImage(
-            "topbarPhoto",
-            currentStudent.photoUrl
-        );
-
-    }
+loadDashboardProfilePhoto();
 
 }
 
+
+//LOAD SAVED STUDENT PROFILE PHOTO
+
+
+async function loadDashboardProfilePhoto() {
+
+const fallbackPhoto =
+    "Screenshot_20260806-223602.png";
+
+const photoElements = [
+    document.getElementById("sidebarPhoto"),
+    document.getElementById("topbarPhoto")
+].filter(Boolean);
+
+function setDashboardPhotos(src) {
+
+    photoElements.forEach(image => {
+
+        image.onerror = function () {
+
+            this.onerror = null;
+            this.src = fallbackPhoto;
+
+        };
+
+        image.src = src;
+
+    });
+
+}
+
+if (!currentStudent || !currentStudent.photoUrl) {
+
+    setDashboardPhotos(fallbackPhoto);
+    return;
+
+}
+
+try {
+
+    const photoUrl = storage.getFileView(
+        PROFILE_PHOTOS_BUCKET_ID,
+        currentStudent.photoUrl
+    ).toString();
+
+    setDashboardPhotos(photoUrl);
+
+} catch (error) {
+
+    console.error(
+        "Unable to load dashboard profile photo:",
+        error
+    );
+
+    setDashboardPhotos(fallbackPhoto);
+
+}
+
+}
 
 /*==================================================
 SIDEBAR
@@ -468,7 +431,7 @@ function buildSidebar() {
             class="sidebar-brand">
 
             <img
-                src="/assets/logo Aplus tutors.png"
+                src="logo Aplus tutors.png"
                 alt="Aplus Tutors"
                 width="60"
                 >
@@ -482,31 +445,21 @@ function buildSidebar() {
     </div>
 
 
-    <div class="sidebar-profile">
+<div class="sidebar-profile"><div class="profile-image">
+    <img
+        id="sidebarPhoto"
+        src="Screenshot_20260806-223602.png"
+        alt="Student profile photo"
+    >
+</div>
 
-        <img
+<div class="profile-details">
+    <h6 id="sidebarName">Loading...</h6>
 
-            id="sidebarPhoto"
+    <small id="sidebarDepartment">Student</small>
+</div>
 
-            src="/assets/Screenshot_20260806-223602.png"
-            width="40"
-
-            alt="Student">
-
-        <h3 id="sidebarName">
-
-            Loading...
-
-        </h3>
-
-        <p id="sidebarDepartment">
-
-            Student
-
-        </p>
-
-    </div>
-
+</div>
 
     <nav class="sidebar-nav">
 
@@ -521,30 +474,15 @@ function buildSidebar() {
 
         `
 
-        <li>
+<li>
+    <a
+        href="${item.page}"
+        class="menu-item ${currentPage === item.page ? "active" : ""}"
+    >
+        <i class="${item.icon}" aria-hidden="true"></i>    <span>${item.title}</span>
+</a>
 
-            <a
-
-                href="${item.page}"
-
-                class="${
-                    currentPage === item.page
-                    ? "active"
-                    : ""
-                }">
-
-                <i class="${item.icon}"></i>
-
-                <span>
-
-                    ${item.title}
-
-                </span>
-
-            </a>
-
-        </li>
-
+</li>
         `;
 
     });
@@ -644,11 +582,7 @@ function setupSidebar() {
 
                 window.innerWidth < 992 &&
 
-                event.target.closest(
-
-                    ".sidebar-nav a"
-
-                )
+                event.target.closest(".sidebar-nav a")
 
             ) {
 
@@ -841,11 +775,11 @@ function buildTopbar() {
 
             </span>
 
-            <h2 id="pageTitle">
+            <h3 id="pageTitle">
 
                 Dashboard
 
-            </h2>
+            </h3>
 
         </div>
 
@@ -873,9 +807,9 @@ function buildTopbar() {
 
                 id="topbarPhoto"
 
-                src="/assets/Screenshot_20260806-223602.png"
+                src="Screenshot_20260806-223602.png"
                 
-                width="40"
+                width="30"
 
                 alt="Student">
             </a>
@@ -911,151 +845,98 @@ function renderDashboard() {
 }
 
 
-/*==================================================
-GREETING
-==================================================*/
+
+//GREETING
+
 
 function renderGreeting() {
 
-    const container =
+const container = document.getElementById("greetingCard");
 
-        document.getElementById(
+if (!container) {
+    return;
+}
 
-            "greetingCard"
+// Get the student's first name
+const fullName = (currentStudent?.fullName || "Student").trim();
 
-        );
+const firstName = fullName.split(/\s+/)[1];
 
-    if (!container) {
+const department = currentStudent?.department || "General";
 
-        return;
-
-    }
-
-    const name =
-
-        currentStudent?.fullName ||
-
-        "Student";
-
-    const department =
-
-        currentStudent?.department ||
-
-        "General";
-
-    container.innerHTML = `
+container.innerHTML = `
 
     <div class="greeting-card">
 
         <div class="greeting-left">
 
             <span class="welcome-tag">
-
                 Welcome Back 👋
-
             </span>
 
             <h2 id="greetingText">
-
-                Hello,
-
-                ${name}
-
+                Hello, ${firstName}
             </h2>
 
             <p>
-
                 Department:
-
-                <strong>
-
-                    ${department}
-
-                </strong>
-
+                <strong>${department}</strong>
             </p>
 
         </div>
 
-
         <div class="greeting-right">
 
             <h2 id="liveClock">
-
                 --:--
-
             </h2>
 
-            <p id="todayDate">
-
-            </p>
+            <p id="todayDate"></p>
 
         </div>
 
     </div>
 
-    `;
+`;
 
-    updateGreeting();
+updateGreeting();
+updateClock();
 
+// Clear the previous interval, if one exists
+if (greetingClockInterval !== null) {
+    clearInterval(greetingClockInterval);
+}
+
+// Update the clock every minute
+greetingClockInterval = setInterval(() => {
     updateClock();
-
-    setInterval(
-
-        updateClock,
-
-        1000
-
-    );
+    updateGreeting();
+}, 60000);
 
 }
 
 
-/*==================================================
-GREETING MESSAGE
-==================================================*/
-
 function updateGreeting() {
 
-    const hour =
+const hour = new Date().getHours();
 
-        new Date().getHours();
+let greeting = "Good Evening";
 
-    let greeting =
+if (hour < 12) {
+    greeting = "Good Morning";
+} else if (hour < 17) {
+    greeting = "Good Afternoon";
+}
 
-        "Good Evening";
+const fullName = (currentStudent?.fullName || "Student").trim();
 
-    if (hour < 12) {
+const firstName = fullName.split(/\s+/)[1];
 
-        greeting =
+const greetingText = document.getElementById("greetingText");
 
-            "Good Morning";
-
-    }
-
-    else if (hour < 17) {
-
-        greeting =
-
-            "Good Afternoon";
-
-    }
-
-    const greetingText =
-
-        document.getElementById(
-
-            "greetingText"
-
-        );
-
-    if (greetingText) {
-
-        greetingText.textContent =
-
-            `${greeting}, ${currentStudent.fullName}`;
-
-    }
+if (greetingText) {
+    greetingText.textContent = `${greeting}, ${firstName}`;
+}
 
 }
 
@@ -1178,83 +1059,67 @@ const QUICK_START = [
 ];
 
 
-/*==================================================
-RENDER QUICK START
-==================================================*/
+/* =========================================================
+   RENDER QUICK LEARNING
+========================================================= */
 
 function renderQuickStart() {
+    const quickStart = document.getElementById("quickStart");
 
-    const container =
-
-        document.getElementById(
-
-            "quickStart"
-
-        );
-
-    if (!container) {
-
+    if (!quickStart) {
+        console.warn("Quick Learning container not found.");
         return;
-
     }
 
-    let html = `
+    const quickActions = [
+        {
+            title: "Study Notes",
+            description: "Read your study materials and revise important topics.",
+            icon: "fa-book-open",
+            href: "student-notes.html"
+        },
+        {
+            title: "Quick Quiz",
+            description: "Test your knowledge and strengthen your understanding.",
+            icon: "fa-clipboard-question",
+            href: "student-quiz.html"
+        },
+        {
+            title: "CBT Practice",
+            description: "Prepare for your examinations with timed CBT practice.",
+            icon: "fa-laptop",
+            href: "student-cbt.html"
+        },
+        {
+            title: "My Results",
+            description: "Review your performance and monitor your progress.",
+            icon: "fa-chart-line",
+            href: "student-progress.html"
+        }
+    ];
 
-    <section class="quick-start-section">
-
-        <div class="section-header">
-
-            <h2>
-
-                Quick Start
-
-            </h2>
-
-        </div>
-
-        <div class="quick-start-grid">
-
-    `;
-
-    QUICK_START.forEach(item => {
-
-        html += `
-
+    quickStart.innerHTML = quickActions.map(action => `
         <a
-
-            href="${item.page}"
-
-            class="quick-card">
-
+            href="${action.href}"
+            class="quick-action"
+            aria-label="${action.title}"
+        >
             <div class="quick-icon">
-
-                <i class="${item.icon}"></i>
-
+                <i class="fa-solid ${action.icon}" aria-hidden="true"></i>
             </div>
 
-            <h3>
+            <div class="quick-content">
+                <h3 class="quick-title">${action.title}</h3>
 
-                ${item.title}
+                <p class="quick-description">
+                    ${action.description}
+                </p>
+            </div>
 
-            </h3>
-
+            <span class="quick-arrow" aria-hidden="true">
+                <i class="fa-solid fa-arrow-right"></i>
+            </span>
         </a>
-
-        `;
-
-    });
-
-    html += `
-
-        </div>
-
-    </section>
-
-    `;
-
-    container.innerHTML =
-
-        html;
-
+    `).join("");
 }
 

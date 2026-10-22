@@ -582,7 +582,24 @@ EDITOR
 </button>
 
 
-        <span class="editor-divider"></span>
+<!-- Insert Image --><button
+type="button"
+class="editor-btn"
+id="insertNoteImageBtn"
+title="Insert image"
+aria-label="Insert image">
+
+<i class="fa-solid fa-image"></i>
+
+</button>
+
+<input
+type="file"
+id="noteImageInput"
+accept="image/jpeg,image/png,image/webp,image/gif"
+hidden>
+
+<span class="editor-divider"></span>
 
 
         <!-- Heading -->
@@ -741,10 +758,18 @@ EDITOR HELP TEXT
 ==================================================-->
 
 <div class="editor-help">
+    
+<i class="fa-solid fa-circle-info"></i>
 
-    <i class="fa-solid fa-circle-info"></i>
+Format your note using the toolbar. Use the image button to
+upload and insert images into your study material.
 
-    You can format your note using the toolbar above.
+<br>
+
+<small>
+    Supported formats: JPG, PNG, WEBP and GIF.
+    Maximum image size: 5 MB.
+</small>
 
 </div>
 

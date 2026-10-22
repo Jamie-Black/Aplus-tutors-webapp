@@ -1586,3 +1586,102 @@ MOBILE EDITOR
     }
 
 }
+
+
+
+
+/* =========================================================
+APLUS TUTORS
+STUDY NOTES IMAGE SUPPORT
+========================================================= */
+
+/* Image inside the rich-text editor */
+
+.note-editor-content img.study-note-image,
+.note-editor-content img[data-appwrite-file-id] {
+
+display: block;
+
+max-width: 100% !important;
+
+height: auto !important;
+
+margin: 16px auto;
+
+border-radius: 8px;
+
+object-fit: contain;
+
+}
+
+/* Image inside the note viewer */
+
+.study-note-reader img.study-note-image,
+.study-note-reader img[data-appwrite-file-id] {
+
+display: block;
+
+max-width: 100% !important;
+
+height: auto !important;
+
+margin: 20px auto;
+
+border-radius: 8px;
+
+object-fit: contain;
+
+}
+
+/* Prevent wide images from expanding the note viewer */
+
+.study-note-reader {
+
+overflow-wrap: anywhere;
+
+min-width: 0;
+
+}
+
+.study-note-reader img {
+
+max-width: 100%;
+
+}
+
+/* Image-upload toolbar button */
+
+#insertNoteImageBtn {
+
+position: relative;
+
+}
+
+#insertNoteImageBtn:disabled {
+
+opacity: 0.6;
+
+cursor: wait;
+
+}
+
+/* Mobile image display */
+
+@media (max-width: 576px) {
+
+.note-editor-content img.study-note-image,
+.note-editor-content img[data-appwrite-file-id],
+.study-note-reader img.study-note-image,
+.study-note-reader img[data-appwrite-file-id] {
+
+    max-width: 100% !important;
+
+    height: auto !important;
+
+    margin: 14px auto;
+
+    border-radius: 6px;
+
+}
+
+}

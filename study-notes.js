@@ -16,6 +16,344 @@ let currentSubjects = [];
 
 let noteModal = null;
 
+
+
+
+/* =========================================================
+APLUS TUTORS
+STUDY NOTES IMAGE SUPPORT
+========================================================= */
+
+const NOTE_IMAGE_MAX_SIZE = 5 * 1024 * 1024;
+
+let noteImageUploadInProgress = false;
+
+/* =========================================================
+   STUDY NOTE IMAGE UPLOAD
+========================================================= */
+
+let savedNoteImageRange = null;
+
+
+/* =========================================================
+   UPLOAD IMAGE TO APPWRITE STORAGE
+========================================================= */
+
+async function uploadStudyNoteImage(file) {
+
+    if (!file) {
+        throw new Error("Please select an image.");
+    }
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/gif"
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+        throw new Error(
+            "Unsupported image format. Use JPG, PNG, WEBP or GIF."
+        );
+    }
+
+    if (file.size > NOTE_IMAGE_MAX_SIZE) {
+        throw new Error(
+            "The maximum image size is 5 MB."
+        );
+    }
+
+    if (file.size === 0) {
+        throw new Error(
+            "The selected image is empty."
+        );
+    }
+
+    // Verify that the bucket ID is configured.
+    if (
+        typeof STUDY_NOTES_IMAGES_ID === "undefined" ||
+        !STUDY_NOTES_IMAGES_ID
+    ) {
+        throw new Error(
+            "The Study Notes image Storage bucket ID is missing from appwrite.js."
+        );
+    }
+
+    const extensions = {
+        "image/jpeg": "jpg",
+        "image/png": "png",
+        "image/webp": "webp",
+        "image/gif": "gif"
+    };
+
+    const fileName =
+        "study-note-" +
+        Date.now() +
+        "-" +
+        Math.random().toString(36).slice(2, 10) +
+        "." +
+        extensions[file.type];
+
+    const imageFile = new File(
+        [file],
+        fileName,
+        {
+            type: file.type,
+            lastModified: Date.now()
+        }
+    );
+
+    console.log("Uploading Study Note image:", {
+        endpoint: client.config.endpoint,
+        projectId: client.config.project,
+        bucketId: STUDY_NOTES_IMAGES_ID,
+        fileName: imageFile.name,
+        fileSize: imageFile.size
+    });
+
+    // IMPORTANT:
+    // createFile(bucketId, fileId, file)
+    // Do not pass DATABASE_ID to Storage.
+    const uploadedFile = await storage.createFile(
+        STUDY_NOTES_IMAGES_ID,
+        Appwrite.ID.unique(),
+        imageFile
+    );
+
+    return {
+        fileId: uploadedFile.$id,
+        fileName: uploadedFile.name
+    };
+}
+
+
+/* =========================================================
+   CREATE APPWRITE IMAGE URL
+========================================================= */
+
+function getStudyNoteImageUrl(fileId) {
+
+    if (!fileId) {
+        return "";
+    }
+
+    return (
+        client.config.endpoint +
+        "/storage/buckets/" +
+        encodeURIComponent(STUDY_NOTES_IMAGES_ID) +
+        "/files/" +
+        encodeURIComponent(fileId) +
+        "/view?project=" +
+        encodeURIComponent(client.config.project)
+    );
+}
+
+
+/* =========================================================
+   INSERT IMAGE INTO EDITOR
+========================================================= */
+
+function insertStudyNoteImage(fileId, altText = "") {
+
+    const editor = document.getElementById("noteContent");
+
+    if (!editor) {
+        throw new Error("The study note editor was not found.");
+    }
+
+    const imageUrl = getStudyNoteImageUrl(fileId);
+
+    if (!imageUrl) {
+        throw new Error("Unable to create the image URL.");
+    }
+
+    const image = document.createElement("img");
+
+    image.src = imageUrl;
+    image.alt = altText;
+    image.dataset.appwriteFileId = fileId;
+    image.className = "study-note-image";
+    image.loading = "lazy";
+    image.decoding = "async";
+
+    image.style.maxWidth = "100%";
+    image.style.height = "auto";
+    image.style.display = "block";
+    image.style.margin = "12px 0";
+
+    // Restore the cursor position saved before opening
+    // the phone's file picker.
+    if (savedNoteImageRange) {
+
+        const selection = window.getSelection();
+
+        try {
+
+            const range = savedNoteImageRange.cloneRange();
+
+            if (editor.contains(range.commonAncestorContainer)) {
+
+                range.deleteContents();
+                range.insertNode(image);
+
+                range.setStartAfter(image);
+                range.collapse(true);
+
+                selection.removeAllRanges();
+                selection.addRange(range);
+
+            } else {
+
+                editor.appendChild(image);
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Could not restore the editor cursor. Appending image instead.",
+                error
+            );
+
+            editor.appendChild(image);
+        }
+
+    } else {
+
+        editor.appendChild(image);
+    }
+
+    editor.focus();
+
+    // Notify any existing editor listeners.
+    editor.dispatchEvent(
+        new Event("input", { bubbles: true })
+    );
+
+    savedNoteImageRange = null;
+
+    return image;
+}
+
+
+/* =========================================================
+   INITIALIZE IMAGE UPLOAD
+========================================================= */
+
+function initializeStudyNoteImageUpload() {
+
+    const imageButton = document.getElementById("insertNoteImageBtn");
+    const imageInput = document.getElementById("noteImageInput");
+    const editor = document.getElementById("noteContent");
+
+    if (!imageButton || !imageInput || !editor) {
+
+        console.error("Study Note image controls are missing.", {
+            buttonFound: !!imageButton,
+            inputFound: !!imageInput,
+            editorFound: !!editor
+        });
+
+        return;
+    }
+
+    if (imageButton.dataset.imageUploadReady === "true") {
+        return;
+    }
+
+    imageButton.dataset.imageUploadReady = "true";
+
+    // Save the insertion position before the file picker opens.
+    imageButton.addEventListener("mousedown", function () {
+
+        const selection = window.getSelection();
+
+        if (selection && selection.rangeCount > 0) {
+
+            const range = selection.getRangeAt(0);
+
+            if (editor.contains(range.commonAncestorContainer)) {
+                savedNoteImageRange = range.cloneRange();
+            }
+        }
+    });
+
+    imageButton.addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        if (noteImageUploadInProgress) {
+            return;
+        }
+
+        // Also save the current cursor position on touch devices.
+        const selection = window.getSelection();
+
+        if (selection && selection.rangeCount > 0) {
+
+            const range = selection.getRangeAt(0);
+
+            if (editor.contains(range.commonAncestorContainer)) {
+                savedNoteImageRange = range.cloneRange();
+            }
+        }
+
+        imageInput.click();
+    });
+
+    imageInput.addEventListener("change", async function () {
+
+        const file = imageInput.files?.[0];
+
+        if (!file) {
+            return;
+        }
+
+        noteImageUploadInProgress = true;
+        imageButton.disabled = true;
+
+        const originalButtonContent = imageButton.innerHTML;
+
+        imageButton.innerHTML =
+            '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+        try {
+
+            // 1. Upload image to Appwrite.
+            const uploadedImage = await uploadStudyNoteImage(file);
+
+            // 2. Insert uploaded image into the editor.
+            insertStudyNoteImage(
+                uploadedImage.fileId,
+                file.name
+            );
+
+            alert(
+                "Image uploaded and inserted successfully. " +
+                "Remember to save the study note."
+            );
+
+        } catch (error) {
+
+            console.error("Study Note image upload failed:", error);
+
+            alert(
+                error?.message ||
+                "Image upload failed. Check your Appwrite Storage permissions and try again."
+            );
+
+        } finally {
+
+            noteImageUploadInProgress = false;
+            imageButton.disabled = false;
+            imageButton.innerHTML = originalButtonContent;
+            imageInput.value = "";
+        }
+    });
+
+    console.log("Study Note image upload initialized.");
+}
+
 /* ==================================================
 DOM ELEMENTS
 ================================================== */
@@ -1545,6 +1883,12 @@ const formatBlock =
  */
 
 editorButtons.forEach(button => {
+    
+    
+    // The image button has its own event handler.
+if (button.id === "insertNoteImageBtn") {
+    return;
+}
 
     button.addEventListener(
         "mousedown",
@@ -1965,14 +2309,9 @@ function hasNoteContent() {
 INITIALIZE EDITOR
 ================================================== */
 
-document.addEventListener(
-"DOMContentLoaded",
-() => {
-
+document.addEventListener("DOMContentLoaded", () => {
     initializeNoteEditor();
-
-}
-
-);
+    initializeStudyNoteImageUpload();
+});
 
 
