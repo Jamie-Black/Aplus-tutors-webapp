@@ -3069,43 +3069,129 @@ function renderStudentProgressSubjects() {
 
 
 
+
+
+
+
+
 /* =========================================================
-RENDER RECENT STUDENT ASSESSMENTS
-Combines quiz attempts and completed CBT attempts
+APLUS TUTORS
+STUDENT PROGRESS
+ASSESSMENT GRADES AND REMARKS
 ========================================================= */
 
 /* =========================================================
-   RENDER RECENT STUDENT ASSESSMENTS
-
-   Columns:
-   1. Assessment
-   2. Subject
-   3. Score
-   4. Date
-   5. Results
+CALCULATE LETTER GRADE
 ========================================================= */
 
+function getStudentProgressGrade(score) {
+
+const percentage = Number(score);
+
+if (!Number.isFinite(percentage)) {
+    return "F";
+}
+
+if (percentage >= 80) {
+    return "A";
+}
+
+if (percentage >= 70) {
+    return "B";
+}
+
+if (percentage >= 60) {
+    return "C";
+}
+
+if (percentage >= 50) {
+    return "D";
+}
+
+if (percentage >= 40) {
+    return "E";
+}
+
+return "F";
+
+}
+
+/* =========================================================
+GET GRADE REMARK
+========================================================= */
+
+function getStudentProgressGradeRemark(grade) {
+
+const remarks = {
+
+    A: "Excellent",
+
+    B: "Very Good",
+
+    C: "Good",
+
+    D: "Fair",
+
+    E: "Pass",
+
+    F: "Fail"
+
+};
+
+return remarks[grade] || "Not graded";
+
+}
+
+/* =========================================================
+GET GRADE CSS CLASS
+========================================================= */
+
+function getStudentProgressGradeClass(grade) {
+
+const classes = {
+
+    A: "progress-grade-a",
+
+    B: "progress-grade-b",
+
+    C: "progress-grade-c",
+
+    D: "progress-grade-d",
+
+    E: "progress-grade-e",
+
+    F: "progress-grade-f"
+
+};
+
+return classes[grade] || "progress-grade-f";
+
+}
+
+
+
+ 
 function renderStudentProgressRecentAssessments() {
+const tableBody =
+    progressPageElements.assessmentsBody;
 
-    const tableBody =
-        progressPageElements.assessmentsBody;
+const emptyState =
+    progressPageElements.assessmentsEmpty;
 
-    const emptyState =
-        progressPageElements.assessmentsEmpty;
+if (!tableBody) {
 
-    if (!tableBody) {
+    console.warn(
+        "Recent assessments table body was not found."
+    );
 
-        console.warn(
-            "Recent assessments table body was not found."
-        );
+    return;
 
-        return;
-    }
+}
 
 
-    /* =====================================================
-       FIND SUBJECT NAME USING SUBJECT ID
-    ===================================================== */
+/* =====================================================
+   FIND SUBJECT NAME
+===================================================== */
 
 function getProgressSubjectName(subjectId) {
 
@@ -3120,14 +3206,7 @@ function getProgressSubjectName(subjectId) {
     );
 
     if (!subject) {
-
-        console.warn(
-            "Subject not found for assessment:",
-            subjectId
-        );
-
         return "Unknown Subject";
-
     }
 
     return (
@@ -3141,320 +3220,726 @@ function getProgressSubjectName(subjectId) {
 }
 
 
-    /* =====================================================
-       ESCAPE HTML
-    ===================================================== */
-
-    function escapeProgressHtml(value) {
-
-        return String(value ?? "").replace(
-            /[&<>"']/g,
-            function(character) {
-
-                const replacements = {
-                    "&": "&amp;",
-                    "<": "&lt;",
-                    ">": "&gt;",
-                    '"': "&quot;",
-                    "'": "&#39;"
-                };
-
-                return replacements[character];
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       COMBINE QUIZ AND CBT ATTEMPTS
-    ===================================================== */
-
-    const assessments = [
-
-        ...studentProgressQuizAttempts.map(
-            function(attempt) {
-
-                return {
-                    ...attempt,
-                    assessmentType: "Quiz"
-                };
-
-            }
-        ),
-
-        ...studentProgressCbtAttempts.map(
-            function(attempt) {
-
-                return {
-                    ...attempt,
-                    assessmentType: "CBT"
-                };
-
-            }
-        )
-
-    ];
-
-
-    /* =====================================================
-       SORT NEWEST FIRST
-    ===================================================== */
-
-    assessments.sort(function(a, b) {
-
-        const dateA = new Date(
-            a.completedAt || a.startedAt || 0
-        ).getTime();
-
-        const dateB = new Date(
-            b.completedAt || b.startedAt || 0
-        ).getTime();
-
-        return dateB - dateA;
-
-    });
-
-
-    /* =====================================================
-       EMPTY STATE
-    ===================================================== */
-
-    if (assessments.length === 0) {
-
-        tableBody.innerHTML = "";
-
-        if (emptyState) {
-            emptyState.style.display = "block";
-        }
-
-        return;
-    }
-
-    if (emptyState) {
-        emptyState.style.display = "none";
-    }
-
-
-    /* =====================================================
-       DISPLAY FIVE MOST RECENT ASSESSMENTS
-    ===================================================== */
-
-    const recentAssessments =
-        assessments.slice(0, 5);
-
-
-    /* =====================================================
-       CREATE TABLE ROWS
-    ===================================================== */
-
-    tableBody.innerHTML = recentAssessments.map(
-        function(attempt) {
-
-            const assessmentType =
-                attempt.assessmentType;
-
-
-            /* ---------------------------------------------
-               ASSESSMENT NAME
-            --------------------------------------------- */
-
-            const assessmentName =
-                assessmentType === "CBT"
-                    ? "CBT Examination"
-                    : "Quiz Assessment";
-
-
-            /* ---------------------------------------------
-               SUBJECT NAME
-
-               A quiz has one subjectId.
-               A CBT can contain multiple subjects.
-            --------------------------------------------- */
-
-            let subjectName = "—";
-
-            if (assessmentType === "Quiz") {
-
-                subjectName =
-                    getProgressSubjectName(
-                        attempt.subjectId
-                    );
-
-            } else {
-
-                subjectName = "Multiple Subjects";
-
-            }
-
-
-            /* ---------------------------------------------
-               SCORE
-            --------------------------------------------- */
-
-            const rawPercentage = Number(
-                attempt.percentage ??
-                attempt.score ??
-                0
-            );
-
-            const percentage = Math.max(
-                0,
-                Math.min(
-                    100,
-                    Number.isFinite(rawPercentage)
-                        ? rawPercentage
-                        : 0
-                )
-            );
-
-            const scoreClass =
-                percentage >= 50
-                    ? "text-success"
-                    : "text-danger";
-
-
-            /* ---------------------------------------------
-               DATE
-            --------------------------------------------- */
-
-            const dateValue =
-                attempt.completedAt ||
-                attempt.startedAt ||
-                null;
-
-            const formattedDate =
-                formatProgressDate(dateValue);
-
-
-            /* ---------------------------------------------
-               ANSWER SUMMARY
-            --------------------------------------------- */
-
-            const correctAnswers =
-                Number(attempt.correctAnswers) || 0;
-
-            const wrongAnswers =
-                Number(
-                    attempt.wrongAnswers ??
-                    attempt.incorrectAnswers ??
-                    0
-                );
-
-            const totalQuestions =
-                Number(attempt.totalQuestions) || 0;
-
-
-            /* ---------------------------------------------
-               RESULT STATUS
-            --------------------------------------------- */
-
-            let resultLabel = "Completed";
-
-            let resultClass = "text-bg-secondary";
-
-            if (
-                String(attempt.status || "").toLowerCase()
-                === "passed"
-            ) {
-
-                resultLabel = "Passed";
-
-                resultClass = "text-bg-success";
-
-            } else if (
-                String(attempt.status || "").toLowerCase()
-                === "failed"
-            ) {
-
-                resultLabel = "Failed";
-
-                resultClass = "text-bg-danger";
-
-            } else if (
-                assessmentType === "CBT" &&
-                String(attempt.status || "").toLowerCase()
-                === "completed"
-            ) {
-
-                resultLabel = "Completed";
-
-                resultClass = "text-bg-success";
-
-            }
-
-
-            /* ---------------------------------------------
-               RETURN FIVE TABLE CELLS
-            --------------------------------------------- */
-
-            return `
-                <tr>
-
-                    <!-- ASSESSMENT -->
-
-                    <td>
-                        <div class="fw-semibold">
-                            ${escapeProgressHtml(assessmentName)}
-                        </div>
-                    </td>
-
-
-                    <!-- SUBJECT -->
-
-                    <td>
-                        <span>
-                            ${escapeProgressHtml(subjectName)}
-                        </span>
-                    </td>
-
-
-                    <!-- SCORE -->
-
-                    <td>
-                        <span class="fw-semibold ${scoreClass}">
-                            ${percentage.toFixed(1)}%
-                        </span>
-
-                        <div class="small text-muted">
-                            ${correctAnswers} / ${totalQuestions} correct
-                        </div>
-                    </td>
-
-
-                    <!-- DATE -->
-
-                    <td>
-                        ${escapeProgressHtml(formattedDate)}
-                    </td>
-
-
-                    <!-- RESULTS -->
-
-                    <td>
-                        <span class="badge ${resultClass}">
-                            ${escapeProgressHtml(resultLabel)}
-                        </span>
-
-                        <div class="small text-muted mt-1">
-                            ${wrongAnswers} incorrect
-                        </div>
-                    </td>
-
-                </tr>
-            `;
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeProgressHtml(value) {
+
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        function(character) {
+
+            const replacements = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            };
+
+            return replacements[character];
 
         }
-    ).join("");
-
-
-    console.log(
-        "Recent student assessments rendered:",
-        recentAssessments.length
     );
 
 }
+
+
+/* =====================================================
+   GET UNIQUE CBT SUBJECTS FOR AN ATTEMPT
+===================================================== */
+
+function getCbtAttemptSubjects(attemptId) {
+
+    const subjectIds = new Set();
+
+    studentProgressCbtAnswers.forEach(
+        function(answer) {
+
+            if (
+                answer.attemptId === attemptId &&
+                answer.subjectId
+            ) {
+
+                subjectIds.add(answer.subjectId);
+
+            }
+
+        }
+    );
+
+    const subjectNames = Array.from(subjectIds)
+        .map(getProgressSubjectName)
+        .filter(function(name) {
+            return (
+                name &&
+                name !== "Unknown Subject" &&
+                name !== "Unnamed Subject"
+            );
+        });
+
+    return subjectNames.length
+        ? subjectNames.join(", ")
+        : "Subjects unavailable";
+
+}
+
+
+/* =====================================================
+   COMBINE QUIZ AND CBT ATTEMPTS
+===================================================== */
+
+const assessments = [
+
+    ...studentProgressQuizAttempts.map(
+        function(attempt) {
+
+            return {
+                ...attempt,
+                assessmentType: "Quiz"
+            };
+
+        }
+    ),
+
+    ...studentProgressCbtAttempts.map(
+        function(attempt) {
+
+            return {
+                ...attempt,
+                assessmentType: "CBT"
+            };
+
+        }
+    )
+
+];
+
+
+/* =====================================================
+   SORT NEWEST FIRST
+===================================================== */
+
+assessments.sort(function(a, b) {
+
+    const dateA = new Date(
+        a.completedAt || a.startedAt || 0
+    ).getTime();
+
+    const dateB = new Date(
+        b.completedAt || b.startedAt || 0
+    ).getTime();
+
+    return dateB - dateA;
+
+});
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+if (assessments.length === 0) {
+
+    tableBody.innerHTML = "";
+
+    if (emptyState) {
+        emptyState.style.display = "block";
+    }
+
+    return;
+
+}
+
+if (emptyState) {
+    emptyState.style.display = "none";
+}
+
+
+/* =====================================================
+   DISPLAY FIVE MOST RECENT ASSESSMENTS
+===================================================== */
+
+const recentAssessments =
+    assessments.slice(0, 5);
+
+
+/* =====================================================
+   RENDER ASSESSMENT ROWS
+===================================================== */
+
+tableBody.innerHTML = recentAssessments.map(
+    function(attempt) {
+
+        const assessmentType =
+            attempt.assessmentType;
+
+
+        /* ---------------------------------------------
+           ASSESSMENT NAME
+        --------------------------------------------- */
+
+        const assessmentName =
+            assessmentType === "CBT"
+                ? "CBT Examination"
+                : "Quiz Assessment";
+
+
+        /* ---------------------------------------------
+           SUBJECT NAME
+        --------------------------------------------- */
+
+        let subjectName = "—";
+
+        if (assessmentType === "Quiz") {
+
+            subjectName = getProgressSubjectName(
+                attempt.subjectId
+            );
+
+        } else {
+
+            subjectName = getCbtAttemptSubjects(
+                attempt.$id
+            );
+
+        }
+
+
+        /* ---------------------------------------------
+           SCORE
+        --------------------------------------------- */
+
+        const rawPercentage = Number(
+            attempt.percentage ??
+            attempt.score ??
+            0
+        );
+
+        const percentage = Math.max(
+            0,
+            Math.min(
+                100,
+                Number.isFinite(rawPercentage)
+                    ? rawPercentage
+                    : 0
+            )
+        );
+
+        const scoreClass =
+            percentage >= 50
+                ? "text-success"
+                : "text-danger";
+
+
+        /* ---------------------------------------------
+           DATE
+        --------------------------------------------- */
+
+        const dateValue =
+            attempt.completedAt ||
+            attempt.startedAt ||
+            null;
+
+        const formattedDate =
+            formatProgressDate(dateValue);
+
+
+        /* ---------------------------------------------
+           ANSWER SUMMARY
+        --------------------------------------------- */
+
+        const correctAnswers =
+            Number(attempt.correctAnswers) || 0;
+
+        const wrongAnswers =
+            Number(
+                attempt.wrongAnswers ??
+                attempt.incorrectAnswers ??
+                0
+            );
+
+
+        const totalQuestions =
+            Number(attempt.totalQuestions) || 0;
+
+
+        /* ---------------------------------------------
+           LETTER GRADE AND REMARK
+        --------------------------------------------- */
+
+        const grade =
+            getStudentProgressGrade(percentage);
+
+        const remark =
+            getStudentProgressGradeRemark(grade);
+
+        const gradeClass =
+            getStudentProgressGradeClass(grade);
+
+
+        /* ---------------------------------------------
+           RETURN TABLE ROW
+        --------------------------------------------- */
+
+        return `
+<tr>
+
+    <td>
+        <div class="fw-semibold">
+            ${escapeProgressHtml(assessmentName)}
+        </div>
+    </td>
+
+    <td>
+        <span>
+            ${escapeProgressHtml(subjectName)}
+        </span>
+    </td>
+
+    <td>
+        <span class="fw-semibold ${scoreClass}">
+            ${percentage.toFixed(1)}%
+        </span>
+
+        <div class="small text-muted">
+            ${correctAnswers} / ${totalQuestions} correct
+        </div>
+    </td>
+
+    <td>
+        ${escapeProgressHtml(formattedDate)}
+    </td>
+
+    <td>
+        <span class="badge ${gradeClass}">
+            ${escapeProgressHtml(grade)}
+        </span>
+
+        <div class="small text-muted mt-1">
+            ${escapeProgressHtml(remark)}
+        </div>
+    </td>
+
+    <td>
+        <button
+            type="button"
+            class="assessment-view-btn"
+            data-assessment-type="${assessmentType.toLowerCase()}"
+            data-assessment-id="${escapeProgressHtml(attempt.$id)}"
+            aria-label="View ${escapeProgressHtml(assessmentName)} result"
+        >
+            <i class="fa-solid fa-eye"></i>
+            View
+        </button>
+    </td>
+
+</tr>
+
+`;
+    }
+).join("");
+
+
+console.log(
+    "Recent student assessments rendered:",
+    recentAssessments.length
+);
+ 
+}
+
+
+
+
+
+
+/* =========================================================
+APLUS TUTORS
+STUDENT PROGRESS
+ASSESSMENT RESULT REVIEW
+========================================================= */
+
+/* =========================================================
+OPEN ASSESSMENT RESULT MODAL
+========================================================= */
+
+function openStudentProgressAssessmentResult(
+assessmentType,
+assessmentId
+) {
+
+const modalElement = document.getElementById(
+    "assessmentResultModal"
+);
+
+if (!modalElement) {
+    console.error(
+        "Assessment result modal was not found."
+    );
+    return;
+}
+
+const isCbt = assessmentType === "cbt";
+
+const attempts = isCbt
+    ? studentProgressCbtAttempts
+    : studentProgressQuizAttempts;
+
+const attempt = attempts.find(function(item) {
+    return item.$id === assessmentId;
+});
+
+if (!attempt) {
+    console.error(
+        "Assessment attempt could not be found.",
+        { assessmentType, assessmentId }
+    );
+
+    alert(
+        "This assessment result could not be found. Please refresh the page and try again."
+    );
+
+    return;
+}
+
+
+/* -----------------------------------------------------
+   FIND ELEMENTS
+----------------------------------------------------- */
+
+const setText = function(id, value) {
+    const element = document.getElementById(id);
+
+    if (element) {
+        element.textContent = String(value ?? "—");
+    }
+};
+
+
+/* -----------------------------------------------------
+   ASSESSMENT SUBJECT
+----------------------------------------------------- */
+
+let subjects = "—";
+
+if (isCbt) {
+
+    const subjectIds = new Set();
+
+    studentProgressCbtAnswers.forEach(function(answer) {
+
+        if (
+            answer.attemptId === assessmentId &&
+            answer.subjectId
+        ) {
+            subjectIds.add(answer.subjectId);
+        }
+
+    });
+
+    const names = Array.from(subjectIds).map(function(subjectId) {
+
+        const subject = studentProgressSubjects.find(
+            function(item) {
+                return item.$id === subjectId;
+            }
+        );
+
+        return subject
+            ? (
+                subject.name ||
+                subject.subjectName ||
+                subject.title ||
+                subject.subject ||
+                "Unnamed Subject"
+            )
+            : null;
+
+    }).filter(Boolean);
+
+    subjects = names.length
+        ? names.join(", ")
+        : "Subjects unavailable";
+
+} else {
+
+    const subject = studentProgressSubjects.find(
+        function(item) {
+            return item.$id === attempt.subjectId;
+        }
+    );
+
+    subjects = subject
+        ? (
+            subject.name ||
+            subject.subjectName ||
+            subject.title ||
+            subject.subject ||
+            "Unnamed Subject"
+        )
+        : "Subject unavailable";
+
+}
+
+
+/* -----------------------------------------------------
+   NORMALIZE SAVED RESULT VALUES
+----------------------------------------------------- */
+
+const totalQuestions = Math.max(
+    0,
+    Number(attempt.totalQuestions) || 0
+);
+
+const correctAnswers = Math.max(
+    0,
+    Number(attempt.correctAnswers) || 0
+);
+
+const wrongAnswers = Math.max(
+    0,
+    Number(
+        attempt.wrongAnswers ??
+        attempt.incorrectAnswers ??
+        0
+    )
+);
+
+const unanswered = Math.max(
+    0,
+    Number(
+        attempt.unanswered ??
+        attempt.unansweredQuestions ??
+        Math.max(
+            0,
+            totalQuestions -
+            correctAnswers -
+            wrongAnswers
+        )
+    ) || 0
+);
+
+const rawPercentage = Number(
+    attempt.percentage ??
+    attempt.score ??
+    0
+);
+
+const percentage = Math.max(
+    0,
+    Math.min(
+        100,
+        Number.isFinite(rawPercentage)
+            ? rawPercentage
+            : 0
+    )
+);
+
+
+/* -----------------------------------------------------
+   GRADE AND REMARK
+----------------------------------------------------- */
+
+const grade = getStudentProgressGrade(percentage);
+
+const remark = getStudentProgressGradeRemark(grade);
+
+
+/* -----------------------------------------------------
+   ASSESSMENT DATE
+----------------------------------------------------- */
+
+const dateValue =
+    attempt.completedAt ||
+    attempt.startedAt ||
+    null;
+
+const formattedDate = dateValue
+    ? formatProgressDate(dateValue)
+    : "Date unavailable";
+
+
+/* -----------------------------------------------------
+   POPULATE MODAL
+----------------------------------------------------- */
+
+setText(
+    "assessmentResultModalTitle",
+    "Assessment Results"
+);
+
+setText(
+    "assessmentResultSubtitle",
+    isCbt
+        ? "Review your CBT examination performance"
+        : "Review your quiz performance"
+);
+
+setText(
+    "resultAssessmentName",
+    isCbt ? "CBT Examination" : "Quiz Assessment"
+);
+
+setText(
+    "resultAssessmentType",
+    isCbt ? "CBT Examination" : "Quiz"
+);
+
+setText(
+    "resultAssessmentSubjects",
+    subjects
+);
+
+setText(
+    "resultAssessmentDate",
+    formattedDate
+);
+
+setText(
+    "resultAssessmentPercentage",
+    `${percentage.toFixed(1)}%`
+);
+
+setText(
+    "resultAssessmentGrade",
+    grade
+);
+
+setText(
+    "resultAssessmentRemark",
+    remark
+);
+
+setText(
+    "resultTotalQuestions",
+    totalQuestions
+);
+
+setText(
+    "resultCorrectAnswers",
+    correctAnswers
+);
+
+setText(
+    "resultWrongAnswers",
+    wrongAnswers
+);
+
+setText(
+    "resultUnansweredQuestions",
+    unanswered
+);
+
+
+/* -----------------------------------------------------
+   SHOW MODAL
+----------------------------------------------------- */
+
+if (!window.bootstrap || !window.bootstrap.Modal) {
+
+    console.error(
+        "Bootstrap Modal is unavailable."
+    );
+
+    alert(
+        "The results window could not be opened. Please refresh the page and try again."
+    );
+
+    return;
+}
+
+window.bootstrap.Modal
+    .getOrCreateInstance(modalElement)
+    .show();
+
+}
+
+/* =========================================================
+VIEW BUTTON EVENT DELEGATION
+
+Attach one listener to the table body.
+This continues working when assessment rows are rerendered.
+========================================================= */
+
+function initializeStudentProgressAssessmentReview() {
+
+const tableBody = document.getElementById(
+    "progressAssessmentsBody"
+);
+
+if (!tableBody) {
+    console.warn(
+        "Assessment review: table body was not found."
+    );
+    return;
+}
+
+if (tableBody.dataset.reviewListenerAttached === "true") {
+    return;
+}
+
+tableBody.dataset.reviewListenerAttached = "true";
+
+tableBody.addEventListener("click", function(event) {
+
+    const button = event.target.closest(
+        ".assessment-view-btn"
+    );
+
+    if (!button || !tableBody.contains(button)) {
+        return;
+    }
+
+    const assessmentType =
+        button.dataset.assessmentType;
+
+    const assessmentId =
+        button.dataset.assessmentId;
+
+    if (
+        !["quiz", "cbt"].includes(assessmentType) ||
+        !assessmentId
+    ) {
+        console.error(
+            "Assessment review button has invalid data.",
+            { assessmentType, assessmentId }
+        );
+        return;
+    }
+
+    openStudentProgressAssessmentResult(
+        assessmentType,
+        assessmentId
+    );
+
+});
+
+}
+
+/* =========================================================
+INITIALIZE ASSESSMENT REVIEW
+========================================================= */
+
+if (document.readyState === "loading") {
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initializeStudentProgressAssessmentReview,
+    { once: true }
+);
+
+} else {
+
+initializeStudentProgressAssessmentReview();
+
+}
+
+
+
+
+
+
 
 
 

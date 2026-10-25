@@ -670,32 +670,15 @@
             <table class="progress-assessments-table">
 
                 <thead>
-
-                    <tr>
-
-                        <th scope="col">
-                            Assessment
-                        </th>
-
-                        <th scope="col">
-                            Subject
-                        </th>
-
-                        <th scope="col">
-                            Score
-                        </th>
-
-                        <th scope="col">
-                            Date
-                        </th>
-
-                        <th scope="col">
-                            Result
-                        </th>
-
-                    </tr>
-
-                </thead>
+    <tr>
+        <th scope="col">Assessment</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Score</th>
+        <th scope="col">Date</th>
+        <th scope="col">Remark</th>
+        <th scope="col">Action</th>
+    </tr>
+</thead>
 
 
                 <tbody id="progressAssessmentsBody">
@@ -703,7 +686,7 @@
                     <tr>
 
                         <td
-                            colspan="5"
+                            colspan="6"
                             class="progress-table-loading"
                         >
 
@@ -785,6 +768,190 @@
 
 
 </main>
+
+<!-- ==================================================
+     ASSESSMENT RESULTS MODAL
+================================================== --><div
+    class="modal fade"
+    id="assessmentResultModal"
+    tabindex="-1"
+    aria-labelledby="assessmentResultModalTitle"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">    <div class="modal-content assessment-result-modal">
+
+        <div class="modal-header assessment-result-header">
+
+            <div>
+                <span class="assessment-result-eyebrow">
+                    APLUS TUTORS
+                </span>
+
+                <h2
+                    class="modal-title"
+                    id="assessmentResultModalTitle"
+                >
+                    Assessment Results
+                </h2>
+
+                <p id="assessmentResultSubtitle">
+                    Review your performance
+                </p>
+            </div>
+
+            <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+
+        </div>
+
+
+        <div class="modal-body assessment-result-body">
+
+            <!-- Assessment information -->
+
+            <section class="assessment-result-info">
+
+                <div class="assessment-result-info-item">
+                    <span>Assessment</span>
+                    <strong id="resultAssessmentName">—</strong>
+                </div>
+
+                <div class="assessment-result-info-item">
+                    <span>Type</span>
+                    <strong id="resultAssessmentType">—</strong>
+                </div>
+
+                <div class="assessment-result-info-item">
+                    <span>Subject(s)</span>
+                    <strong id="resultAssessmentSubjects">—</strong>
+                </div>
+
+                <div class="assessment-result-info-item">
+                    <span>Date completed</span>
+                    <strong id="resultAssessmentDate">—</strong>
+                </div>
+
+            </section>
+
+
+            <!-- Main score -->
+
+            <section class="assessment-result-score-card">
+
+                <div class="assessment-result-score-label">
+                    YOUR SCORE
+                </div>
+
+                <div class="assessment-result-score-line">
+
+                    <strong id="resultAssessmentPercentage">
+                        0%
+                    </strong>
+
+                    <span id="resultAssessmentGrade">
+                        —
+                    </span>
+
+                </div>
+
+                <p id="resultAssessmentRemark">
+                    Assessment performance
+                </p>
+
+            </section>
+
+
+            <!-- Statistics -->
+
+            <section class="assessment-result-statistics">
+
+                <h3>Performance Summary</h3>
+
+                <div class="assessment-result-stat-grid">
+
+                    <div class="assessment-result-stat">
+                        <span class="assessment-result-stat-icon result-icon-total">
+                            <i class="fa-solid fa-list-check"></i>
+                        </span>
+
+                        <span>Total Questions</span>
+
+                        <strong id="resultTotalQuestions">0</strong>
+                    </div>
+
+
+                    <div class="assessment-result-stat">
+                        <span class="assessment-result-stat-icon result-icon-correct">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+
+                        <span>Correct Answers</span>
+
+                        <strong id="resultCorrectAnswers">0</strong>
+                    </div>
+
+
+                    <div class="assessment-result-stat">
+                        <span class="assessment-result-stat-icon result-icon-wrong">
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+
+                        <span>Wrong Answers</span>
+
+                        <strong id="resultWrongAnswers">0</strong>
+                    </div>
+
+
+                    <div class="assessment-result-stat">
+                        <span class="assessment-result-stat-icon result-icon-unanswered">
+                            <i class="fa-solid fa-minus"></i>
+                        </span>
+
+                        <span>Unanswered</span>
+
+                        <strong id="resultUnansweredQuestions">0</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <div class="assessment-result-notice">
+                <i class="fa-solid fa-circle-info"></i>
+
+                <p>
+                    This is a summary of your assessment results.
+                    Individual questions, answers, corrections,
+                    and explanations are not displayed here.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer assessment-result-footer">
+
+            <button
+                type="button"
+                class="assessment-result-close-btn"
+                data-bs-dismiss="modal"
+            >
+                <i class="fa-solid fa-xmark"></i>
+                Close Review
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
 
 
 
@@ -881,6 +1048,10 @@
 
     <script
         src="student-dashboard.js"
+    ></script>
+
+    <script
+        src="student-notifications-core.js"
     ></script>
 
 

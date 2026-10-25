@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#080808"
+    >
+
+    <title>Notifications | Aplus Tutors Admin</title>
+
+    <!-- ==================================================
+         BOOTSTRAP
+    ================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- ==================================================
+         FONT AWESOME
+    ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
+
+    <!-- ==================================================
+         ADMIN DASHBOARD CSS
+    ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="admin-dashboard.css"
+    >
+
+    <!-- ==================================================
+         ADMIN NOTIFICATIONS CSS
+    ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="admin-notifications.css"
+    >
+
+</head>
+
+
+<body data-role="admin">
+
+
+    <!-- ==================================================
+         PAGE LOADER
+    ================================================== -->
+
+    <div id="pageLoader">
+
+        <div class="loader-content">
+
+            <div class="loader-spinner"></div>
+
+            <h3>Aplus Tutors</h3>
+
+            <p>Loading notifications...</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         SIDEBAR OVERLAY
+    ================================================== -->
+
+    <div
+        id="overlay"
+        class="overlay"
+    ></div>
+
+
+    <!-- ==================================================
+         DASHBOARD LAYOUT
+    ================================================== -->
+
+    <div class="dashboard">
+
+
+        <!-- ==================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside id="sidebar"></aside>
+
+
+        <!-- ==================================================
+             MAIN CONTENT
+        ================================================== -->
+
+        <main class="main-content">
+
+
+            <!-- ==================================================
+                 TOPBAR
+            ================================================== -->
+
+            <header id="topbar"></header>
+
+
+            <!-- ==================================================
+                 NOTIFICATIONS PAGE
+            ================================================== -->
+
+            <section
+                class="admin-notifications-page"
+                id="adminNotificationsPage"
+            >
+
+
+                <!-- ==================================================
+                     PAGE HEADING
+                ================================================== -->
+
+                <div class="notifications-page-header">
+
+                    <div class="notifications-heading-content">
+
+                        <div class="notifications-eyebrow">
+                            <span class="eyebrow-indicator"></span>
+                            ADMINISTRATION
+                        </div>
+
+                        <h1>
+                            Notification
+                            <span>Center</span>
+                        </h1>
+
+                        <p>
+                            Create announcements, send important updates,
+                            and keep Aplus Tutors students informed.
+                        </p>
+
+                    </div>
+
+
+                    <div class="notifications-header-actions">
+
+                        <button
+                            type="button"
+                            class="notifications-secondary-btn"
+                            id="refreshNotificationsBtn"
+                        >
+
+                            <i class="fa-solid fa-rotate-right"></i>
+
+                            <span>Refresh</span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="notifications-primary-btn"
+                            id="createNotificationBtn"
+                        >
+
+                            <i class="fa-solid fa-plus"></i>
+
+                            <span>Create Notification</span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                     NOTIFICATION STATISTICS
+                ================================================== -->
+
+                <div
+                    class="notifications-stats-grid"
+                    id="notificationStats"
+                >
+
+
+                    <!-- TOTAL -->
+
+                    <article class="notification-stat-card">
+
+                        <div class="notification-stat-top">
+
+                            <span class="notification-stat-label">
+                                Total Notifications
+                            </span>
+
+                            <div class="notification-stat-icon stat-icon-total">
+                                <i class="fa-solid fa-bell"></i>
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="notification-stat-value"
+                            id="totalNotifications"
+                        >
+                            --
+                        </div>
+
+                        <p class="notification-stat-description">
+                            All notification records
+                        </p>
+
+                    </article>
+
+
+                    <!-- PUBLISHED -->
+
+                    <article class="notification-stat-card">
+
+                        <div class="notification-stat-top">
+
+                            <span class="notification-stat-label">
+                                Published
+                            </span>
+
+                            <div class="notification-stat-icon stat-icon-published">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="notification-stat-value"
+                            id="publishedNotifications"
+                        >
+                            --
+                        </div>
+
+                        <p class="notification-stat-description">
+                            Notifications currently published
+                        </p>
+
+                    </article>
+
+
+                    <!-- DRAFTS -->
+
+                    <article class="notification-stat-card">
+
+                        <div class="notification-stat-top">
+
+                            <span class="notification-stat-label">
+                                Drafts
+                            </span>
+
+                            <div class="notification-stat-icon stat-icon-draft">
+                                <i class="fa-solid fa-file-pen"></i>
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="notification-stat-value"
+                            id="draftNotifications"
+                        >
+                            --
+                        </div>
+
+                        <p class="notification-stat-description">
+                            Unpublished notifications
+                        </p>
+
+                    </article>
+
+
+                    <!-- ARCHIVED -->
+
+                    <article class="notification-stat-card">
+
+                        <div class="notification-stat-top">
+
+                            <span class="notification-stat-label">
+                                Archived
+                            </span>
+
+                            <div class="notification-stat-icon stat-icon-archived">
+                                <i class="fa-solid fa-box-archive"></i>
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="notification-stat-value"
+                            id="archivedNotifications"
+                        >
+                            --
+                        </div>
+
+                        <p class="notification-stat-description">
+                            Archived notification records
+                        </p>
+
+                    </article>
+
+
+                </div>
+
+
+                <!-- ==================================================
+                     QUICK GUIDE
+                ================================================== -->
+
+                <div class="notifications-info-banner">
+
+                    <div class="notifications-info-icon">
+
+                        <i class="fa-solid fa-circle-info"></i>
+
+                    </div>
+
+                    <div class="notifications-info-content">
+
+                        <h3>Keep students informed</h3>
+
+                        <p>
+                            Send updates to all students, target a department,
+                            or notify an individual student. Review your
+                            audience carefully before publishing.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==================================================
+                     NOTIFICATION MANAGEMENT WORKSPACE
+                ================================================== -->
+
+                <section class="notifications-management-card">
+
+
+                    <!-- WORKSPACE HEADER -->
+
+                    <div class="notifications-management-header">
+
+                        <div>
+
+                            <h2>Manage Notifications</h2>
+
+                            <p>
+                                View, search, filter, and manage your messages.
+                            </p>
+
+                        </div>
+
+
+                        <div class="notifications-results-summary">
+
+                            <span
+                                class="notifications-results-dot"
+                            ></span>
+
+                            <span id="notificationsResultsCount">
+                                Loading records...
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         SEARCH AND FILTERS
+                    ================================================== -->
+
+                    <div class="notifications-toolbar">
+
+
+                        <!-- SEARCH -->
+
+                        <div class="notifications-search">
+
+                            <i class="fa-solid fa-magnifying-glass"></i>
+
+                            <input
+                                type="search"
+                                id="notificationSearch"
+                                placeholder="Search notifications..."
+                                autocomplete="off"
+                                aria-label="Search notifications"
+                            >
+
+                            <button
+                                type="button"
+                                id="clearNotificationSearch"
+                                class="notifications-clear-search"
+                                aria-label="Clear search"
+                                hidden
+                            >
+
+                                <i class="fa-solid fa-xmark"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- STATUS FILTER -->
+
+                        <div class="notifications-filter">
+
+                            <label for="notificationStatusFilter">
+                                Status
+                            </label>
+
+                            <select
+                                id="notificationStatusFilter"
+                                class="form-select"
+                            >
+
+                                <option value="all">
+                                    All statuses
+                                </option>
+
+                                <option value="published">
+                                    Published
+                                </option>
+
+                                <option value="draft">
+                                    Drafts
+                                </option>
+
+                                <option value="archived">
+                                    Archived
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- AUDIENCE FILTER -->
+
+                        <div class="notifications-filter">
+
+                            <label for="notificationAudienceFilter">
+                                Audience
+                            </label>
+
+                            <select
+                                id="notificationAudienceFilter"
+                                class="form-select"
+                            >
+
+                                <option value="all">
+                                    All audiences
+                                </option>
+
+                                <option value="all_students">
+                                    All students
+                                </option>
+
+                                <option value="department">
+                                    Department
+                                </option>
+
+                                <option value="individual">
+                                    Individual student
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- RESET FILTERS -->
+
+                        <button
+                            type="button"
+                            id="resetNotificationFilters"
+                            class="notifications-reset-btn"
+                        >
+
+                            <i class="fa-solid fa-filter-circle-xmark"></i>
+
+                            <span>Reset</span>
+
+                        </button>
+
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         NOTIFICATIONS TABLE
+                    ================================================== -->
+
+                    <div class="notifications-table-wrapper">
+
+                        <table class="notifications-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th scope="col">
+                                        NOTIFICATION
+                                    </th>
+
+                                    <th scope="col">
+                                        AUDIENCE
+                                    </th>
+
+                                    <th scope="col">
+                                        PRIORITY
+                                    </th>
+
+                                    <th scope="col">
+                                        STATUS
+                                    </th>
+
+                                    <th scope="col">
+                                        CREATED
+                                    </th>
+
+                                    <th scope="col">
+                                        ACTIONS
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="notificationsTableBody">
+
+                                <!--
+                                    Notification records will be rendered
+                                    here by admin-notifications.js.
+                                -->
+
+                                <tr>
+
+                                    <td
+                                        colspan="6"
+                                        class="notifications-loading-cell"
+                                    >
+
+                                        <div class="notifications-table-loader">
+
+                                            <span
+                                                class="spinner-border spinner-border-sm"
+                                                aria-hidden="true"
+                                            ></span>
+
+                                            <span>
+                                                Loading notifications...
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         EMPTY STATE
+                    ================================================== -->
+
+                    <div
+                        class="notifications-empty-state"
+                        id="notificationsEmptyState"
+                        hidden
+                    >
+
+                        <div class="notifications-empty-icon">
+
+                            <i class="fa-regular fa-bell-slash"></i>
+
+                        </div>
+
+                        <h3>No notifications found</h3>
+
+                        <p>
+                            There are no notifications matching your current
+                            search or filters.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="notifications-primary-btn"
+                            id="emptyStateCreateBtn"
+                        >
+
+                            <i class="fa-solid fa-plus"></i>
+
+                            Create Notification
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- ==================================================
+                         PAGINATION
+                    ================================================== -->
+
+                    <div class="notifications-pagination">
+
+                        <div
+                            class="notifications-pagination-info"
+                            id="notificationsPaginationInfo"
+                        >
+                            Showing 0–0 of 0 notifications
+                        </div>
+
+
+                        <div
+                            class="notifications-pagination-controls"
+                            id="notificationsPaginationControls"
+                        >
+
+                            <button
+                                type="button"
+                                id="previousNotificationsPage"
+                                class="notifications-page-btn"
+                                disabled
+                                aria-label="Previous page"
+                            >
+
+                                <i class="fa-solid fa-chevron-left"></i>
+
+                            </button>
+
+
+                            <span
+                                id="notificationsPageIndicator"
+                                class="notifications-page-indicator"
+                            >
+                                Page 1
+                            </span>
+ <button
+                                type="button"
+                                id="nextNotificationsPage"
+                                class="notifications-page-btn"
+                                disabled
+                                aria-label="Next page"
+                            >
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                </section>
+
+
+                <!-- ==================================================
+                     FOOTER
+                ================================================== -->
+
+                <footer class="notifications-page-footer">
+
+                    <div class="notifications-footer-brand">
+
+                        <span class="notifications-footer-mark">
+                            A+
+                        </span>
+
+                        <span>
+                            Aplus Tutors
+                        </span>
+
+                    </div>
+
+                    <p>
+                        Notification Center
+                        <span>&bull;</span>
+                        Administration
+                    </p>
+
+                </footer>
+
+
+            </section>
+
+
+        </main>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    <!-- =====================================================
+     CREATE / EDIT NOTIFICATION MODAL
+===================================================== -->
+
+<div
+    class="modal fade"
+    id="notificationFormModal"
+    tabindex="-1"
+    aria-labelledby="notificationFormModalTitle"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div>
+                    <h5
+                        class="modal-title"
+                        id="notificationFormModalTitle"
+                    >
+                        Create Notification
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        Send important updates to Aplus Tutors students.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+
+
+            <form id="notificationForm" novalidate>
+
+                <div class="modal-body">
+
+                    <input
+                        type="hidden"
+                        id="notificationId"
+                    >
+
+
+                    <!-- TITLE -->
+
+                    <div class="mb-3">
+                        <label
+                            for="notificationTitle"
+                            class="form-label"
+                        >
+                            Notification Title
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="notificationTitle"
+                            maxlength="150"
+                            placeholder="e.g. Important CBT Examination Update"
+                            required
+                        >
+
+                        <div class="invalid-feedback">
+                            Enter a notification title.
+                        </div>
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div class="mb-3">
+                        <label
+                            for="notificationMessage"
+                            class="form-label"
+                        >
+                            Message
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <textarea
+                            class="form-control"
+                            id="notificationMessage"
+                            rows="5"
+                            maxlength="5000"
+                            placeholder="Write the notification message..."
+                            required
+                        ></textarea>
+
+                        <div class="invalid-feedback">
+                            Enter the notification message.
+                        </div>
+
+                        <small class="text-muted">
+                            Maximum 5,000 characters.
+                        </small>
+                    </div>
+
+
+                    <!-- NOTIFICATION TYPE -->
+
+                    <div class="mb-3">
+                        <label
+                            for="notificationType"
+                            class="form-label"
+                        >
+                            Notification Type
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="notificationType"
+                        >
+                            <option value="general">General</option>
+                            <option value="announcement">Announcement</option>
+                            <option value="academic">Academic</option>
+                            <option value="examination">Examination</option>
+                            <option value="payment">Payment</option>
+                            <option value="system">System Update</option>
+                        </select>
+                    </div>
+
+
+                    <!-- AUDIENCE -->
+
+                    <div class="mb-3">
+                        <label
+                            for="notificationFormAudience"
+                            class="form-label"
+                        >
+                            Target Audience
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="notificationFormAudience"
+                            required
+                        >
+                            <option value="all">
+                                All Students
+                            </option>
+
+                            <option value="department">
+                                Specific Department
+                            </option>
+
+                            <option value="individual">
+                                Individual Student
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div
+                        class="mb-3"
+                        id="notificationDepartmentGroup"
+                        hidden
+                    >
+                        <label
+                            for="notificationDepartment"
+                            class="form-label"
+                        >
+                            Department
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="notificationDepartment"
+                        >
+                            <option value="">
+                                Select department
+                            </option>
+
+                            <option value="Science">
+                                Science
+                            </option>
+
+                            <option value="Commercial">
+                                Commercial
+                            </option>
+
+                            <option value="Arts">
+                                Arts
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <!-- INDIVIDUAL STUDENT -->
+
+                    <div
+                        class="mb-3"
+                        id="notificationStudentGroup"
+                        hidden
+                    >
+                        <label
+                            for="notificationStudentId"
+                            class="form-label"
+                        >
+                            Student Profile Document ID
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="notificationStudentId"
+                            maxlength="100"
+                            placeholder="Enter the student's Appwrite profile document ID"
+                        >
+
+                        <small class="text-muted">
+                            Enter the student's document ID from the users table.
+                        </small>
+                    </div>
+
+
+                    <!-- PRIORITY -->
+
+                    <div class="mb-3">
+                        <label
+                            for="notificationPriority"
+                            class="form-label"
+                        >
+                            Priority
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="notificationPriority"
+                        >
+                            <option value="low">Low</option>
+                            <option value="normal" selected>
+                                Normal
+                            </option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="mb-3">
+                        <label
+                            for="notificationStatus"
+                            class="form-label"
+                        >
+                            Save As
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="notificationStatus"
+                        >
+                            <option value="draft">
+                                Draft
+                            </option>
+
+                            <option value="published">
+                                Publish Immediately
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <!-- OPTIONAL DESTINATION URL -->
+
+                    <div class="mb-3">
+                        <label
+                            for="notificationTargetUrl"
+                            class="form-label"
+                        >
+                            Destination URL (Optional)
+                        </label>
+
+                        <input
+                            type="url"
+                            class="form-control"
+                            id="notificationTargetUrl"
+                            maxlength="2048"
+                            placeholder="https://example.com/page"
+                        >
+
+                        <small class="text-muted">
+                            An optional page students can open from the notification.
+                        </small>
+                    </div>
+
+
+                    <!-- EXPIRY -->
+
+                    <div class="mb-3">
+                        <label
+                            for="notificationExpiresAt"
+                            class="form-label"
+                        >
+                            Expiry Date (Optional)
+                        </label>
+
+                        <input
+                            type="datetime-local"
+                            class="form-control"
+                            id="notificationExpiresAt"
+                        >
+
+                        <small class="text-muted">
+                            Leave empty if the notification should not expire.
+                        </small>
+                    </div>
+
+
+                    <div
+                        id="notificationFormMessage"
+                        class="alert d-none"
+                        role="alert"
+                    ></div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        data-bs-dismiss="modal"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-danger"
+                        id="saveNotificationBtn"
+                    >
+                        <i class="fas fa-save me-2"></i>
+                        Save Notification
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!-- ==================================================
+     APLUS TUTORS
+     ADMIN NOTIFICATION PREVIEW MODAL
+================================================== --><div class="modal fade" id="notificationPreviewModal" tabindex="-1"
+     aria-labelledby="notificationPreviewModalTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content notification-preview-modal">
+
+        <div class="modal-header">
+            <div>
+                <span class="notification-preview-eyebrow">
+                    APLUS TUTORS · NOTIFICATION PREVIEW
+                </span>
+
+                <h5 class="modal-title" id="notificationPreviewModalTitle">
+                    Notification Details
+                </h5>
+            </div>
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+
+            <div class="notification-preview-top">
+                <div class="notification-preview-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+
+                <div class="notification-preview-heading">
+                    <div class="notification-preview-badges">
+                        <span id="previewNotificationStatus"
+                              class="notification-status-badge">
+                            Draft
+                        </span>
+
+                        <span id="previewNotificationPriority"
+                              class="notification-priority-badge">
+                            Normal
+                        </span>
+                    </div>
+
+                    <h3 id="previewNotificationTitle">
+                        Notification title
+                    </h3>
+
+                    <p id="previewNotificationDate">
+                        Created date
+                    </p>
+                </div>
+            </div>
+
+            <div class="notification-preview-message-card">
+                <h6>
+                    <i class="fas fa-align-left"></i>
+                    Message
+                </h6>
+
+                <div id="previewNotificationMessage"
+                     class="notification-preview-message">
+                </div>
+            </div>
+
+            <div class="notification-preview-details">
+
+                <div class="notification-preview-detail">
+                    <span>Notification type</span>
+                    <strong id="previewNotificationType">General</strong>
+                </div>
+
+                <div class="notification-preview-detail">
+                    <span>Audience</span>
+                    <strong id="previewNotificationAudience">All students</strong>
+                </div>
+
+                <div class="notification-preview-detail">
+                    <span>Department</span>
+                    <strong id="previewNotificationDepartment">—</strong>
+                </div>
+
+                <div class="notification-preview-detail">
+                    <span>Target student</span>
+                    <strong id="previewNotificationStudent">—</strong>
+                </div>
+
+                <div class="notification-preview-detail">
+                    <span>Published date</span>
+                    <strong id="previewNotificationPublished">Not published</strong>
+                </div>
+
+                <div class="notification-preview-detail">
+                    <span>Expiry date</span>
+                    <strong id="previewNotificationExpiry">No expiry date</strong>
+                </div>
+
+                <div class="notification-preview-detail notification-preview-link-detail">
+                    <span>Target link</span>
+                    <a id="previewNotificationLink"
+                       href="#"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       hidden>
+                        Open notification link
+                    </a>
+
+                    <span id="previewNotificationNoLink">No target link</span>
+                </div>
+
+            </div>
+
+            <div id="notificationPreviewAlert"
+                 class="notification-preview-alert"
+                 hidden>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button type="button"
+                    class="btn btn-outline-secondary"
+                    data-bs-dismiss="modal">
+                Close
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline-dark"
+                    id="previewEditNotificationBtn">
+                <i class="fas fa-edit me-1"></i>
+                Edit Notification
+            </button>
+
+            <button type="button"
+                    class="btn btn-crimson"
+                    id="previewPublishNotificationBtn"
+                    hidden>
+                <i class="fas fa-paper-plane me-1"></i>
+                Publish Notification
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+</div>
+
+
+    <!-- ==================================================
+         APPWRITE SDK
+    ================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/appwrite@26.2.0"
+    ></script>
+
+
+    <!-- ==================================================
+         BOOTSTRAP JAVASCRIPT
+    ================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+    <!-- ==================================================
+         APPWRITE CONFIGURATION
+    ================================================== -->
+
+    <script src="appwrite.js"></script>
+
+
+    <!-- ==================================================
+         AUTHENTICATION GUARD
+    ================================================== -->
+
+    <script src="guard.js"></script>
+
+
+    <!-- ==================================================
+         ADMIN DASHBOARD SHELL
+    ================================================== -->
+
+    <script src="admin-dashboard.js"></script>
+
+
+    <!-- ==================================================
+         ADMIN NOTIFICATIONS
+    ================================================== -->
+
+    <script src="admin-notifications.js"></script>
+
+
+</body>
+
+</html>

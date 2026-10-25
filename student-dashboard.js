@@ -55,83 +55,120 @@ function normalizeDepartment(value) {
     
 }
 
+/* =========================================================
+   APLUS TUTORS
+   STUDENT DASHBOARD — LOAD SUBJECTS
+========================================================= */
+
 async function loadStudentSubjects() {
+    const subjectCards = document.getElementById("subjectCards");
+
+    if (!subjectCards) {
+        console.warn(
+            "[Dashboard Subjects] Subject cards container not found."
+        );
+        return;
+    }
+
     try {
-        console.log("=================================");
-        console.log("LOADING STUDENT SUBJECTS");
-        
+        console.log("[Dashboard Subjects] Loading subjects...");
+
+        subjectCards.innerHTML = `
+            <div class="dashboard-subjects-loading">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <span>Loading your subjects...</span>
+            </div>
+        `;
+
         const studentDepartment =
             currentStudent?.department || "General";
-        
-        console.log(
-            "Student department:",
-            studentDepartment
-        );
-        
+
         const response = await tablesDB.listRows(
             DATABASE_ID,
             SUBJECTS_TABLE_ID,
-            [Query.limit(100)]
+            [
+                Query.limit(100)
+            ]
         );
-        
+
         const allSubjects = response.rows || [];
-        
-        console.log("ALL SUBJECT ROWS:", allSubjects);
-        
+
         studentSubjects = allSubjects.filter(subject => {
             const subjectDepartment = normalizeDepartment(
                 subject.department
             );
-            
+
             const studentDept = normalizeDepartment(
                 studentDepartment
             );
-            
+
             const isActive =
                 String(subject.status || "")
-                .trim()
-                .toLowerCase() === "active";
-            
+                    .trim()
+                    .toLowerCase() === "active";
+
             const isGeneralSubject =
                 subjectDepartment === "general";
-            
+
             const isDepartmentMatch =
                 subjectDepartment === studentDept;
-            
+
             return (
                 isActive &&
                 (isGeneralSubject || isDepartmentMatch)
             );
         });
-        
+
         console.log(
-            "MATCHING ACTIVE SUBJECTS:",
+            "[Dashboard Subjects] Available subjects:",
             studentSubjects
         );
-        
-        console.log(
-            "MATCHING SUBJECT COUNT:",
-            studentSubjects.length
-        );
-        
-        if (typeof updateSubjectCounters === "function") {
-            updateSubjectCounters();
-        }
-        
-        if (typeof renderStudentSubjects === "function") {
-            renderStudentSubjects();
-        }
-        
-        console.log("=================================");
-        
+
+        renderDashboardSubjectCards();
+
     } catch (error) {
-        console.error("SUBJECT LOADING ERROR:", error);
-        
-        if (typeof showSubjectsError === "function") {
-            showSubjectsError();
-        }
+        console.error(
+            "[Dashboard Subjects] Failed to load subjects:",
+            error
+        );
+
+        showDashboardSubjectError();
     }
-    
+}
+
+
+/* =========================================================
+   NORMALIZE DEPARTMENT NAMES
+========================================================= */
+
+function normalizeDepartment(value) {
+    const department = String(value || "")
+        .trim()
+        .toLowerCase();
+
+    if (
+        department === "science" ||
+        department === "sciences"
+    ) {
+        return "science";
+    }
+
+    if (
+        department === "commercial" ||
+        department === "commerce"
+    ) {
+        return "commercial";
+    }
+
+    if (department === "arts") {
+        return "arts";
+    }
+
+    if (department === "general") {
+        return "general";
+    }
+
+    return department;
 }
 
 
@@ -531,11 +568,25 @@ SIDEBAR EVENTS
 ==================================================*/
 
 function attachEvents() {
-
+    
     setupSidebar();
-
+    
     attachLogout();
-
+    
+    // =========================================================
+    // VIEW ALL SUBJECTS BUTTON
+    // =========================================================
+    
+    const viewAllSubjectsButton = document.getElementById(
+        "viewAllSubjects"
+    );
+    
+    if (viewAllSubjectsButton) {
+        viewAllSubjectsButton.addEventListener("click", () => {
+            window.location.href = "student-subject.html";
+        });
+    }
+    
 }
 
 
@@ -786,39 +837,102 @@ function buildTopbar() {
     </div>
 
 
-    <div class="topbar-right">
+<div class="topbar-right">
+
+    <div class="student-notification-wrapper">
 
         <button
+            type="button"
+            class="topbar-icon student-notification-trigger"
+            id="studentNotificationTrigger"
+            title="Notifications"
+            aria-label="Open notifications"
+            aria-expanded="false"
+            aria-controls="studentNotificationPanel">
 
-            class="topbar-icon"
+            <i
+                class="fa-solid fa-bell"
+                aria-hidden="true">
+            </i>
 
-            title="Notifications">
-
-            <i class="fa-solid fa-bell"></i>
+            <span
+                class="student-notification-count"
+                id="studentNotificationCount"
+                hidden>
+                0
+            </span>
 
         </button>
 
+        <div
+            class="student-notification-panel"
+            id="studentNotificationPanel"
+            hidden>
 
-        <div class="topbar-user">
+            <div class="student-notification-panel-header">
 
-            <a href="student-profile.html">
-            
-            <img
+                <div>
+                    <h4>Notifications</h4>
 
-                id="topbarPhoto"
+                    <p>Stay updated with Aplus Tutors.</p>
+                </div>
 
-                src="Screenshot_20260806-223602.png"
-                
-                width="30"
+                <span
+                    id="studentNotificationHeaderCount">
+                    0
+                </span>
 
-                alt="Student">
-            </a>
+            </div>
+
+            <div
+                class="student-notification-list"
+                id="studentNotificationList"
+                aria-live="polite">
+
+                <div class="student-notification-loading">
+
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+
+                    <span>Loading notifications...</span>
+
+                </div>
+
+            </div>
+
+            <div class="student-notification-panel-footer">
+
+                <span id="studentNotificationFooterText">
+                    Your latest updates appear here.
+                </span>
+
+            </div>
 
         </div>
 
     </div>
 
+    <div class="topbar-user">
+
+        <a href="student-profile.html">
+
+            <img
+                id="topbarPhoto"
+                src="Screenshot_20260806-223602.png"
+                width="30"
+                alt="Student">
+
+        </a>
+
+    </div>
+
+</div>
+
     `;
+    
+    // Notify the notification system that the topbar now exists.
+document.dispatchEvent(
+    new CustomEvent("aplusDashboardTopbarReady")
+);
 
 }
 
@@ -838,12 +952,15 @@ RENDER DASHBOARD
 
 function renderDashboard() {
 
-    renderGreeting() ? true : false
+renderGreeting();
 
-    renderQuickStart();
+renderQuickStart();
+
+loadStudentSubjects();
+
+loadDashboardProgress();
 
 }
-
 
 
 //GREETING
@@ -1123,3 +1240,934 @@ function renderQuickStart() {
     `).join("");
 }
 
+
+
+
+
+
+
+
+/* =========================================================
+   APLUS TUTORS
+   STUDENT DASHBOARD — RENDER SUBJECT CARDS
+========================================================= */
+
+function renderDashboardSubjectCards() {
+    const container = document.getElementById("subjectCards");
+
+    if (!container) {
+        return;
+    }
+
+    if (!Array.isArray(studentSubjects) || studentSubjects.length === 0) {
+        container.innerHTML = `
+            <div class="dashboard-subjects-empty">
+                <div class="dashboard-subjects-state-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+
+                <h4>No Subjects Available</h4>
+
+                <p>
+                    There are currently no active subjects
+                    available for your department.
+                </p>
+
+                <a href="student-subjects.html">
+                    Explore Subjects
+                </a>
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = studentSubjects
+        .map(subject => createDashboardSubjectCard(subject))
+        .join("");
+}
+
+
+/* =========================================================
+   CREATE INDIVIDUAL SUBJECT CARD
+========================================================= */
+
+function createDashboardSubjectCard(subject) {
+    const subjectId = String(subject.$id || "");
+    const subjectName = String(subject.name || "Untitled Subject");
+    const subjectCode = String(subject.code || "");
+    const subjectDescription = String(
+        subject.description || "Explore notes and learning materials."
+    );
+
+    const icon = getDashboardSubjectIcon(subjectName);
+
+    return `
+        <article class="dashboard-subject-card">
+
+            <div class="dashboard-subject-card-top">
+
+                <div class="dashboard-subject-icon">
+                    <i class="${icon}"></i>
+                </div>
+
+                <span class="dashboard-subject-status">
+                    <span class="dashboard-status-dot"></span>
+                    Active
+                </span>
+
+            </div>
+
+            <div class="dashboard-subject-card-content">
+
+                <h3 class="dashboard-subject-name">
+                    ${escapeDashboardSubjectHTML(subjectName)}
+                </h3>
+
+                ${
+                    subjectCode
+                        ? `
+                            <span class="dashboard-subject-code">
+                                ${escapeDashboardSubjectHTML(subjectCode)}
+                            </span>
+                        `
+                        : ""
+                }
+
+                <p class="dashboard-subject-description">
+                    ${escapeDashboardSubjectHTML(subjectDescription)}
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="dashboard-subject-start"
+                onclick="openDashboardSubject('${escapeDashboardSubjectAttribute(subjectId)}')"
+                aria-label="Start learning ${escapeDashboardSubjectHTML(subjectName)}"
+            >
+                <span>Start Learning</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+        </article>
+    `;
+}
+
+
+/* =========================================================
+   SUBJECT ICONS
+========================================================= */
+
+function getDashboardSubjectIcon(subjectName) {
+    const name = String(subjectName || "").toLowerCase();
+
+    if (name.includes("mathematics") || name.includes("math")) {
+        return "fa-solid fa-calculator";
+    }
+
+    if (name.includes("english")) {
+        return "fa-solid fa-language";
+    }
+
+    if (name.includes("physics")) {
+        return "fa-solid fa-atom";
+    }
+
+    if (name.includes("chemistry")) {
+        return "fa-solid fa-flask";
+    }
+
+    if (name.includes("biology")) {
+        return "fa-solid fa-dna";
+    }
+
+    if (name.includes("computer") || name.includes("ict")) {
+        return "fa-solid fa-laptop-code";
+    }
+
+    if (name.includes("economics")) {
+        return "fa-solid fa-chart-line";
+    }
+
+    if (name.includes("commerce")) {
+        return "fa-solid fa-store";
+    }
+
+    if (name.includes("account")) {
+        return "fa-solid fa-file-invoice-dollar";
+    }
+
+    if (name.includes("government") || name.includes("civic")) {
+        return "fa-solid fa-landmark";
+    }
+
+    if (name.includes("literature")) {
+        return "fa-solid fa-book-open";
+    }
+
+    if (name.includes("geography")) {
+        return "fa-solid fa-earth-africa";
+    }
+
+    if (name.includes("agric")) {
+        return "fa-solid fa-seedling";
+    }
+
+    if (name.includes("crs") || name.includes("religious")) {
+        return "fa-solid fa-book-bible";
+    }
+
+    return "fa-solid fa-book";
+}
+
+
+/* =========================================================
+   OPEN SUBJECT NOTES
+========================================================= */
+
+function openDashboardSubject(subjectId) {
+    if (!subjectId) {
+        console.error(
+            "[Dashboard Subjects] Missing subject ID."
+        );
+
+        return;
+    }
+
+    try {
+        localStorage.setItem(
+            "aplusSelectedSubjectId",
+            subjectId
+        );
+
+        localStorage.setItem(
+            "selectedSubjectId",
+            subjectId
+        );
+
+        window.location.href = "student-notes.html";
+
+    } catch (error) {
+        console.error(
+            "[Dashboard Subjects] Unable to open subject:",
+            error
+        );
+    }
+}
+
+
+/* =========================================================
+   SUBJECT LOADING ERROR
+========================================================= */
+
+function showDashboardSubjectError() {
+    const container = document.getElementById("subjectCards");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="dashboard-subjects-error">
+
+            <div class="dashboard-subjects-state-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <h4>Unable to Load Subjects</h4>
+
+            <p>
+                Please check your connection and try again.
+            </p>
+
+            <button
+                type="button"
+                onclick="loadStudentSubjects()"
+            >
+                <i class="fa-solid fa-rotate-right"></i>
+                Try Again
+            </button>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   ESCAPE SUBJECT TEXT
+========================================================= */
+
+function escapeDashboardSubjectHTML(value) {
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        character => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[character]
+    );
+}
+
+
+/* =========================================================
+   ESCAPE SUBJECT ID FOR HTML ATTRIBUTE
+========================================================= */
+
+function escapeDashboardSubjectAttribute(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/'/g, "&#39;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+
+
+/* =========================================================
+APLUS TUTORS
+STUDENT DASHBOARD
+ASSESSMENT AND STUDY NOTES PROGRESS
+========================================================= */
+
+/* =========================================================
+LOAD DASHBOARD PROGRESS
+========================================================= */
+
+async function loadDashboardProgress() {
+
+const assessmentElement =
+    document.getElementById("assessmentProgress");
+
+const notesElement =
+    document.getElementById("notesProgress");
+
+const assessmentBar =
+    document.getElementById("assessmentProgressBar");
+
+const notesBar =
+    document.getElementById("notesProgressBar");
+
+if (
+    !assessmentElement ||
+    !notesElement ||
+    !assessmentBar ||
+    !notesBar
+) {
+    console.warn(
+        "[Dashboard Progress] Progress elements not found."
+    );
+
+    return;
+}
+
+try {
+
+    setDashboardProgressLoading();
+
+    /*
+     * Identify the authenticated account and
+     * student profile separately.
+     *
+     * Quiz and CBT attempts use the account ID.
+     * Study-note progress uses the profile row ID.
+     */
+
+    const accountId =
+        currentStudent?.accountId ||
+        currentStudent?.userId ||
+        currentStudent?.id ||
+        (
+            currentStudent?.profileId
+                ? ""
+                : currentStudent?.$id || ""
+        );
+
+    const profileId =
+        currentStudent?.profileId ||
+        (
+            currentStudent?.userId
+                ? currentStudent?.$id || ""
+                : ""
+        );
+
+    if (!accountId || !profileId) {
+
+        throw new Error(
+            "The student account or profile ID could not be identified."
+        );
+
+    }
+
+
+    /*
+     * Load the four data sources used by
+     * the Student Progress page.
+     */
+
+    const results = await Promise.allSettled([
+
+        tablesDB.listRows(
+            DATABASE_ID,
+            QUIZ_ATTEMPTS_TABLE_ID,
+            [
+                Query.equal("studentId", accountId),
+                Query.limit(100)
+            ]
+        ),
+
+        tablesDB.listRows(
+            DATABASE_ID,
+            CBT_ATTEMPTS_TABLE_ID,
+            [
+                Query.equal("studentId", accountId),
+                Query.limit(100)
+            ]
+        ),
+
+        tablesDB.listRows(
+            DATABASE_ID,
+            STUDY_NOTE_PROGRESS_TABLE_ID,
+            [
+                Query.equal("studentId", profileId),
+                Query.limit(100)
+            ]
+        ),
+
+        tablesDB.listRows(
+            DATABASE_ID,
+            SUBJECTS_TABLE_ID,
+            [
+                Query.limit(100)
+            ]
+        ),
+
+        tablesDB.listRows(
+            DATABASE_ID,
+            STUDY_NOTES_ID,
+            [
+                Query.equal("status", "published"),
+                Query.limit(100)
+            ]
+        )
+
+    ]);
+
+
+    /*
+     * Read successful results.
+     *
+     * If one source fails, log the error and
+     * continue with the sources that succeeded.
+     */
+
+    const sourceNames = [
+        "Quiz attempts",
+        "CBT attempts",
+        "Study-note progress",
+        "Subjects",
+        "Published study notes"
+    ];
+
+    results.forEach(function(result, index) {
+
+        if (result.status === "rejected") {
+
+            console.error(
+                "[Dashboard Progress] " +
+                sourceNames[index] +
+                " failed to load:",
+                result.reason
+            );
+
+        }
+
+    });
+
+
+    const quizAttempts =
+        results[0].status === "fulfilled"
+            ? results[0].value.rows || []
+            : null;
+
+    const allCbtAttempts =
+        results[1].status === "fulfilled"
+            ? results[1].value.rows || []
+            : null;
+
+    const noteRecords =
+        results[2].status === "fulfilled"
+            ? results[2].value.rows || []
+            : null;
+
+    const allSubjects =
+        results[3].status === "fulfilled"
+            ? results[3].value.rows || []
+            : null;
+
+    const allPublishedNotes =
+        results[4].status === "fulfilled"
+            ? results[4].value.rows || []
+            : null;
+
+
+    /*
+     * ASSESSMENT PROGRESS
+     *
+     * Match the Student Progress page:
+     * - Include quiz attempts.
+     * - Include completed CBT attempts only.
+     * - Average the percentage or score field.
+     */
+
+    if (quizAttempts !== null && allCbtAttempts !== null) {
+
+        const completedCbtAttempts =
+            allCbtAttempts.filter(function(attempt) {
+
+                return String(
+                    attempt.status || ""
+                ).toLowerCase() === "completed";
+
+            });
+
+
+        const assessments = [
+
+            ...quizAttempts.map(function(attempt) {
+
+                return Number(
+                    attempt.percentage ??
+                    attempt.score ??
+                    0
+                );
+
+            }),
+
+            ...completedCbtAttempts.map(function(attempt) {
+
+                return Number(
+                    attempt.percentage ??
+                    attempt.score ??
+                    0
+                );
+
+            })
+
+        ].filter(function(score) {
+
+            return Number.isFinite(score);
+
+        });
+
+
+        const averageScore = assessments.length
+
+            ? assessments.reduce(
+                function(total, score) {
+                    return total + score;
+                },
+                0
+            ) / assessments.length
+
+            : 0;
+
+
+        updateDashboardProgressValue(
+            "assessmentProgress",
+            "assessmentProgressBar",
+            "assessmentProgressTrack",
+            averageScore
+        );
+
+    } else {
+
+        setDashboardProgressUnavailable(
+            "assessmentProgress",
+            "assessmentProgressBar",
+            "assessmentProgressTrack"
+        );
+
+    }
+
+
+    /*
+     * STUDY NOTES PROGRESS
+     *
+     * Match the Student Progress page:
+     * - Published notes only.
+     * - Notes must belong to an accessible subject.
+     * - A note counts as completed when its status
+     *   is completed or progressPercent is at least 100.
+     */
+
+    if (
+        noteRecords !== null &&
+        allSubjects !== null &&
+        allPublishedNotes !== null
+    ) {
+
+        const studentDepartment = String(
+            currentStudent?.department || ""
+        ).trim().toLowerCase();
+
+
+        const allowedSubjectIds = new Set(
+
+            allSubjects
+
+                .filter(function(subject) {
+
+                    const subjectDepartment = String(
+                        subject.department || ""
+                    ).trim().toLowerCase();
+
+                    return (
+                        subjectDepartment === studentDepartment ||
+                        subjectDepartment === "general"
+                    );
+
+                })
+
+                .map(function(subject) {
+
+                    return subject.$id;
+
+                })
+
+        );
+
+
+        const availableNotes =
+            allPublishedNotes.filter(function(note) {
+
+                return allowedSubjectIds.has(
+                    note.subjectId
+                );
+
+            });
+
+
+        const completedNoteIds = new Set(
+
+            noteRecords
+
+                .filter(function(record) {
+
+                    return (
+                        String(
+                            record.status || ""
+                        ).toLowerCase() === "completed" ||
+
+                        Number(
+                            record.progressPercent
+                        ) >= 100
+                    );
+
+                })
+
+                .map(function(record) {
+
+                    return record.noteId;
+
+                })
+
+        );
+
+
+        const completedNotes =
+            availableNotes.filter(function(note) {
+
+                return completedNoteIds.has(
+                    note.$id
+                );
+
+            }).length;
+
+
+        const totalNotes =
+            availableNotes.length;
+
+
+        const notesPercentage = totalNotes > 0
+
+            ? Math.round(
+                (completedNotes / totalNotes) * 100
+            )
+
+            : 0;
+
+
+        updateDashboardProgressValue(
+            "notesProgress",
+            "notesProgressBar",
+            "notesProgressTrack",
+            notesPercentage
+        );
+
+
+        const notesDescription =
+            document.getElementById(
+                "notesProgressDescription"
+            );
+
+        if (notesDescription) {
+
+            notesDescription.textContent =
+                `${completedNotes} of ${totalNotes} available study notes completed.`;
+
+        }
+
+    } else {
+
+        setDashboardProgressUnavailable(
+            "notesProgress",
+            "notesProgressBar",
+            "notesProgressTrack"
+        );
+
+        const notesDescription =
+            document.getElementById(
+                "notesProgressDescription"
+            );
+
+        if (notesDescription) {
+
+            notesDescription.textContent =
+                "Study-note progress is temporarily unavailable.";
+
+        }
+
+    }
+
+
+    updateDashboardProgressMessage();
+
+
+    console.log(
+        "[Dashboard Progress] Progress updated."
+    );
+
+} catch (error) {
+
+    console.error(
+        "[Dashboard Progress] Unable to load progress:",
+        error
+    );
+
+    const message =
+        document.getElementById(
+            "dashboardProgressMessage"
+        );
+
+    if (message) {
+
+        message.textContent =
+            "Unable to load your progress. Please refresh the page.";
+
+    }
+
+}
+
+}
+
+/* =========================================================
+UPDATE A PROGRESS PERCENTAGE AND BAR
+========================================================= */
+
+function updateDashboardProgressValue(
+valueElementId,
+barElementId,
+trackElementId,
+value
+) {
+
+const valueElement =
+    document.getElementById(valueElementId);
+
+const progressBar =
+    document.getElementById(barElementId);
+
+const progressTrack =
+    document.getElementById(trackElementId);
+
+
+const percentage = Math.max(
+    0,
+    Math.min(
+        100,
+        Number(value) || 0
+    )
+);
+
+
+if (valueElement) {
+
+    valueElement.textContent =
+        `${Math.round(percentage)}%`;
+
+}
+
+
+if (progressBar) {
+
+    progressBar.style.width =
+        `${percentage}%`;
+
+}
+
+
+if (progressTrack) {
+
+    progressTrack.setAttribute(
+        "aria-valuenow",
+        String(Math.round(percentage))
+    );
+
+}
+
+}
+
+/* =========================================================
+LOADING STATE
+========================================================= */
+
+function setDashboardProgressLoading() {
+
+const assessmentElement =
+    document.getElementById("assessmentProgress");
+
+const notesElement =
+    document.getElementById("notesProgress");
+
+if (assessmentElement) {
+
+    assessmentElement.textContent = "…";
+
+}
+
+if (notesElement) {
+
+    notesElement.textContent = "…";
+
+}
+
+}
+
+/* =========================================================
+UNAVAILABLE DATA STATE
+========================================================= */
+
+function setDashboardProgressUnavailable(
+valueElementId,
+barElementId,
+trackElementId
+) {
+
+const valueElement =
+    document.getElementById(valueElementId);
+
+const progressBar =
+    document.getElementById(barElementId);
+
+const progressTrack =
+    document.getElementById(trackElementId);
+
+
+if (valueElement) {
+
+    valueElement.textContent = "—";
+
+}
+
+if (progressBar) {
+
+    progressBar.style.width = "0%";
+
+}
+
+if (progressTrack) {
+
+    progressTrack.setAttribute(
+        "aria-valuenow",
+        "0"
+    );
+
+}
+
+}
+
+/* =========================================================
+PROGRESS MESSAGE
+========================================================= */
+
+function updateDashboardProgressMessage() {
+
+const message =
+    document.getElementById(
+        "dashboardProgressMessage"
+    );
+
+if (!message) {
+    return;
+}
+
+const assessmentElement =
+    document.getElementById("assessmentProgress");
+
+const notesElement =
+    document.getElementById("notesProgress");
+
+
+const assessmentValue = Number(
+    String(
+        assessmentElement?.textContent || ""
+    ).replace("%", "")
+);
+
+const notesValue = Number(
+    String(
+        notesElement?.textContent || ""
+    ).replace("%", "")
+);
+
+
+if (
+    !Number.isFinite(assessmentValue) ||
+    !Number.isFinite(notesValue)
+) {
+
+    message.textContent =
+        "Keep studying and check your progress regularly.";
+
+    return;
+
+}
+
+
+if (assessmentValue >= 70 && notesValue >= 70) {
+
+    message.textContent =
+        "Excellent work! Keep building on your progress.";
+
+} else if (assessmentValue < 50) {
+
+    message.textContent =
+        "Keep practising your quizzes and CBT questions.";
+
+} else if (notesValue < 50) {
+
+    message.textContent =
+        "Complete more study notes to strengthen your preparation.";
+
+} else {
+
+    message.textContent =
+        "Good progress. Keep studying consistently.";
+
+}
+
+}

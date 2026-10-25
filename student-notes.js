@@ -44,6 +44,68 @@ let isRestoringReadingPosition = false;
 let currentReadingPercent = 0;
 
 
+
+// ============================================================
+// FLUSH PENDING READING PROGRESS
+// Saves the latest reading position before switching notes
+// or closing the reader.
+// ============================================================
+
+async function flushPendingNoteProgress() {
+
+    clearTimeout(progressSaveTimer);
+
+    progressSaveTimer = null;
+
+    const noteId = currentReadingNoteId;
+
+    if (!noteId) {
+        return;
+    }
+
+    const content = document.getElementById(
+        "viewNoteContent"
+    );
+
+    if (!content) {
+        return;
+    }
+
+    // Do not save while another note is being restored.
+    if (isRestoringReadingPosition) {
+        return;
+    }
+
+    const percentage = calculateNoteReadingProgress();
+
+    const position = content.scrollTop;
+
+    const existingStatus = getNoteStudyStatus(noteId);
+
+    const status = (
+        existingStatus === "completed" ||
+        percentage >= 100
+    )
+        ? "completed"
+        : (
+            percentage > 0
+                ? "in_progress"
+                : existingStatus === "unread"
+                    ? "in_progress"
+                    : existingStatus
+        );
+
+    currentReadingPercent = percentage;
+
+    await saveStudentNoteProgress(
+        noteId,
+        percentage,
+        position,
+        status
+    );
+}
+
+
 /* ==================================================
    DOM ELEMENTS
 ================================================== */
@@ -171,12 +233,21 @@ document.addEventListener(
 
             if (viewNoteModalElement) {
 
-                viewNoteModal =
-                    new bootstrap.Modal(
-                        viewNoteModalElement
-                    );
+    viewNoteModal = new bootstrap.Modal(
+        viewNoteModalElement
+    );
 
-            }
+    // Save the current position when the reader closes.
+    viewNoteModalElement.addEventListener(
+        "hide.bs.modal",
+        function () {
+
+            flushPendingNoteProgress();
+
+        }
+    );
+
+}
 
             /* ------------------------------------------
                LOAD STUDENT PROFILE
@@ -1219,11 +1290,13 @@ function updateNotesCount(count) {
 }
 
 
+// ============================================================
 // OPEN STUDY NOTE
-// RESTORE SAVED READING POSITION
+// RESTORE SAVED POSITION AND PRESERVE COMPLETION
 // ============================================================
 
 async function openViewNote(id) {
+
     const note = currentNotes.find(
         item => item.$id === id
     );
@@ -1250,20 +1323,44 @@ async function openViewNote(id) {
     );
 
     if (!viewContent) {
-        console.error("Study note reader content element not found.");
+        console.error(
+            "Study note reader content element not found."
+        );
         return;
     }
 
-    // Cancel any pending save for the previously opened note.
-    clearTimeout(progressSaveTimer);
+    // Save pending progress for the previously opened note.
+    if (
+        currentReadingNoteId &&
+        currentReadingNoteId !== id
+    ) {
+        await flushPendingNoteProgress();
+    } else {
+        clearTimeout(progressSaveTimer);
+        progressSaveTimer = null;
+    }
 
-    // Set the current note.
+    // Prevent scroll events from saving while the reader loads.
+    isRestoringReadingPosition = true;
+
+    // Set the new current note.
     currentReadingNoteId = note.$id;
 
-    // Retrieve its saved progress.
+    // Retrieve the saved progress record.
     currentReadingProgress = getNoteProgress(note.$id);
 
+    // Preserve the saved percentage and completion status.
     currentReadingPercent = getNoteReadingPercent(note.$id);
+
+    const savedPosition = Math.max(
+        0,
+        Number(currentReadingProgress?.lastPosition) || 0
+    );
+
+    const wasCompleted = (
+        currentReadingProgress?.status === "completed" ||
+        Number(currentReadingProgress?.progressPercent) >= 100
+    );
 
     // Update the reader heading.
     if (viewTitle) {
@@ -1287,12 +1384,10 @@ async function openViewNote(id) {
     viewContent.innerHTML =
         note.content || "<p>No content available.</p>";
 
-    // Start from the top while MathJax renders.
-    isRestoringReadingPosition = true;
-
+    // Begin at the top temporarily while the content renders.
     viewContent.scrollTop = 0;
 
-    // Reset the progress bar before rendering.
+    // Update the progress bar using saved progress.
     const progressBar = document.getElementById(
         "noteReadingProgress"
     );
@@ -1300,43 +1395,90 @@ async function openViewNote(id) {
     if (progressBar) {
         progressBar.style.width =
             `${currentReadingPercent}%`;
+
+        progressBar.setAttribute(
+            "aria-valuenow",
+            String(currentReadingPercent)
+        );
     }
 
-    // Open the reader.
+    // Open the modal.
     if (viewNoteModal) {
         viewNoteModal.show();
     }
 
-    // Render mathematical expressions.
-    await renderStudyNoteMath(viewContent);
+    try {
 
-    // Wait for the reader content to be laid out.
-    requestAnimationFrame(() => {
-        const savedPosition = Number(
-            currentReadingProgress?.lastPosition
-        ) || 0;
+        // Wait for MathJax to finish rendering the note.
+        await renderStudyNoteMath(viewContent);
 
-        // Restore the student's previous position.
+        // Wait for browser layout to settle.
+        await new Promise(resolve => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+            });
+        });
+
+        // Ensure this operation still belongs to the same note.
+        if (currentReadingNoteId !== note.$id) {
+            return;
+        }
+
+        // Restore the saved position after rendering.
         viewContent.scrollTop = savedPosition;
 
-        updateNoteReadingProgress();
+        // Wait for the restored position to take effect.
+        await new Promise(resolve => {
+            requestAnimationFrame(resolve);
+        });
 
+        // Update the progress indicator without downgrading
+        // a note that was already completed.
+        const actualPercentage =
+            calculateNoteReadingProgress();
+
+        currentReadingPercent = wasCompleted
+            ? 100
+            : actualPercentage;
+
+        if (progressBar) {
+            progressBar.style.width =
+                `${currentReadingPercent}%`;
+
+            progressBar.setAttribute(
+                "aria-valuenow",
+                String(currentReadingPercent)
+            );
+        }
+
+        // Finish restoration before attaching normal scrolling.
         isRestoringReadingPosition = false;
 
         attachReadingProgressEvents();
-    });
 
-    // Create a progress record for a note the student
-    // has opened for the first time.
-    if (!currentReadingProgress) {
-        await saveStudentNoteProgress(
-            note.$id,
-            0,
-            0,
-            "in_progress"
+        // Create a record only for a note without existing progress.
+        if (!currentReadingProgress) {
+
+            await saveStudentNoteProgress(
+                note.$id,
+                actualPercentage,
+                viewContent.scrollTop,
+                "in_progress"
+            );
+
+        }
+
+    } catch (error) {
+
+        isRestoringReadingPosition = false;
+
+        console.error(
+            "Unable to restore study note reading position:",
+            error
         );
+
     }
-}
+}w
 
 
 /* ==================================================
@@ -1603,6 +1745,7 @@ function formatDate(dateString) {
 
 // ============================================================
 // SAVE STUDENT NOTE PROGRESS
+// PRESERVE COMPLETED STATUS
 // ============================================================
 
 async function saveStudentNoteProgress(
@@ -1611,13 +1754,15 @@ async function saveStudentNoteProgress(
     lastPosition,
     status = "in_progress"
 ) {
+
     try {
+
         if (!currentStudentProfileId || !noteId) {
-            return;
+            return null;
         }
 
-        // Find the existing progress record.
-        let existingProgress = currentNoteProgress.find(
+        // Find the existing record for this student and note.
+        const existingProgress = currentNoteProgress.find(
             progress =>
                 progress.noteId === noteId &&
                 progress.studentId === currentStudentProfileId
@@ -1625,7 +1770,10 @@ async function saveStudentNoteProgress(
 
         const percentage = Math.max(
             0,
-            Math.min(100, Math.round(Number(progressPercent) || 0))
+            Math.min(
+                100,
+                Math.round(Number(progressPercent) || 0)
+            )
         );
 
         const position = Math.max(
@@ -1633,10 +1781,24 @@ async function saveStudentNoteProgress(
             Math.round(Number(lastPosition) || 0)
         );
 
-        // Do not downgrade a completed note when the student
-        // opens it again for revision.
-        if (existingProgress?.status === "completed") {
+        // Never downgrade a completed note.
+        const alreadyCompleted = (
+            existingProgress?.status === "completed" ||
+            Number(existingProgress?.progressPercent) >= 100
+        );
+
+        if (alreadyCompleted) {
+
             status = "completed";
+
+        } else if (percentage >= 100) {
+
+            status = "completed";
+
+        } else if (status !== "unread") {
+
+            status = "in_progress";
+
         }
 
         const now = new Date().toISOString();
@@ -1645,22 +1807,26 @@ async function saveStudentNoteProgress(
             studentId: currentStudentProfileId,
             noteId: noteId,
             status: status,
-            progressPercent: percentage,
+            progressPercent: alreadyCompleted
+                ? 100
+                : percentage,
             lastPosition: position,
             lastReadAt: now
         };
 
-        // Record the completion timestamp when applicable.
+        // Preserve the original completion timestamp.
         if (status === "completed") {
+
             data.completedAt =
                 existingProgress?.completedAt || now;
+
         }
 
         let savedRecord;
 
         if (existingProgress) {
-            // Update the existing record instead of creating
-            // a duplicate for the same student and note.
+
+            // Update the existing progress record.
             savedRecord = await tablesDB.updateRow(
                 DATABASE_ID,
                 STUDY_NOTE_PROGRESS_TABLE_ID,
@@ -1668,7 +1834,7 @@ async function saveStudentNoteProgress(
                 data
             );
 
-            // Replace the old local record with the new one.
+            // Replace the existing local record.
             currentNoteProgress = currentNoteProgress.map(
                 progress =>
                     progress.$id === savedRecord.$id
@@ -1677,6 +1843,7 @@ async function saveStudentNoteProgress(
             );
 
         } else {
+
             // Create a record only when one does not exist.
             savedRecord = await tablesDB.createRow(
                 DATABASE_ID,
@@ -1686,33 +1853,42 @@ async function saveStudentNoteProgress(
             );
 
             currentNoteProgress.push(savedRecord);
+
         }
 
-        // Update the currently open note's local progress.
-        // Update the currently open note's local progress.
-if (currentReadingNoteId === noteId) {
-    currentReadingProgress = savedRecord;
-    currentReadingPercent = percentage;
-}
+        // Update the current reader's progress.
+        if (currentReadingNoteId === noteId) {
 
-// Refresh dashboard statistics and note cards.
-updateStudyNotesDashboard();
-applyNoteFilters();
+            currentReadingProgress = savedRecord;
 
-console.log("Study progress saved:", {
-    noteId,
-    status,
-    progressPercent: percentage,
-    lastPosition: position
-});
+            currentReadingPercent =
+                Number(savedRecord.progressPercent) || 0;
+
+        }
+
+        // Refresh statistics and note cards.
+        updateStudyNotesDashboard();
+
+        applyNoteFilters();
+
+        console.log("Study progress saved:", {
+            noteId: noteId,
+            status: savedRecord.status,
+            progressPercent: savedRecord.progressPercent,
+            lastPosition: savedRecord.lastPosition
+        });
+
         return savedRecord;
-        
-        
 
     } catch (error) {
-        console.error("Unable to save study progress:", error);
+
+        console.error(
+            "Unable to save study progress:",
+            error
+        );
 
         return null;
+
     }
 }
 
@@ -1787,9 +1963,11 @@ function updateNoteReadingProgress() {
 
 // ============================================================
 // HANDLE READER SCROLLING
+// PRESERVE COMPLETED STATUS
 // ============================================================
 
 function handleNoteReaderScroll() {
+
     if (isRestoringReadingPosition) {
         return;
     }
@@ -1808,29 +1986,40 @@ function handleNoteReaderScroll() {
 
     updateNoteReadingProgress();
 
+    const noteId = currentReadingNoteId;
+
     const percentage = currentReadingPercent;
+
     const position = content.scrollTop;
 
-    // Do not downgrade a completed note.
-    const existingStatus = getNoteStudyStatus(
-        currentReadingNoteId
-    );
+    const existingStatus = getNoteStudyStatus(noteId);
 
-    const status =
-        existingStatus === "completed"
-            ? "completed"
-            : "in_progress";
+    // Keep completed notes completed when revisiting them.
+    const status = (
+        existingStatus === "completed" ||
+        percentage >= 100
+    )
+        ? "completed"
+        : "in_progress";
 
-    // Wait until scrolling pauses before saving.
+    // Debounce database updates while scrolling.
     clearTimeout(progressSaveTimer);
 
-    progressSaveTimer = setTimeout(() => {
-        saveStudentNoteProgress(
-            currentReadingNoteId,
+    progressSaveTimer = setTimeout(async () => {
+
+        // Avoid saving stale progress if the student
+        // has already opened another note.
+        if (currentReadingNoteId !== noteId) {
+            return;
+        }
+
+        await saveStudentNoteProgress(
+            noteId,
             percentage,
             position,
             status
         );
+
     }, 800);
 }
 
