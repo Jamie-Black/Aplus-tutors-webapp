@@ -115,7 +115,7 @@ const ADMIN_MENU = [
     {
         title: "Announcements",
         icon: "fa-solid fa-bullhorn",
-        page: "announcements.html"
+        page: "admin-notifications.html"
     },
 
     {
@@ -179,7 +179,7 @@ function setImage(
     selector,
     src,
     fallback =
-        "/assets/Screenshot_20260806-223602.png"
+        "Screenshot_20260806-223602.png"
 ) {
 
     const image =
