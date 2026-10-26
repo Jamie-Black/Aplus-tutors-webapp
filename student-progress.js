@@ -26,6 +26,20 @@ let studentProgressQuizAttempts = [];
 
 let studentProgressCbtAttempts = [];
 
+
+/* =========================================================
+   APLUS TUTORS
+   STUDENT PROGRESS CHARTS
+   BATCH 3 — GLOBAL VARIABLES
+========================================================= */
+
+let studentProgressChartInstances = {
+    performanceTrend: null,
+    subjectPerformance: null,
+    answerAccuracy: null,
+    notesCompletion: null
+};
+
 /*
  * CBT ANSWERS
  *
@@ -1164,383 +1178,50 @@ async function loadStudentProgressData(student) {
        RENDER RECENT ASSESSMENTS
     ===================================================== */
 
-    try {
+/* =====================================================
+   PHASE D:
+   RENDER RECENT ASSESSMENTS
+===================================================== */
 
-        renderStudentProgressRecentAssessments();
+try {
 
-    } catch (error) {
+    renderStudentProgressRecentAssessments();
 
-        console.error(
+} catch (error) {
 
-            "Recent assessments rendering failed:",
-
-            error
-
-        );
-
-        failedSources.push(
-            "Recent assessments rendering"
-
-        );
-
-    }
-
-
-    /* =====================================================
-       MARK DATA LOADING COMPLETE
-    ===================================================== */
-
-    studentProgressDataLoaded = true;
-
-
-    /* =====================================================
-       LOG LOADING RESULTS
-    ===================================================== */
-
-    console.log(
-
-        "Aplus student progress loading finished.",
-
-        {
-
-            quizzes:
-                studentProgressQuizAttempts.length,
-
-            completedCbt:
-                studentProgressCbtAttempts.length,
-
-            cbtAnswers:
-                studentProgressCbtAnswers.length,
-
-            noteRecords:
-                studentProgressNoteRecords.length,
-
-            subjects:
-                studentProgressSubjects.length,
-
-            availableNotes:
-                studentProgressNotes.length,
-
-            failedSources:
-                failedSources
-
-        }
-
+    console.error(
+        "Recent assessments rendering failed:",
+        error
     );
 
-
-    /* =====================================================
-       RETURN LOADING RESULTS
-    ===================================================== */
-
-    return {
-
-        success:
-            failedSources.length === 0,
-
-        failedSources:
-            failedSources,
-
-        results:
-            results
-
-    };
-
-}/* =========================================================
-   LOAD ALL STUDENT PROGRESS DATA
-
-   PHASE 2 — CORRECTED DATA LOADING
-
-   Loads:
-   1. Subjects
-   2. Quiz attempts
-   3. Completed CBT attempts
-   4. Study-note progress
-   5. Published study notes
-   6. CBT answers
-
-   Renders:
-   1. Dashboard summary
-   2. Subject performance
-   3. Recent assessments
-
-   FIX:
-   Only one declaration of dataSources.
-========================================================= */
-
-async function loadStudentProgressData(student) {
-
-    if (!student) {
-
-        throw new Error(
-            "Student information is unavailable."
-        );
-
-    }
-
-
-    /* =====================================================
-       IDENTIFY STUDENT
-    ===================================================== */
-
-    const accountId =
-        student.accountId ||
-        student.userId ||
-        student.id ||
-        student.$id;
-
-    const profileId =
-        student.profileId;
-
-
-    if (!accountId) {
-
-        throw new Error(
-            "Unable to identify the student's account."
-        );
-
-    }
-
-
-    if (!profileId) {
-
-        throw new Error(
-            "Unable to identify the student's profile."
-        );
-
-    }
-
-
-    console.log(
-        "Loading Aplus student progress...",
-        {
-            accountId,
-            profileId
-        }
+    failedSources.push(
+        "Recent assessments rendering"
     );
 
+}
 
-    /* =====================================================
-       RESET LOADING STATUS
-    ===================================================== */
 
-    studentProgressDataLoaded = false;
+/* =====================================================
+   PHASE D2:
+   RENDER PROGRESS CHARTS
+===================================================== */
 
+try {
 
-    /* =====================================================
-       PHASE A:
-       LOAD SUBJECTS FIRST
+    renderStudentProgressCharts();
 
-       Published study notes depend on the subjects.
-    ===================================================== */
+} catch (error) {
 
-    await loadStudentProgressSubjects();
+    console.error(
+        "Progress charts rendering failed:",
+        error
+    );
 
+    failedSources.push(
+        "Progress charts rendering"
+    );
 
-    /* =====================================================
-       PHASE B:
-       LOAD MAIN PROGRESS DATA SOURCES
-    ===================================================== */
-
-    const results = await Promise.allSettled([
-
-        loadStudentProgressQuizAttempts(
-            accountId
-        ),
-
-        loadStudentProgressCbtAttempts(
-            accountId
-        ),
-
-        loadStudentProgressNoteRecords(
-            profileId
-        ),
-
-        loadStudentProgressNotes()
-
-    ]);
-
-
-    /* =====================================================
-       REPORT FAILED MAIN DATA SOURCES
-
-       IMPORTANT:
-       dataSources is declared only once in this function.
-    ===================================================== */
-
-    const dataSources = [
-
-        "Quiz attempts",
-
-        "CBT attempts",
-
-        "Study-note progress",
-
-        "Published study notes"
-
-    ];
-
-
-    const failedSources = [];
-
-
-    results.forEach(function(result, index) {
-
-        if (result.status === "rejected") {
-
-            failedSources.push(
-                dataSources[index]
-            );
-
-
-            console.error(
-
-                dataSources[index] +
-                " failed to load:",
-
-                result.reason
-
-            );
-
-        }
-
-    });
-
-
-    /* =====================================================
-       PHASE B2:
-       LOAD CBT ANSWERS
-
-       Completed CBT attempts must be loaded before
-       their individual answers can be retrieved.
-    ===================================================== */
-
-    try {
-
-        const cbtAnswerResult =
-            await loadStudentProgressCbtAnswers();
-
-
-        /*
-         * Record partial answer-loading failures.
-         */
-
-        if (
-
-            cbtAnswerResult &&
-
-            Array.isArray(
-                cbtAnswerResult.failedAttempts
-            ) &&
-
-            cbtAnswerResult.failedAttempts.length > 0
-
-        ) {
-
-            failedSources.push(
-                "Some CBT answer records"
-            );
-
-        }
-
-    } catch (error) {
-
-        console.error(
-
-            "CBT answers failed to load:",
-
-            error
-
-        );
-
-
-        studentProgressCbtAnswers = [];
-
-
-        failedSources.push(
-            "CBT answers"
-        );
-
-    }
-
-
-    /* =====================================================
-       PHASE C:
-       RENDER DASHBOARD SUMMARY
-    ===================================================== */
-
-    try {
-
-        renderStudentProgressSummary();
-
-    } catch (error) {
-
-        console.error(
-
-            "Progress summary rendering failed:",
-
-            error
-
-        );
-
-        failedSources.push(
-            "Progress summary rendering"
-        );
-
-    }
-
-
-    /* =====================================================
-       PHASE C2:
-       RENDER SUBJECT PERFORMANCE
-    ===================================================== */
-
-    try {
-
-        renderStudentProgressSubjects();
-
-    } catch (error) {
-
-        console.error(
-
-            "Subject performance rendering failed:",
-
-            error
-
-        );
-
-        failedSources.push(
-            "Subject performance rendering"
-        );
-
-    }
-
-
-    /* =====================================================
-       PHASE D:
-       RENDER RECENT ASSESSMENTS
-    ===================================================== */
-
-    try {
-
-        renderStudentProgressRecentAssessments();
-
-    } catch (error) {
-
-        console.error(
-
-            "Recent assessments rendering failed:",
-
-            error
-
-        );
-
-        failedSources.push(
-            "Recent assessments rendering"
-
-        );
-
-    }
+}
 
 
     /* =====================================================
@@ -4344,5 +4025,1326 @@ if (window.aplusUser) {
     startStudentProgressPage(
         window.aplusUser
     );
+
+}
+
+
+
+
+
+
+/* =========================================================
+   APLUS TUTORS
+   STUDENT PROGRESS CHARTS
+   BATCH 3 — CHART RENDERING
+========================================================= */
+
+
+/* =========================================================
+   1. CHART ELEMENT HELPERS
+========================================================= */
+
+function getStudentProgressChartElement(id) {
+    return document.getElementById(id);
+}
+
+
+function showStudentProgressChartEmptyState(chartName, show) {
+
+    const emptyStateIds = {
+        performanceTrend: "progressPerformanceTrendEmpty",
+        subjectPerformance: "progressSubjectPerformanceEmpty",
+        answerAccuracy: "progressAnswerAccuracyEmpty",
+        notesCompletion: "progressNotesCompletionEmpty"
+    };
+
+    const canvasIds = {
+        performanceTrend: "progressPerformanceTrendChart",
+        subjectPerformance: "progressSubjectPerformanceChart",
+        answerAccuracy: "progressAnswerAccuracyChart",
+        notesCompletion: "progressNotesCompletionChart"
+    };
+
+    const emptyElement = getStudentProgressChartElement(
+        emptyStateIds[chartName]
+    );
+
+    const canvasElement = getStudentProgressChartElement(
+        canvasIds[chartName]
+    );
+
+    if (emptyElement) {
+        emptyElement.hidden = !show;
+    }
+
+    if (canvasElement) {
+        canvasElement.style.display = show ? "none" : "block";
+    }
+}
+
+
+/* =========================================================
+   2. DESTROY EXISTING CHARTS
+========================================================= */
+
+function destroyStudentProgressChart(chartName) {
+
+    const chart = studentProgressChartInstances[chartName];
+
+    if (chart) {
+        chart.destroy();
+        studentProgressChartInstances[chartName] = null;
+    }
+}
+
+
+/* =========================================================
+   3. COMMON CHART OPTIONS
+========================================================= */
+
+function getStudentProgressChartTextColor() {
+
+    return "#666666";
+}
+
+
+function getStudentProgressChartGridColor() {
+
+    return "rgba(0, 0, 0, 0.07)";
+}
+
+
+function getStudentProgressChartFont() {
+
+    return {
+        family: "DM Sans, Arial, sans-serif",
+        size: 11
+    };
+}
+
+
+function getStudentProgressChartTooltipOptions() {
+
+    return {
+        backgroundColor: "#111111",
+        titleColor: "#ffffff",
+        bodyColor: "#ffffff",
+        borderColor: "#dc143c",
+        borderWidth: 1,
+        padding: 12,
+        displayColors: true,
+        cornerRadius: 8
+    };
+}
+
+
+/* =========================================================
+   4. NORMALIZE ASSESSMENT SCORE
+========================================================= */
+
+function getStudentProgressChartScore(attempt) {
+
+    if (!attempt) {
+        return null;
+    }
+
+    let score = attempt.percentage;
+
+    if (
+        score === undefined ||
+        score === null ||
+        score === ""
+    ) {
+        score = attempt.score;
+    }
+
+    if (
+        score === undefined ||
+        score === null ||
+        score === ""
+    ) {
+        return null;
+    }
+
+    score = Number(score);
+
+    if (!Number.isFinite(score)) {
+        return null;
+    }
+
+    return Math.max(0, Math.min(100, score));
+}
+
+
+/* =========================================================
+   5. NORMALIZE ASSESSMENT DATE
+========================================================= */
+
+function getStudentProgressChartDate(attempt) {
+
+    if (!attempt) {
+        return null;
+    }
+
+    const rawDate =
+        attempt.completedAt ||
+        attempt.submittedAt ||
+        attempt.$updatedAt ||
+        attempt.startedAt ||
+        attempt.$createdAt;
+
+    if (!rawDate) {
+        return null;
+    }
+
+    const date = new Date(rawDate);
+
+    if (Number.isNaN(date.getTime())) {
+        return null;
+    }
+
+    return date;
+}
+
+
+function formatStudentProgressChartDate(date) {
+
+    return date.toLocaleDateString(undefined, {
+        day: "numeric",
+        month: "short"
+    });
+}
+
+
+/* =========================================================
+   6. GET VALID COMPLETED CBT ATTEMPTS
+========================================================= */
+
+function getStudentProgressChartCbtAttempts() {
+
+    return (studentProgressCbtAttempts || []).filter(
+        attempt => {
+            return (
+                String(attempt.status || "").toLowerCase() ===
+                "completed"
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   7. PERFORMANCE OVER TIME
+========================================================= */
+
+function renderStudentProgressPerformanceTrendChart() {
+
+    const chartName = "performanceTrend";
+
+    destroyStudentProgressChart(chartName);
+
+    const canvas = getStudentProgressChartElement(
+        "progressPerformanceTrendChart"
+    );
+
+    if (!canvas) {
+        console.warn(
+            "[Aplus Progress Charts] Performance chart canvas not found."
+        );
+
+        return;
+    }
+
+    if (typeof Chart === "undefined") {
+
+        console.error(
+            "[Aplus Progress Charts] Chart.js is not loaded."
+        );
+
+        showStudentProgressChartEmptyState(chartName, true);
+
+        return;
+    }
+
+    const quizAttempts = (
+        studentProgressQuizAttempts || []
+    ).map(attempt => ({
+        attempt,
+        type: "Quiz"
+    }));
+
+    const cbtAttempts = getStudentProgressChartCbtAttempts()
+        .map(attempt => ({
+            attempt,
+            type: "CBT"
+        }));
+
+    const allAttempts = [
+        ...quizAttempts,
+        ...cbtAttempts
+    ];
+
+    const validAssessments = allAttempts
+        .map(item => {
+
+            const score = getStudentProgressChartScore(
+                item.attempt
+            );
+
+            const date = getStudentProgressChartDate(
+                item.attempt
+            );
+
+            if (score === null || !date) {
+                return null;
+            }
+
+            return {
+                score,
+                date,
+                type: item.type,
+                id: item.attempt.$id || ""
+            };
+
+        })
+        .filter(Boolean)
+        .sort((a, b) => {
+            return a.date.getTime() - b.date.getTime();
+        });
+
+    if (!validAssessments.length) {
+
+        showStudentProgressChartEmptyState(chartName, true);
+
+        return;
+    }
+
+    showStudentProgressChartEmptyState(chartName, false);
+
+    const labels = validAssessments.map(item => {
+
+        const dateLabel = formatStudentProgressChartDate(
+            item.date
+        );
+
+        return `${dateLabel} · ${item.type}`;
+
+    });
+
+    const scores = validAssessments.map(
+        item => item.score
+    );
+
+    studentProgressChartInstances.performanceTrend =
+        new Chart(canvas, {
+
+            type: "line",
+
+            data: {
+
+                labels,
+
+                datasets: [{
+
+                    label: "Assessment score",
+
+                    data: scores,
+
+                    borderColor: "#dc143c",
+
+                    backgroundColor:
+                        "rgba(220, 20, 60, 0.10)",
+
+                    pointBackgroundColor: "#dc143c",
+
+                    pointBorderColor: "#ffffff",
+
+                    pointBorderWidth: 2,
+
+                    pointRadius: 4,
+
+                    pointHoverRadius: 7,
+
+                    borderWidth: 3,
+
+                    fill: true,
+
+                    tension: 0.3,
+
+                    spanGaps: false
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                interaction: {
+                    intersect: false,
+                    mode: "index"
+                },
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    },
+
+                    tooltip: {
+
+                        ...getStudentProgressChartTooltipOptions(),
+
+                        callbacks: {
+
+                            label(context) {
+
+                                return (
+                                    ` Score: ${context.parsed.y}%`
+                                );
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+                scales: {
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        },
+
+                        ticks: {
+
+                            color:
+                                getStudentProgressChartTextColor(),
+
+                            font:
+                                getStudentProgressChartFont(),
+
+                            maxRotation: 45,
+
+                            minRotation: 0,
+
+                            autoSkip: true,
+
+                            maxTicksLimit: 8
+
+                        }
+
+                    },
+
+                    y: {
+
+                        min: 0,
+
+                        max: 100,
+
+                        ticks: {
+
+                            stepSize: 20,
+
+                            color:
+                                getStudentProgressChartTextColor(),
+
+                            font:
+                                getStudentProgressChartFont(),
+
+                            callback(value) {
+                                return `${value}%`;
+                            }
+
+                        },
+
+                        grid: {
+                            color:
+                                getStudentProgressChartGridColor()
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+}
+
+
+/* =========================================================
+   8. SUBJECT PERFORMANCE
+========================================================= */
+
+function renderStudentProgressSubjectPerformanceChart() {
+
+    const chartName = "subjectPerformance";
+
+    destroyStudentProgressChart(chartName);
+
+    const canvas = getStudentProgressChartElement(
+        "progressSubjectPerformanceChart"
+    );
+
+    if (!canvas) {
+        console.warn(
+            "[Aplus Progress Charts] Subject chart canvas not found."
+        );
+
+        return;
+    }
+
+    if (typeof Chart === "undefined") {
+
+        showStudentProgressChartEmptyState(chartName, true);
+
+        return;
+    }
+
+    const subjects = studentProgressSubjects || [];
+
+    const quizAttempts = studentProgressQuizAttempts || [];
+
+    const cbtAttempts = getStudentProgressChartCbtAttempts();
+
+    const cbtAnswers = studentProgressCbtAnswers || [];
+
+    const accessibleSubjects = subjects.filter(subject => {
+
+        const status = String(
+            subject.status || ""
+        ).toLowerCase();
+
+        if (status === "inactive") {
+            return false;
+        }
+
+        const subjectDepartment = String(
+            subject.department || ""
+        ).trim().toLowerCase();
+
+        const studentDepartment = String(
+            studentProgressUser?.department || ""
+        ).trim().toLowerCase();
+
+        return (
+            subjectDepartment === "general" ||
+            (
+                subjectDepartment &&
+                studentDepartment &&
+                (
+                    subjectDepartment === studentDepartment ||
+                    (
+                        ["science", "sciences"].includes(
+                            subjectDepartment
+                        ) &&
+                        ["science", "sciences"].includes(
+                            studentDepartment
+                        )
+                    )
+                )
+            )
+        );
+    });
+
+    const subjectStats = new Map();
+
+    accessibleSubjects.forEach(subject => {
+
+        subjectStats.set(subject.$id, {
+            name: subject.name || subject.subjectName || "Subject",
+            scores: []
+        });
+
+    });
+
+
+    /* Quiz scores */
+
+    quizAttempts.forEach(attempt => {
+
+        const subjectId = attempt.subjectId;
+
+        if (!subjectStats.has(subjectId)) {
+            return;
+        }
+
+        const score = getStudentProgressChartScore(attempt);
+
+        if (score === null) {
+            return;
+        }
+
+        subjectStats.get(subjectId).scores.push(score);
+
+    });
+
+
+    /* CBT scores grouped by attempt and subject */
+
+    const cbtAttemptIds = new Set(
+        cbtAttempts.map(attempt => attempt.$id)
+    );
+
+    const groupedAnswers = new Map();
+
+    cbtAnswers.forEach(answer => {
+
+        if (!cbtAttemptIds.has(answer.attemptId)) {
+            return;
+        }
+
+        if (!subjectStats.has(answer.subjectId)) {
+            return;
+        }
+
+        const key = `${answer.attemptId}::${answer.subjectId}`;
+
+        if (!groupedAnswers.has(key)) {
+
+            groupedAnswers.set(key, {
+                attemptId: answer.attemptId,
+                subjectId: answer.subjectId,
+                total: 0,
+                correct: 0
+            });
+
+        }
+
+        const group = groupedAnswers.get(key);
+
+        group.total += 1;
+
+        if (
+            typeof isStudentProgressAnswerCorrect === "function" &&
+            isStudentProgressAnswerCorrect(answer.isCorrect)
+        ) {
+            group.correct += 1;
+        }
+
+    });
+
+
+    groupedAnswers.forEach(group => {
+
+        if (group.total <= 0) {
+            return;
+        }
+
+        const score = (
+            group.correct / group.total
+        ) * 100;
+
+        subjectStats.get(group.subjectId).scores.push(score);
+
+    });
+
+
+    const chartRows = Array.from(subjectStats.values())
+        .map(subject => {
+
+            if (!subject.scores.length) {
+                return null;
+            }
+
+            const average = subject.scores.reduce(
+                (sum, score) => sum + score,
+                0
+            ) / subject.scores.length;
+
+            return {
+                name: subject.name,
+                score: Math.round(average * 10) / 10
+            };
+
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.score - a.score);
+
+    if (!chartRows.length) {
+
+        showStudentProgressChartEmptyState(chartName, true);
+
+        return;
+    }
+
+    showStudentProgressChartEmptyState(chartName, false);
+
+    const labels = chartRows.map(
+        row => row.name
+    );
+
+    const scores = chartRows.map(
+        row => row.score
+    );
+
+    studentProgressChartInstances.subjectPerformance =
+        new Chart(canvas, {
+
+            type: "bar",
+
+            data: {
+
+                labels,
+
+                datasets: [{
+
+                    label: "Average score",
+
+                    data: scores,
+
+                    backgroundColor: scores.map(score => {
+
+                        if (score >= 70) {
+                            return "#dc143c";
+                        }
+
+                        if (score >= 50) {
+                            return "#a80f2e";
+                        }
+
+                        return "#777777";
+
+                    }),
+
+                    borderRadius: 7,
+
+                    borderSkipped: false,
+
+                    barThickness: "flex",
+
+                    maxBarThickness: 32
+
+                }]
+
+            },
+
+            options: {
+
+                indexAxis: "y",
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    },
+
+                    tooltip: {
+
+                        ...getStudentProgressChartTooltipOptions(),
+
+                        callbacks: {
+
+                            label(context) {
+
+                                return (
+                                    ` Average score: ${context.parsed.x}%`
+                                );
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+                scales: {
+
+                    x: {
+
+                        min: 0,
+
+                        max: 100,
+
+                        ticks: {
+
+                            stepSize: 20,
+
+                            color:
+                                getStudentProgressChartTextColor(),
+
+                            font:
+                                getStudentProgressChartFont(),
+
+                            callback(value) {
+                                return `${value}%`;
+                            }
+
+                        },
+
+                        grid: {
+                            color:
+                                getStudentProgressChartGridColor()
+                        }
+
+                    },
+
+                    y: {
+
+                        ticks: {
+
+                            color: "#292929",
+
+                            font: {
+                                family: "DM Sans, Arial, sans-serif",
+                                size: 12,
+                                weight: "600"
+                            }
+
+                        },
+
+                        grid: {
+                            display: false
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+}
+
+
+/* =========================================================
+   9. ANSWER ACCURACY
+========================================================= */
+
+function renderStudentProgressAnswerAccuracyChart() {
+
+    const chartName = "answerAccuracy";
+
+    destroyStudentProgressChart(chartName);
+
+    const canvas = getStudentProgressChartElement(
+        "progressAnswerAccuracyChart"
+    );
+
+    if (!canvas) {
+        console.warn(
+            "[Aplus Progress Charts] Answer chart canvas not found."
+        );
+
+        return;
+    }
+
+    if (typeof Chart === "undefined") {
+
+        showStudentProgressChartEmptyState(chartName, true);
+
+        return;
+    }
+
+    let correct = 0;
+    let incorrect = 0;
+    let unanswered = 0;
+
+    let hasReliableData = false;
+
+
+    /* Quiz attempt summaries */
+
+    (studentProgressQuizAttempts || []).forEach(attempt => {
+
+        const correctValue = Number(
+            attempt.correctAnswers
+        );
+
+        const wrongValue = Number(
+            attempt.wrongAnswers ??
+            attempt.incorrectAnswers
+        );
+
+        const unansweredValue = Number(
+            attempt.unansweredQuestions ??
+            attempt.unanswered
+        );
+
+        if (
+            Number.isFinite(correctValue) &&
+            attempt.correctAnswers !== undefined &&
+            attempt.correctAnswers !== null
+        ) {
+            correct += Math.max(0, correctValue);
+            hasReliableData = true;
+        }
+
+        if (
+            Number.isFinite(wrongValue) &&
+            (
+                attempt.wrongAnswers !== undefined ||
+                attempt.incorrectAnswers !== undefined
+            )
+        ) {
+            incorrect += Math.max(0, wrongValue);
+            hasReliableData = true;
+        }
+
+        if (
+            Number.isFinite(unansweredValue) &&
+            (
+                attempt.unansweredQuestions !== undefined ||
+                attempt.unanswered !== undefined
+            )
+        ) {
+            unanswered += Math.max(0, unansweredValue);
+            hasReliableData = true;
+        }
+
+    });
+
+
+/* CBT answer records */
+
+    const cbtAttempts = getStudentProgressChartCbtAttempts();
+
+    const cbtAttemptIds = new Set(
+        cbtAttempts.map(attempt => attempt.$id)
+    );
+
+    const answersByAttempt = new Map();
+
+    (studentProgressCbtAnswers || []).forEach(answer => {
+
+        if (!cbtAttemptIds.has(answer.attemptId)) {
+            return;
+        }
+
+        if (!answersByAttempt.has(answer.attemptId)) {
+            answersByAttempt.set(answer.attemptId, []);
+        }
+
+        answersByAttempt.get(answer.attemptId).push(answer);
+
+    });
+
+
+    cbtAttempts.forEach(attempt => {
+
+        const answers = answersByAttempt.get(
+            attempt.$id
+        ) || [];
+
+        answers.forEach(answer => {
+
+            if (
+                typeof isStudentProgressAnswerCorrect === "function" &&
+                isStudentProgressAnswerCorrect(answer.isCorrect)
+            ) {
+
+                correct += 1;
+                hasReliableData = true;
+
+            } else if (
+                answer.isCorrect === false ||
+                answer.isCorrect === 0 ||
+                answer.isCorrect === "false" ||
+                answer.isCorrect === "0"
+            ) {
+
+                incorrect += 1;
+                hasReliableData = true;
+
+            }
+
+        });
+
+
+        /*
+         * Only infer unanswered questions if the CBT attempt
+         * has a valid question total and the answer rows are
+         * known to represent individual questions.
+         *
+         * We do not infer unanswered questions from a missing
+         * answer collection.
+         */
+
+        const totalQuestions = Number(
+            attempt.totalQuestions
+        );
+
+        if (
+            Number.isFinite(totalQuestions) &&
+            totalQuestions >= answers.length &&
+            answers.length > 0
+        ) {
+
+            unanswered += Math.max(
+                0,
+                totalQuestions - answers.length
+            );
+
+        }
+
+    });
+
+
+    const total = correct + incorrect + unanswered;
+
+    if (!hasReliableData || total <= 0) {
+
+        showStudentProgressChartEmptyState(chartName, true);
+
+        return;
+    }
+
+    showStudentProgressChartEmptyState(chartName, false);
+
+    studentProgressChartInstances.answerAccuracy =
+        new Chart(canvas, {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: [
+                    "Correct",
+                    "Incorrect",
+                    "Unanswered"
+                ],
+
+                datasets: [{
+
+                    data: [
+                        correct,
+                        incorrect,
+                        unanswered
+                    ],
+
+                    backgroundColor: [
+                        "#198754",
+                        "#dc143c",
+                        "#d5d5d5"
+                    ],
+
+                    borderColor: "#ffffff",
+
+                    borderWidth: 4,
+
+                    hoverOffset: 8
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                cutout: "70%",
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom",
+
+                        labels: {
+
+                            usePointStyle: true,
+
+                            pointStyle: "circle",
+
+                            padding: 18,
+
+                            color: "#444444",
+
+                            font:
+                                getStudentProgressChartFont()
+
+                        }
+
+                    },
+
+                    tooltip: {
+
+                        ...getStudentProgressChartTooltipOptions(),
+
+                        callbacks: {
+
+                            label(context) {
+
+                                const value = Number(
+                                    context.raw || 0
+                                );
+
+                                const percentage = total
+                                    ? (
+                                        value / total * 100
+                                    ).toFixed(1)
+                                    : "0.0";
+
+                                return (
+                                    ` ${context.label}: ${value} ` +
+                                    `(${percentage}%)`
+                                );
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+}
+
+
+/* =========================================================
+   10. STUDY NOTES COMPLETION
+========================================================= */
+
+function renderStudentProgressNotesCompletionChart() {
+
+    const chartName = "notesCompletion";
+
+    destroyStudentProgressChart(chartName);
+
+    const canvas = getStudentProgressChartElement(
+        "progressNotesCompletionChart"
+    );
+
+    if (!canvas) {
+        console.warn(
+            "[Aplus Progress Charts] Notes chart canvas not found."
+        );
+
+        return;
+    }
+
+    if (typeof Chart === "undefined") {
+
+        showStudentProgressChartEmptyState(chartName, true);
+
+        return;
+    }
+
+    const availableNotes = studentProgressNotes || [];
+
+    const noteRecords = studentProgressNoteRecords || [];
+
+    if (!availableNotes.length) {
+
+        showStudentProgressChartEmptyState(chartName, true);
+
+        return;
+    }
+
+
+    const recordsByNoteId = new Map();
+
+    noteRecords.forEach(record => {
+
+        if (!record.noteId) {
+            return;
+        }
+
+        recordsByNoteId.set(
+            record.noteId,
+            record
+        );
+
+    });
+
+
+    let completed = 0;
+    let remaining = 0;
+
+    availableNotes.forEach(note => {
+
+        const record = recordsByNoteId.get(note.$id);
+
+        if (!record) {
+
+            remaining += 1;
+
+            return;
+        }
+
+        const status = String(
+            record.status || ""
+        ).toLowerCase();
+
+        const progress = Number(
+            record.progressPercent || 0
+        );
+
+        if (
+            status === "completed" ||
+            progress >= 100
+        ) {
+
+            completed += 1;
+
+        } else {
+
+            remaining += 1;
+
+        }
+
+    });
+
+
+    showStudentProgressChartEmptyState(chartName, false);
+
+    studentProgressChartInstances.notesCompletion =
+        new Chart(canvas, {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: [
+                    "Completed",
+                    "Remaining"
+                ],
+
+                datasets: [{
+
+                    data: [
+                        completed,
+                        remaining
+                    ],
+
+                    backgroundColor: [
+                        "#dc143c",
+                        "#eeeeee"
+                    ],
+
+                    borderColor: "#ffffff",
+
+                    borderWidth: 4,
+
+                    hoverOffset: 8
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                cutout: "72%",
+
+                plugins: {
+
+                    legend: {
+
+                        position: "bottom",
+
+                        labels: {
+
+                            usePointStyle: true,
+
+                            pointStyle: "circle",
+
+                            padding: 18,
+
+                            color: "#444444",
+
+                            font:
+                                getStudentProgressChartFont()
+
+                        }
+
+                    },
+
+                    tooltip: {
+
+                        ...getStudentProgressChartTooltipOptions(),
+
+                        callbacks: {
+
+                            label(context) {
+
+                                const value = Number(
+                                    context.raw || 0
+                                );
+
+                                const percentage = availableNotes.length
+                                    ? (
+                                        value /
+                                        availableNotes.length *
+                                        100
+                                    ).toFixed(1)
+                                    : "0.0";
+
+                                return (
+                                    ` ${context.label}: ${value} ` +
+                                    `(${percentage}%)`
+                                );
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+}
+
+/* =========================================================
+   11. RENDER ALL STUDENT PROGRESS CHARTS
+========================================================= */
+
+function renderStudentProgressCharts() {
+
+    if (typeof Chart === "undefined") {
+
+        console.error(
+            "[Aplus Progress Charts] Chart.js is unavailable. " +
+            "Check the Chart.js script import."
+        );
+
+        return;
+    }
+
+    try {
+
+        renderStudentProgressPerformanceTrendChart();
+
+        renderStudentProgressSubjectPerformanceChart();
+
+        renderStudentProgressAnswerAccuracyChart();
+
+        renderStudentProgressNotesCompletionChart();
+
+        console.log(
+            "[Aplus Progress Charts] Charts rendered successfully."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "[Aplus Progress Charts] Rendering failed:",
+            error
+        );
+
+    }
 
 }

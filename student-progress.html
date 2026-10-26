@@ -589,8 +589,262 @@
 
 
     </section>
+    
+    
+    <!-- =========================================================
+     APLUS TUTORS
+     STUDENT PROGRESS CHARTS
+========================================================= -->
+
+<section class="progress-charts-section" id="progressChartsSection">
+
+    <!-- Section heading -->
+    <div class="progress-section-heading">
+
+        <div class="progress-section-heading-text">
+            <span class="progress-section-eyebrow">
+                PERFORMANCE INSIGHTS
+            </span>
+
+            <h2>My Learning Analytics</h2>
+
+            <p>
+                Track your improvement, compare subject performance,
+                and monitor your study progress.
+            </p>
+        </div>
+
+    </div>
 
 
+    <!-- =====================================================
+         CHART 1: PERFORMANCE OVER TIME
+    ====================================================== -->
+
+    <div class="progress-chart-card progress-chart-card-wide">
+
+        <div class="progress-chart-header">
+
+            <div>
+                <span class="progress-chart-label">
+                    PERFORMANCE TREND
+                </span>
+
+                <h3>Performance Over Time</h3>
+
+                <p>
+                    Follow your scores across quizzes and CBT examinations.
+                </p>
+            </div>
+
+            <span class="progress-chart-icon" aria-hidden="true">
+                <i class="bi bi-graph-up-arrow"></i>
+            </span>
+
+        </div>
+
+
+        <div class="progress-chart-container progress-chart-container-line">
+
+            <canvas
+                id="progressPerformanceTrendChart"
+                role="img"
+                aria-label="Line chart showing assessment scores over time"
+            ></canvas>
+
+        </div>
+
+
+        <div
+            class="progress-chart-empty"
+            id="progressPerformanceTrendEmpty"
+            hidden
+        >
+            <i class="bi bi-graph-up" aria-hidden="true"></i>
+
+            <h4>No performance trend yet</h4>
+
+            <p>
+                Complete a quiz or CBT examination to start tracking
+                your performance over time.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CHART 2: SUBJECT PERFORMANCE
+    ====================================================== -->
+
+    <div class="progress-chart-card progress-chart-card-wide">
+
+        <div class="progress-chart-header">
+
+            <div>
+                <span class="progress-chart-label">
+                    SUBJECT ANALYSIS
+                </span>
+
+                <h3>Subject Performance</h3>
+
+                <p>
+                    Compare your average scores across your available subjects.
+                </p>
+            </div>
+
+            <span class="progress-chart-icon" aria-hidden="true">
+                <i class="bi bi-bar-chart-line" aria-hidden="true"></i>
+            </span>
+
+        </div>
+
+
+        <div class="progress-chart-container progress-chart-container-subjects">
+
+            <canvas
+                id="progressSubjectPerformanceChart"
+                role="img"
+                aria-label="Bar chart comparing average scores across subjects"
+            ></canvas>
+
+        </div>
+
+
+        <div
+            class="progress-chart-empty"
+            id="progressSubjectPerformanceEmpty"
+            hidden
+        >
+            <i class="bi bi-bar-chart" aria-hidden="true"></i>
+
+            <h4>Subject performance will appear here</h4>
+
+            <p>
+                Complete assessments in your subjects to see how
+                you are performing.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CHARTS 3 AND 4
+    ====================================================== -->
+
+    <div class="progress-chart-grid">
+
+
+        <!-- CHART 3: ANSWER ACCURACY -->
+
+        <div class="progress-chart-card">
+
+            <div class="progress-chart-header">
+
+                <div>
+                    <span class="progress-chart-label">
+                        ANSWER ANALYSIS
+                    </span>
+
+                    <h3>Answer Accuracy</h3>
+
+                    <p>
+                        See how your answers are distributed.
+                    </p>
+                </div>
+
+                <span class="progress-chart-icon" aria-hidden="true">
+                    <i class="bi bi-bullseye" aria-hidden="true"></i>
+                </span>
+
+            </div>
+
+
+            <div class="progress-chart-container progress-chart-container-doughnut">
+
+                <canvas
+                    id="progressAnswerAccuracyChart"
+                    role="img"
+                    aria-label="Doughnut chart showing correct, incorrect, and unanswered questions"
+                ></canvas>
+
+            </div>
+
+
+            <div
+                class="progress-chart-empty"
+                id="progressAnswerAccuracyEmpty"
+                hidden
+            >
+                <i class="bi bi-clipboard-check" aria-hidden="true"></i>
+
+                <h4>No answer data yet</h4>
+
+                <p>
+                    Complete an assessment to see your answer accuracy.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- CHART 4: STUDY NOTES COMPLETION -->
+
+        <div class="progress-chart-card">
+
+            <div class="progress-chart-header">
+
+                <div>
+                    <span class="progress-chart-label">
+                        STUDY PROGRESS
+                    </span>
+
+                    <h3>Study Notes Completion</h3>
+
+                    <p>
+                        Monitor your progress through published study notes.
+                    </p>
+                </div>
+
+                <span class="progress-chart-icon" aria-hidden="true">
+                    <i class="bi bi-journal-check" aria-hidden="true"></i>
+                </span>
+
+            </div>
+
+
+            <div class="progress-chart-container progress-chart-container-doughnut">
+
+                <canvas
+                    id="progressNotesCompletionChart"
+                    role="img"
+                    aria-label="Doughnut chart showing completed and remaining study notes"
+                ></canvas>
+
+            </div>
+
+
+            <div
+                class="progress-chart-empty"
+                id="progressNotesCompletionEmpty"
+                hidden
+            >
+                <i class="bi bi-journal-text" aria-hidden="true"></i>
+
+                <h4>No study notes available</h4>
+
+                <p>
+                    Published study notes will appear here when
+                    they are available for your department.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
     <!-- ================================================
          SUBJECT PERFORMANCE
     ================================================= -->
@@ -1053,9 +1307,10 @@
     <script
         src="student-notifications-core.js"
     ></script>
-
-
-
+    
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
     <!-- ==================================================
          STUDENTS Progress SCRIPT
     =================================================== -->
