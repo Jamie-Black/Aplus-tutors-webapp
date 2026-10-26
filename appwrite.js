@@ -57,12 +57,25 @@ const CBT_ATTEMPTS_TABLE_ID = "6acbb0dd002f4c86fce2";
 
 const CBT_ANSWERS_TABLE_ID = "6acbe459003c1fe45a42";
 
+// ==================================================
+// NOTIFICATIONS
+// ==================================================
+
+const NOTIFICATIONS_TABLE_ID = "6adb6b4b0027f233bace";
+
+const NOTIFICATION_READS_TABLE_ID = "6adb6cbb0014a5f86801";
+
+
+
+
+
 
 
 //Media bucket
 
 const PROFILE_PHOTOS_BUCKET_ID = "6aa1c8740005e3b99f09";
 
+const STUDY_NOTES_IMAGES_ID = "6aa1c8740005e3b99f09";
 
 const QUESTION_IMAGES_BUCKET_ID = "6aa1c8740005e3b99f09";
 
