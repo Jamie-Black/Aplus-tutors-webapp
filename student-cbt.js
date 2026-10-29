@@ -42,7 +42,7 @@ const STUDENT_CBT_DEFAULTS = {
 
     randomizeQuestions: true,
 
-    randomizeOptions: false,
+    randomizeOptions: true,
 
     allowPrevious: true,
 
@@ -498,34 +498,38 @@ function renderStudentCbtRichContent(
        RENDER MATHJAX
     ========================================= */
 
-    function renderMathJax() {
+function renderMathJax() {
 
-        if (!element.isConnected) {
-            return;
-        }
+    if (!element || !element.isConnected) {
+        return;
+    }
 
+    if (
+        !window.MathJax ||
+        typeof window.MathJax.typesetPromise !== "function"
+    ) {
+        console.error(
+            "Student CBT: MathJax has not loaded. " +
+            "Check the MathJax script and internet connection."
+        );
 
-        if (
-            !window.MathJax ||
-            typeof window.MathJax.typesetPromise !== "function"
-        ) {
+        return;
+    }
 
-            console.error(
-                "Student CBT: MathJax has not loaded. Check the MathJax script and internet connection."
-            );
+    /*
+     * Render mathematical expressions inside
+     * the updated question element.
+     */
 
-            return;
+    window.MathJax.typesetPromise([element])
+        .then(function () {
 
-        }
+            if (!element.isConnected) {
+                return;
+            }
 
-
-        /*
-         * Render only the updated question element.
-         */
-
-        window.MathJax.typesetPromise([
-            element
-        ]).catch(function (error) {
+        })
+        .catch(function (error) {
 
             console.error(
                 "Student CBT: MathJax rendering failed.",
@@ -534,7 +538,7 @@ function renderStudentCbtRichContent(
 
         });
 
-    }
+}
 
 
     /* =========================================
@@ -1601,20 +1605,15 @@ function prepareStudentCbtQuestions(
             ];
 
 
-            /* ------------------------------------------
-               RANDOMISE QUESTIONS WITHIN THIS SUBJECT
-            ------------------------------------------ */
+  /* ------------------------------------------
+   RANDOMISE QUESTIONS ACROSS ALL TOPICS
+   WITHIN THE SELECTED SUBJECT
+------------------------------------------ */
 
-            if (
-                configuration.randomizeQuestions
-            ) {
-
-                subjectQuestions =
-                    shuffleStudentCbtArray(
-                        subjectQuestions
-                    );
-
-            }
+subjectQuestions =
+    shuffleStudentCbtArray(
+        subjectQuestions
+    );
 
 
             /* ------------------------------------------
@@ -1710,7 +1709,8 @@ function prepareStudentCbtQuestions(
 
 
 /* ==================================================
-   PREPARE QUESTION OPTIONS
+   PREPARE CBT QUESTION OPTIONS
+   SUPPORTS SAFE OPTION SHUFFLING
 ================================================== */
 
 function prepareStudentCbtQuestionOptions(
@@ -1718,60 +1718,83 @@ function prepareStudentCbtQuestionOptions(
     randomizeOptions = false
 ) {
 
-    const options = [
+    const originalOptions = [
 
         {
-            key: "A",
-            text:
-                question.optionA || ""
+            originalKey: "A",
+            text: question.optionA || ""
         },
 
         {
-            key: "B",
-            text:
-                question.optionB || ""
+            originalKey: "B",
+            text: question.optionB || ""
         },
 
         {
-            key: "C",
-            text:
-                question.optionC || ""
+            originalKey: "C",
+            text: question.optionC || ""
         },
 
         {
-            key: "D",
-            text:
-                question.optionD || ""
+            originalKey: "D",
+            text: question.optionD || ""
         }
 
     ];
 
 
     let preparedOptions =
-        options.filter(
+        originalOptions.filter(
             option =>
-                String(
-                    option.text
-                ).trim() !== ""
+                String(option.text).trim() !== ""
         );
 
 
-    if (
-        randomizeOptions
-    ) {
+    /*
+     * SHUFFLE OPTION POSITIONS
+     */
+
+    if (randomizeOptions) {
 
         preparedOptions =
             shuffleStudentCbtArray(
-                preparedOptions
+                [...preparedOptions]
             );
 
     }
 
 
-    return preparedOptions;
+    /*
+     * ASSIGN NEW DISPLAY LABELS
+     *
+     * originalKey is retained internally so
+     * the correct answer can be remapped.
+     */
+
+    const displayLabels = [
+        "A",
+        "B",
+        "C",
+        "D"
+    ];
+
+
+    return preparedOptions.map(
+        (option, index) => ({
+
+            key:
+                displayLabels[index],
+
+            originalKey:
+                option.originalKey,
+
+            text:
+                option.text
+
+        })
+    );
 
 }
-
 
 
 
@@ -4468,45 +4491,134 @@ async function initializeStudentCbtQuestionEngine(
         );
 
 
-    /* ==================================================
-       PREPARE QUESTIONS
-    ================================================== */
+/* ==================================================
+   PREPARE QUESTIONS AND SHUFFLED OPTIONS
+================================================== */
 
-    studentCbtQuestions =
-        preparedQuestions.map(
-            (question, index) => {
+studentCbtQuestionOptions = {};
 
-                const options =
-                    prepareStudentCbtQuestionOptions(
-                        question,
-                        configuration.randomizeOptions
-                    );
+const subjectQuestionCounters = {};
+const subjectQuestionTotals = {};
 
 
-                const questionId =
-                    question.$id ||
-                    `question-${index + 1}`;
+/*
+ * COUNT QUESTIONS PER SUBJECT
+ */
+
+preparedQuestions.forEach(question => {
+
+    const subjectId =
+        String(question.subjectId || "");
+
+    subjectQuestionTotals[subjectId] =
+        (subjectQuestionTotals[subjectId] || 0) + 1;
+
+});
 
 
-                studentCbtQuestionOptions[
+/*
+ * PREPARE EACH QUESTION
+ */
+
+studentCbtQuestions =
+    preparedQuestions.map(
+        (question, index) => {
+
+            const questionId =
+                question.$id ||
+                `question-${index + 1}`;
+
+
+            const subjectId =
+                String(question.subjectId || "");
+
+
+            /*
+             * SUBJECT-SPECIFIC QUESTION NUMBER
+             */
+
+            subjectQuestionCounters[subjectId] =
+                (subjectQuestionCounters[subjectId] || 0) + 1;
+
+
+            const subjectQuestionNumber =
+                subjectQuestionCounters[subjectId];
+
+
+            /*
+             * PREPARE OPTIONS
+             */
+
+            const options =
+                prepareStudentCbtQuestionOptions(
+                    question,
+                    configuration.randomizeOptions
+                );
+
+
+            studentCbtQuestionOptions[
+                questionId
+            ] = options;
+
+
+            /*
+             * REMAP CORRECT ANSWER
+             *
+             * Example:
+             * Original correct answer: C
+             * After shuffling, original option C
+             * may now have display label A.
+             */
+
+            const originalCorrectAnswer =
+                String(
+                    question.correctAnswer ?? ""
+                )
+                    .trim()
+                    .toUpperCase();
+
+
+            const correctOption =
+                options.find(
+                    option =>
+                        option.originalKey ===
+                        originalCorrectAnswer
+                );
+
+
+            const remappedCorrectAnswer =
+                correctOption
+                    ? correctOption.key
+                    : question.correctAnswer;
+
+
+            /*
+             * RETURN PREPARED QUESTION
+             */
+
+            return {
+
+                ...question,
+
+                correctAnswer:
+                    remappedCorrectAnswer,
+
+                questionNumber:
+                    index + 1,
+
+                subjectQuestionNumber:
+                    subjectQuestionNumber,
+
+                subjectQuestionTotal:
+                    subjectQuestionTotals[subjectId],
+
+                questionId:
                     questionId
-                ] = options;
 
+            };
 
-                return {
-
-                    ...question,
-
-                    questionNumber:
-                        index + 1,
-
-                    questionId:
-                        questionId
-
-                };
-
-            }
-        );
+        }
+    );
 
 
     /* ==================================================
@@ -4534,6 +4646,8 @@ async function initializeStudentCbtQuestionEngine(
         
         
     renderStudentCbtSubjectTabs();
+    
+    createStudentCbtQuestionPalette();
 
 
     console.log(
@@ -4591,16 +4705,32 @@ function renderStudentCbtCurrentQuestion() {
         studentCbtQuestions.length;
 
 
-    /* ==================================================
-       QUESTION NUMBER
-    ================================================== */
+/* ==================================================
+   DISPLAY SUBJECT-SPECIFIC QUESTION NUMBER
+================================================== */
 
-    if (studentCbtElements.questionNumber) {
+if (studentCbtElements.questionNumber) {
 
-        studentCbtElements.questionNumber.textContent =
-            `Question ${questionNumber} of ${totalQuestions}`;
+    const subjectName =
+        getStudentCbtSubjectName(
+            question.subjectId
+        );
 
-    }
+
+    const subjectNumber =
+        question.subjectQuestionNumber ||
+        questionNumber;
+
+
+    const subjectTotal =
+        question.subjectQuestionTotal ||
+        totalQuestions;
+
+
+    studentCbtElements.questionNumber.textContent =
+        `${subjectName} — Question ${subjectNumber} of ${subjectTotal}`;
+
+}
 
 
     /* ==================================================
@@ -4639,7 +4769,18 @@ function renderStudentCbtCurrentQuestion() {
        PROGRESS
     ================================================== */
 
-    updateStudentCbtQuestionProgress();
+    /* ==================================================
+   UPDATE QUESTION PROGRESS
+================================================== */
+
+updateStudentCbtQuestionProgress();
+
+
+/* ==================================================
+   REFRESH SUBJECT-SPECIFIC QUESTION PALETTE
+================================================== */
+
+renderStudentCbtQuestionPalette();
 
 }
 
@@ -4835,6 +4976,8 @@ function handleStudentCbtAnswerChange(
 
 
     updateStudentCbtQuestionProgress();
+    
+    updateStudentCbtQuestionPalette();
 
 }
 
@@ -4996,34 +5139,560 @@ function renderStudentCbtSubjectTabs() {
 }
 
 
+
+
+
 /* ==================================================
-   GO TO SUBJECT
+   QUESTION NAVIGATION PALETTE
 ================================================== */
 
-function goToStudentCbtSubject(
-    subjectId
-) {
+function createStudentCbtQuestionPalette() {
 
-    const questionIndex =
-        studentCbtQuestions.findIndex(
-            question =>
-                question.subjectId ===
-                subjectId
+    const questionScreen =
+        document.getElementById(
+            "studentCbtQuestionScreen"
         );
 
 
-    if (
-        questionIndex === -1
-    ) {
+    const subjectTabs =
+        document.getElementById(
+            "studentCbtSubjectTabs"
+        );
+
+
+    if (!questionScreen) {
+
+        console.error(
+            "CBT question screen was not found."
+        );
 
         return;
 
     }
 
 
+    /*
+     * PREVENT DUPLICATE PALETTES
+     */
+
+    let palette =
+        document.getElementById(
+            "studentCbtQuestionPalette"
+        );
+
+
+    if (palette) {
+
+        palette.remove();
+
+    }
+
+
+    /*
+     * CREATE PALETTE CONTAINER
+     */
+
+    palette =
+        document.createElement("section");
+
+
+    palette.id =
+        "studentCbtQuestionPalette";
+
+
+    palette.className =
+        "student-cbt-question-palette";
+
+
+    palette.setAttribute(
+        "aria-label",
+        "Question navigation"
+    );
+
+
+    /*
+     * PALETTE HEADING
+     */
+
+    const heading =
+        document.createElement("h3");
+
+
+    heading.className =
+        "student-cbt-palette-heading";
+
+
+    heading.textContent =
+        "Question Navigation";
+
+
+    palette.appendChild(
+        heading
+    );
+
+
+    /*
+     * LEGEND
+     */
+
+    const legend =
+        document.createElement("div");
+
+
+    legend.className =
+        "student-cbt-palette-legend";
+
+
+    legend.innerHTML = `
+        <span>
+            <i class="palette-dot palette-current"></i>
+            Current
+        </span>
+
+        <span>
+            <i class="palette-dot palette-answered"></i>
+            Answered
+        </span>
+
+        <span>
+            <i class="palette-dot palette-unanswered"></i>
+            Unanswered
+        </span>
+    `;
+
+
+    palette.appendChild(
+        legend
+    );
+
+
+    /*
+     * QUESTION BUTTON GRID
+     */
+
+    const grid =
+        document.createElement("div");
+
+
+    grid.id =
+        "studentCbtQuestionPaletteGrid";
+
+
+    grid.className =
+        "student-cbt-question-palette-grid";
+
+
+    palette.appendChild(
+        grid
+    );
+
+
+/* ==================================================
+   PLACE PALETTE BELOW CBT NAVIGATION BUTTONS
+================================================== */
+
+const navigationContainer =
+    document.querySelector(
+        ".student-cbt-navigation"
+    );
+
+
+if (
+    navigationContainer &&
+    navigationContainer.parentNode
+) {
+    
+    navigationContainer.insertAdjacentElement(
+        "afterend",
+        palette
+    );
+    
+} else if (
+    studentCbtElements.submitButton &&
+    studentCbtElements.submitButton.parentNode
+) {
+    
+    /*
+     * FALLBACK IF THE NAVIGATION WRAPPER
+     * CANNOT BE FOUND
+     */
+    
+    studentCbtElements.submitButton.parentNode
+        .insertAdjacentElement(
+            "afterend",
+            palette
+        );
+    
+} else {
+    
+    questionScreen.appendChild(
+        palette
+    );
+    
+}
+
+
+    /*
+     * INITIALISE BUTTONS
+     */
+
+    renderStudentCbtQuestionPalette();
+
+}
+
+
+/* ==================================================
+   RENDER SUBJECT-SPECIFIC QUESTION PALETTE
+================================================== */
+
+function renderStudentCbtQuestionPalette() {
+
+    const grid =
+        document.getElementById(
+            "studentCbtQuestionPaletteGrid"
+        );
+
+
+    if (!grid) {
+
+        return;
+
+    }
+
+
+    /*
+     * IDENTIFY THE CURRENT SUBJECT
+     */
+
+    const currentQuestion =
+        studentCbtQuestions[
+            studentCbtCurrentQuestionIndex
+        ];
+
+
+    if (!currentQuestion) {
+
+        grid.innerHTML = "";
+
+        return;
+
+    }
+
+
+    const currentSubjectId =
+        String(
+            currentQuestion.subjectId || ""
+        );
+
+
+    /*
+     * FILTER QUESTIONS TO THE ACTIVE SUBJECT
+     */
+
+    const subjectQuestions =
+        studentCbtQuestions
+            .map(
+                (question, globalIndex) => ({
+
+                    question: question,
+
+                    globalIndex: globalIndex
+
+                })
+            )
+            .filter(
+                item =>
+                    String(
+                        item.question.subjectId || ""
+                    ) === currentSubjectId
+            );
+
+
+    /*
+     * CLEAR THE PREVIOUS SUBJECT'S PALETTE
+     */
+
+    grid.innerHTML = "";
+
+
+    /*
+     * CREATE BUTTONS FOR THIS SUBJECT ONLY
+     */
+
+    subjectQuestions.forEach(
+        item => {
+
+            const question =
+                item.question;
+
+
+            const globalIndex =
+                item.globalIndex;
+
+
+            const button =
+                document.createElement("button");
+
+
+            button.type = "button";
+
+
+            button.className =
+                "student-cbt-palette-question";
+
+
+            /*
+             * DISPLAY SUBJECT-SPECIFIC NUMBER
+             */
+
+            button.textContent =
+                String(
+                    question.subjectQuestionNumber ||
+                    (
+                        subjectQuestions.findIndex(
+                            entry =>
+                                entry.globalIndex ===
+                                globalIndex
+                        ) + 1
+                    )
+                );
+
+
+            /*
+             * KEEP THE REAL EXAMINATION INDEX
+             *
+             * This ensures clicking a number opens
+             * the correct question in the full exam.
+             */
+
+            button.dataset.questionIndex =
+                String(globalIndex);
+
+
+            button.setAttribute(
+                "aria-label",
+                `${getStudentCbtSubjectName(currentSubjectId)}, question ${button.textContent}`
+            );
+
+
+            /*
+             * NAVIGATE TO THE SELECTED QUESTION
+             */
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        studentCbtSubmissionInProgress
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    studentCbtCurrentQuestionIndex =
+                        globalIndex;
+
+
+                    renderStudentCbtCurrentQuestion();
+
+                }
+            );
+
+
+            grid.appendChild(button);
+
+        }
+    );
+
+
+    /*
+     * APPLY ANSWERED, UNANSWERED AND CURRENT COLOURS
+     */
+
+    updateStudentCbtQuestionPalette();
+
+}
+
+
+/* ==================================================
+   UPDATE QUESTION PALETTE STATUS
+================================================== */
+
+function updateStudentCbtQuestionPalette() {
+
+    const grid =
+        document.getElementById(
+            "studentCbtQuestionPaletteGrid"
+        );
+
+
+    if (!grid) {
+
+        return;
+
+    }
+
+
+    const buttons =
+        grid.querySelectorAll(
+            ".student-cbt-palette-question"
+        );
+
+
+    buttons.forEach(
+        button => {
+
+            const index =
+                Number(
+                    button.dataset.questionIndex
+                );
+
+
+            const question =
+                studentCbtQuestions[index];
+
+
+            if (!question) {
+
+                return;
+
+            }
+
+
+            const isCurrent =
+                index ===
+                studentCbtCurrentQuestionIndex;
+
+
+            const isAnswered =
+                Boolean(
+                    studentCbtAnswers[
+                        question.questionId
+                    ]
+                );
+
+
+            /*
+             * RESET STATUS CLASSES
+             */
+
+            button.classList.remove(
+                "is-current",
+                "is-answered",
+                "is-unanswered"
+            );
+
+
+            /*
+             * APPLY CURRENT STATUS
+             */
+
+            if (isCurrent) {
+
+                button.classList.add(
+                    "is-current"
+                );
+
+            } else if (isAnswered) {
+
+                button.classList.add(
+                    "is-answered"
+                );
+
+            } else {
+
+                button.classList.add(
+                    "is-unanswered"
+                );
+
+            }
+
+
+            button.setAttribute(
+                "aria-current",
+                isCurrent ? "step" : "false"
+            );
+
+
+            button.setAttribute(
+                "aria-label",
+                `${getStudentCbtSubjectName(question.subjectId)}, question ${question.subjectQuestionNumber || index + 1}, ${isAnswered ? "answered" : "unanswered"}${isCurrent ? ", current question" : ""}`
+            );
+
+        }
+    );
+
+}
+
+/* ==================================================
+   GO TO SUBJECT
+================================================== */
+
+function goToStudentCbtSubject(subjectId) {
+
+    if (
+        !Array.isArray(studentCbtQuestions) ||
+        studentCbtQuestions.length === 0
+    ) {
+
+        console.warn(
+            "CBT: No questions are available for navigation."
+        );
+
+        return;
+
+    }
+
+    if (studentCbtSubmissionInProgress) {
+        return;
+    }
+
+    const selectedSubjectId =
+        String(subjectId ?? "").trim();
+
+    // Find the first question belonging to the selected subject.
+
+    const questionIndex =
+        studentCbtQuestions.findIndex(
+            question =>
+                String(
+                    question.subjectId ?? ""
+                ).trim() === selectedSubjectId
+        );
+
+    // Stop if the subject has no questions.
+
+    if (questionIndex === -1) {
+
+        console.warn(
+            "CBT: No questions found for the selected subject.",
+            {
+                selectedSubjectId: selectedSubjectId,
+
+                availableSubjectIds: [
+                    ...new Set(
+                        studentCbtQuestions.map(
+                            question =>
+                                String(
+                                    question.subjectId ?? ""
+                                ).trim()
+                        )
+                    )
+                ]
+            }
+        );
+
+        return;
+
+    }
+
+    // Navigate to the first question in that subject.
+
     studentCbtCurrentQuestionIndex =
         questionIndex;
-
 
     renderStudentCbtCurrentQuestion();
 
@@ -5048,7 +5717,9 @@ function updateStudentCbtSubjectTabs() {
 
 
     const currentSubjectId =
-        getCurrentStudentCbtSubjectId();
+    String(
+        getCurrentStudentCbtSubjectId() ?? ""
+    ).trim();
 
 
     const tabs =
@@ -5061,8 +5732,9 @@ function updateStudentCbtSubjectTabs() {
         tab => {
 
             const isActive =
-                tab.dataset.subjectId ===
-                currentSubjectId;
+    String(
+        tab.dataset.subjectId ?? ""
+    ).trim() === currentSubjectId;
 
 
             tab.classList.toggle(
@@ -5172,20 +5844,19 @@ function updateStudentCbtNavigation() {
     }
 
 
-    /* ==================================================
-       SUBMIT
-    ================================================== */
+/* ==================================================
+   SUBMIT — ALWAYS VISIBLE DURING THE EXAM
+================================================== */
 
-    if (
-        studentCbtElements.submitButton
-    ) {
+if (
+    studentCbtElements.submitButton
+) {
 
-        studentCbtElements.submitButton.classList.toggle(
-            "d-none",
-            index !== lastIndex
-        );
+    studentCbtElements.submitButton.classList.remove(
+        "d-none"
+    );
 
-    }
+}
 
 }
 
@@ -5667,6 +6338,9 @@ if (!isAutoSubmit) {
 studentCbtSubmissionInProgress = true;
 
 
+showStudentCbtResultsLoading();
+
+
 /*
  * DISABLE SUBMIT BUTTON
  */
@@ -5833,6 +6507,9 @@ try {
     /*
      * RENDER OVERALL RESULTS
      */
+     
+     
+    hideStudentCbtResultsLoading();
 
     renderStudentCbtResults({
 
@@ -5934,6 +6611,8 @@ try {
 
 
 } catch (error) {
+    
+    hideStudentCbtResultsLoading();
 
     console.error(
         "Aplus CBT: Submission failed.",
@@ -5998,7 +6677,109 @@ try {
 
 
 
+/* ==================================================
+   CBT RESULTS LOADING OVERLAY
+================================================== */
 
+function showStudentCbtResultsLoading() {
+
+    let overlay =
+        document.getElementById(
+            "studentCbtResultsLoading"
+        );
+
+
+    /*
+     * PREVENT DUPLICATE OVERLAYS
+     */
+
+    if (!overlay) {
+
+        overlay =
+            document.createElement("div");
+
+
+        overlay.id =
+            "studentCbtResultsLoading";
+
+
+        overlay.className =
+            "student-cbt-results-loading";
+
+
+        overlay.setAttribute(
+            "role",
+            "status"
+        );
+
+
+        overlay.setAttribute(
+            "aria-live",
+            "polite"
+        );
+
+
+        overlay.innerHTML = `
+            <div class="student-cbt-results-loading-card">
+
+                <div
+                    class="student-cbt-results-spinner"
+                    aria-hidden="true">
+                </div>
+
+                <h3>Preparing Your Results</h3>
+
+                <p>
+                    Please wait while we save your answers
+                    and calculate your examination results.
+                </p>
+
+                <span>
+                    Do not close this page.
+                </span>
+
+            </div>
+        `;
+
+
+        document.body.appendChild(
+            overlay
+        );
+
+    }
+
+
+    overlay.classList.add("is-visible");
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+/* ==================================================
+   HIDE RESULTS LOADING OVERLAY
+================================================== */
+
+function hideStudentCbtResultsLoading() {
+
+    const overlay =
+        document.getElementById(
+            "studentCbtResultsLoading"
+        );
+
+
+    if (overlay) {
+
+        overlay.classList.remove(
+            "is-visible"
+        );
+
+    }
+
+
+    document.body.style.overflow = "";
+
+}
 /* =========================================================
    APLUS TUTORS
    STUDENT CBT

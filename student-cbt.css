@@ -2890,3 +2890,2713 @@ body.student-cbt-fullscreen-body {
 
 }
 
+
+
+
+/* ==================================================
+   APLUS CBT QUESTION NAVIGATION PALETTE
+================================================== */
+
+.student-cbt-question-palette {
+    width: 100%;
+    margin: 20px 0;
+    padding: 18px;
+
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    box-sizing: border-box;
+}
+
+.student-cbt-palette-heading {
+    margin: 0 0 14px;
+
+    color: #111111;
+
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.student-cbt-palette-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+
+    color: #4b5563;
+
+    font-size: 0.78rem;
+}
+
+.student-cbt-palette-legend span {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+}
+
+.palette-dot {
+    display: inline-block;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+}
+
+.palette-current {
+    background: #dc143c;
+}
+
+.palette-answered {
+    background: #15803d;
+}
+
+.palette-unanswered {
+    background: #d1d5db;
+}
+
+.student-cbt-question-palette-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(42px, 1fr));
+
+    gap: 8px;
+}
+
+.student-cbt-palette-question {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+    min-height: 42px;
+
+    padding: 8px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    font-size: 0.85rem;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.student-cbt-palette-question:hover {
+    transform: translateY(-1px);
+}
+
+.student-cbt-palette-question.is-current {
+    color: #ffffff;
+
+    background: #dc143c;
+    border-color: #dc143c;
+
+    box-shadow:
+        0 0 0 3px rgba(220, 20, 60, 0.14);
+}
+
+.student-cbt-palette-question.is-answered {
+    color: #ffffff;
+
+    background: #15803d;
+    border-color: #15803d;
+}
+
+.student-cbt-palette-question.is-unanswered {
+    color: #374151;
+
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+.student-cbt-palette-question:focus-visible {
+    outline: 3px solid rgba(220, 20, 60, 0.35);
+    outline-offset: 2px;
+}
+
+@media (max-width: 576px) {
+
+    .student-cbt-question-palette {
+        padding: 13px;
+    }
+
+    .student-cbt-palette-legend {
+        gap: 9px;
+        font-size: 0.7rem;
+    }
+
+    .student-cbt-question-palette-grid {
+        grid-template-columns:
+            repeat(auto-fill, minmax(35px, 1fr));
+
+        gap: 6px;
+    }
+
+    .student-cbt-palette-question {
+        min-height: 37px;
+        padding: 6px;
+
+        font-size: 0.78rem;
+    }
+
+}
+
+
+/* ==================================================
+   CBT RESULTS LOADING OVERLAY
+================================================== */
+
+.student-cbt-results-loading {
+    position: fixed;
+    inset: 0;
+
+    z-index: 1000000;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(5, 5, 5, 0.78);
+
+    box-sizing: border-box;
+}
+
+.student-cbt-results-loading.is-visible {
+    display: flex;
+}
+
+.student-cbt-results-loading-card {
+    width: 100%;
+    max-width: 420px;
+
+    padding: 32px 24px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.25);
+}
+
+.student-cbt-results-spinner {
+    width: 52px;
+    height: 52px;
+
+    margin: 0 auto 22px;
+
+    border: 5px solid #f3d5dc;
+    border-top-color: #dc143c;
+
+    border-radius: 50%;
+
+    animation:
+        studentCbtSpinnerRotation 0.8s linear infinite;
+}
+
+.student-cbt-results-loading-card h3 {
+    margin: 0 0 12px;
+
+    color: #111111;
+
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.student-cbt-results-loading-card p {
+    margin: 0 0 14px;
+
+    color: #4b5563;
+
+    font-size: 0.92rem;
+    line-height: 1.7;
+}
+
+.student-cbt-results-loading-card span {
+    color: #dc143c;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+@keyframes studentCbtSpinnerRotation {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .student-cbt-results-loading-card {
+        padding: 27px 19px;
+    }
+
+    .student-cbt-results-loading-card h3 {
+        font-size: 1.05rem;
+    }
+
+    .student-cbt-results-loading-card p {
+        font-size: 0.86rem;
+    }
+
+}
+
+
+/* ==================================================
+   SUBJECT-SPECIFIC CBT QUESTION NAVIGATION
+================================================== */
+
+#studentCbtQuestionPalette {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 22px;
+    margin-bottom: 20px;
+
+    clear: both;
+}
+
+#studentCbtQuestionPaletteGrid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(42px, 1fr));
+
+    gap: 8px;
+}
+
+.student-cbt-palette-question {
+    min-width: 0;
+}
+
+/* Mobile layout */
+
+@media (max-width: 576px) {
+
+    #studentCbtQuestionPalette {
+        margin-top: 18px;
+        padding: 13px;
+    }
+
+    #studentCbtQuestionPaletteGrid {
+        grid-template-columns:
+            repeat(auto-fill, minmax(35px, 1fr));
+
+        gap: 6px;
+    }
+
+}
+
+
+/* =========================================================
+   APLUS TUTORS
+   STUDENT CBT — BATCH 1 VISUAL ENHANCEMENTS
+   Exam Screen + Results Screen
+   Add this section at the END of student-cbt.css
+   Existing functionality preserved
+========================================================= */
+
+
+/* =========================================================
+   1. EXAM SCREEN FOUNDATION
+========================================================= */
+
+.student-cbt-page {
+    color: #171717;
+    -webkit-font-smoothing: antialiased;
+}
+
+.student-cbt-page button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.student-cbt-page button:focus-visible,
+.student-cbt-page a:focus-visible {
+    outline: 3px solid rgba(176, 0, 32, 0.35);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   2. SUBJECT TABS
+========================================================= */
+
+.student-cbt-subjects {
+    gap: 9px;
+    padding: 5px;
+    border: 1px solid #eeeeef;
+    border-radius: 15px;
+    background: #f7f7f8;
+}
+
+.student-cbt-subject-tab {
+    position: relative;
+    border-radius: 11px;
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.student-cbt-subject-tab:not(.active):hover {
+    border-color: #f0c5ce;
+    background: #ffffff;
+    transform: translateY(-1px);
+}
+
+.student-cbt-subject-tab.active {
+    box-shadow:
+        0 4px 12px rgba(176, 0, 32, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   3. QUESTION CARD
+========================================================= */
+
+.student-cbt-question-card {
+    position: relative;
+    padding: clamp(20px, 3vw, 30px);
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    background: #ffffff;
+
+    box-shadow:
+        0 3px 8px rgba(17, 24, 39, 0.025),
+        0 12px 32px rgba(17, 24, 39, 0.045);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* =========================================================
+   4. QUESTION HEADER
+========================================================= */
+
+.student-cbt-question-header {
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.student-cbt-question-number {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 7px 12px;
+
+    color: #8f001b;
+    background: #fff0f3;
+
+    border: 1px solid #ffd8e0;
+    border-radius: 9px;
+
+    font-size: 0.82rem;
+    font-weight: 850;
+    letter-spacing: 0.01em;
+}
+
+.student-cbt-question-progress {
+    padding: 6px 10px;
+    border: 1px solid #eeeeef;
+    border-radius: 8px;
+    background: #fafafa;
+
+    color: #626262;
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   5. QUESTION PROGRESS BAR
+========================================================= */
+
+.student-cbt-progress {
+    height: 8px;
+    margin-bottom: 27px;
+
+    background: #eeeeef;
+    border-radius: 99px;
+
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.035);
+}
+
+#studentCbtProgressBar {
+    position: relative;
+    overflow: hidden;
+
+    background: linear-gradient(
+        90deg,
+        #a80020 0%,
+        #dc143c 100%
+    );
+
+    box-shadow: 0 1px 5px rgba(176, 0, 32, 0.16);
+}
+
+
+/* =========================================================
+   6. QUESTION TEXT
+========================================================= */
+
+#studentCbtQuestionText {
+    margin-bottom: 27px;
+
+    color: #202124;
+    font-size: clamp(1rem, 1.5vw, 1.08rem);
+    font-weight: 600;
+    line-height: 1.9;
+
+    overflow-wrap: anywhere;
+}
+
+#studentCbtQuestionText p {
+    margin-bottom: 15px;
+}
+
+#studentCbtQuestionText img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 16px auto;
+
+    border-radius: 10px;
+}
+
+#studentCbtQuestionText table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+}
+
+#studentCbtQuestionText pre {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 14px;
+    border-radius: 10px;
+    background: #f7f7f8;
+}
+
+
+/* =========================================================
+   7. ANSWER OPTIONS
+========================================================= */
+
+#studentCbtOptions {
+    gap: 12px;
+}
+
+.student-cbt-option label {
+    position: relative;
+    min-height: 58px;
+    align-items: center;
+
+    padding: 14px 17px;
+
+    border: 1px solid #e1e4e8;
+    border-radius: 13px;
+
+    background: #ffffff;
+    color: #303238;
+
+    font-size: 0.92rem;
+    line-height: 1.75;
+
+    box-shadow: 0 2px 5px rgba(17, 24, 39, 0.018);
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.student-cbt-option label:hover {
+    border-color: #d6a1ad;
+    background: #fffafb;
+
+    box-shadow: 0 4px 12px rgba(176, 0, 32, 0.045);
+}
+
+.student-cbt-option input:checked + label {
+    border-color: #b00020;
+    background: #fff5f7;
+
+    box-shadow:
+        0 0 0 1px rgba(176, 0, 32, 0.06),
+        0 5px 15px rgba(176, 0, 32, 0.075);
+}
+
+.student-cbt-option-key {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+
+    border: 1px solid #dfe2e6;
+    border-radius: 9px;
+
+    background: #f7f8fa;
+    color: #555b64;
+
+    font-size: 0.78rem;
+    font-weight: 850;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.student-cbt-option input:checked + label
+.student-cbt-option-key {
+    border-color: #b00020;
+    background: #b00020;
+    color: #ffffff;
+}
+
+/* Keyboard users can identify the focused answer option. */
+
+.student-cbt-option input:focus-visible + label {
+    outline: 3px solid rgba(176, 0, 32, 0.25);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   8. EXAM NAVIGATION BUTTONS
+========================================================= */
+
+.student-cbt-navigation {
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 22px;
+
+    border-top: 1px solid #eeeeef;
+}
+
+.student-cbt-navigation button {
+    min-height: 46px;
+    padding: 11px 19px;
+
+    border-radius: 11px;
+
+    font-size: 0.85rem;
+    font-weight: 750;
+    letter-spacing: 0.005em;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.student-cbt-navigation button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.student-cbt-navigation button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.student-cbt-navigation button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+
+/* =========================================================
+   9. EXAM TIMER
+========================================================= */
+
+.student-cbt-timer {
+    position: relative;
+    overflow: hidden;
+
+    padding: 17px 21px;
+
+    border: 1px solid #303030;
+    border-radius: 15px;
+
+    background:
+        linear-gradient(125deg, #171717 0%, #090909 100%);
+
+    box-shadow:
+        0 5px 16px rgba(0, 0, 0, 0.09),
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.student-cbt-timer-label {
+    color: #e5e5e5;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.student-cbt-timer-value {
+    color: #ffffff;
+    font-size: clamp(21px, 3vw, 27px);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 1.5px;
+}
+
+.student-cbt-timer-warning {
+    border-color: #b7791f;
+    background:
+        linear-gradient(125deg, #21190a 0%, #11100b 100%);
+}
+
+.student-cbt-timer-critical {
+    border-color: #dc143c;
+    background:
+        linear-gradient(125deg, #300713 0%, #14070a 100%);
+
+    box-shadow:
+        0 5px 18px rgba(220, 20, 60, 0.13),
+        inset 0 0 0 1px rgba(220, 20, 60, 0.08);
+}
+
+
+/* =========================================================
+   10. RESULTS SCREEN FOUNDATION
+========================================================= */
+
+.student-cbt-results-screen {
+    max-width: 1000px;
+    padding: 30px 0 48px;
+}
+
+.student-cbt-results-header {
+    margin-bottom: 32px;
+}
+
+.student-cbt-results-header h2 {
+    color: #171717;
+    letter-spacing: -0.035em;
+    line-height: 1.2;
+}
+
+.student-cbt-results-header p {
+    max-width: 620px;
+    margin: 0 auto;
+
+    color: #737373;
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   11. RESULTS ICON
+========================================================= */
+
+.student-cbt-results-icon {
+    width: 82px;
+    height: 82px;
+    margin-bottom: 20px;
+
+    border: 1px solid #ffdce3;
+    border-radius: 25px;
+
+    background:
+        linear-gradient(145deg, #fff3f5 0%, #ffe5eb 100%);
+
+    color: #b00020;
+
+    box-shadow:
+        0 8px 22px rgba(176, 0, 32, 0.07),
+        inset 0 1px 0 #ffffff;
+}
+
+
+/* =========================================================
+   12. OVERALL SCORE CARD
+========================================================= */
+
+.student-cbt-overall-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    padding: clamp(28px, 4vw, 42px) clamp(18px, 4vw, 34px);
+
+    border: 1px solid #e7e7e9;
+    border-radius: 24px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(176, 0, 32, 0.055),
+            transparent 48%
+        ),
+        #ffffff;
+
+    box-shadow:
+        0 3px 8px rgba(17, 24, 39, 0.02),
+        0 14px 38px rgba(17, 24, 39, 0.045);
+}
+
+/* Subtle crimson accent along the top edge. */
+
+.student-cbt-overall-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    height: 4px;
+
+    background: linear-gradient(
+        90deg,
+        #8f001b,
+        #dc143c,
+        #f18a9f
+    );
+}
+
+.student-cbt-results-label {
+    display: inline-block;
+    padding: 7px 12px;
+
+    border: 1px solid #f0d9de;
+    border-radius: 99px;
+
+    background: #fff6f8;
+    color: #8f001b;
+
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 1.3px;
+}
+
+.student-cbt-overall-percentage {
+    margin: 18px 0 12px;
+
+    color: #b00020;
+    font-size: clamp(52px, 10vw, 82px);
+    font-weight: 850;
+    letter-spacing: -0.055em;
+    line-height: 1.05;
+
+    font-variant-numeric: tabular-nums;
+}
+
+.student-cbt-overall-card > p {
+    max-width: 560px;
+    margin: 0 auto 30px;
+
+    color: #686868;
+    font-size: 0.93rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   13. RESULT SUMMARY STATISTICS
+========================================================= */
+
+.student-cbt-overall-stats {
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid #ececef;
+}
+
+.student-cbt-overall-stats > div {
+    min-width: 0;
+    padding: 17px 10px;
+
+    border: 1px solid #ededf0;
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.student-cbt-overall-stats > div:hover {
+    border-color: #e7c3cb;
+    box-shadow: 0 5px 15px rgba(17, 24, 39, 0.035);
+    transform: translateY(-2px);
+}
+
+.student-cbt-overall-stats strong {
+    color: #202124;
+    font-size: clamp(21px, 3vw, 27px);
+    font-weight: 850;
+    font-variant-numeric: tabular-nums;
+}
+
+.student-cbt-overall-stats span {
+    color: #737373;
+    font-size: 0.76rem;
+    font-weight: 650;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   14. SUBJECT RESULTS CONTAINER
+========================================================= */
+
+.student-cbt-subject-results-card {
+    padding: clamp(20px, 3vw, 30px);
+
+    border: 1px solid #e7e7e9;
+    border-radius: 22px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 18px rgba(17, 24, 39, 0.025);
+}
+
+.student-cbt-results-section-heading {
+    margin-bottom: 18px;
+    padding-bottom: 19px;
+
+    border-bottom: 1px solid #eeeeef;
+}
+
+.student-cbt-results-section-heading h3 {
+    color: #202124;
+    letter-spacing: -0.025em;
+    line-height: 1.35;
+}
+
+.student-cbt-results-section-heading > i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+
+    border: 1px solid #f3d9df;
+    border-radius: 13px;
+
+    background: #fff4f6;
+    color: #b00020;
+
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   15. INDIVIDUAL SUBJECT PERFORMANCE
+========================================================= */
+
+.student-cbt-subject-result {
+    padding: 21px 0;
+    border-bottom-color: #eeeeef;
+}
+
+.student-cbt-subject-result-header {
+    align-items: center;
+    gap: 15px;
+}
+
+.student-cbt-subject-result-name {
+    color: #252525;
+    font-size: 0.96rem;
+    line-height: 1.5;
+}
+
+.student-cbt-subject-result-count {
+    display: inline-block;
+    margin-top: 2px;
+
+    color: #777;
+    font-size: 0.76rem;
+    line-height: 1.6;
+}
+
+.student-cbt-subject-result-percentage {
+    color: #b00020;
+    font-size: clamp(21px, 3vw, 26px);
+    font-weight: 850;
+    letter-spacing: -0.035em;
+    font-variant-numeric: tabular-nums;
+}
+
+.student-cbt-subject-result-track {
+    height: 10px;
+    background: #f0f0f2;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.035);
+}
+
+.student-cbt-subject-result-fill {
+    background: linear-gradient(
+        90deg,
+        #a80020,
+        #dc143c
+    );
+
+    box-shadow: 0 1px 4px rgba(176, 0, 32, 0.14);
+}
+
+.student-cbt-subject-result-meta {
+    margin-top: 11px;
+
+    color: #737373;
+    font-size: 0.76rem;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   16. EXAM DETAILS CARDS
+========================================================= */
+
+.student-cbt-result-details {
+    gap: 14px;
+}
+
+.student-cbt-result-details > div {
+    position: relative;
+    min-width: 0;
+    padding: 22px;
+
+    border: 1px solid #e8e8eb;
+    border-radius: 16px;
+
+    background:
+        linear-gradient(145deg, #ffffff 0%, #fbfbfc 100%);
+
+    box-shadow: 0 3px 10px rgba(17, 24, 39, 0.02);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.student-cbt-result-details > div:hover {
+    border-color: #e8c2cb;
+    box-shadow: 0 8px 20px rgba(17, 24, 39, 0.045);
+    transform: translateY(-2px);
+}
+
+.student-cbt-result-details i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 39px;
+    height: 39px;
+
+    border: 1px solid #f1dce1;
+    border-radius: 11px;
+
+    background: #fff3f5;
+    color: #b00020;
+
+    font-size: 17px;
+}
+
+.student-cbt-result-details span {
+    color: #727272;
+    font-size: 0.76rem;
+    line-height: 1.5;
+}
+
+.student-cbt-result-details strong {
+    color: #202124;
+    font-size: clamp(18px, 2vw, 22px);
+    font-weight: 850;
+    line-height: 1.4;
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================================
+   17. RESULTS ACTION BUTTONS
+========================================================= */
+
+.student-cbt-results-actions {
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.student-cbt-results-actions button {
+    min-height: 48px;
+    padding: 12px 21px;
+
+    border-radius: 12px;
+
+    font-size: 0.86rem;
+    font-weight: 750;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.student-cbt-results-actions button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(17, 24, 39, 0.075);
+}
+
+.student-cbt-results-actions button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   18. TABLET RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .student-cbt-question-card {
+        padding: 22px;
+        border-radius: 17px;
+    }
+
+    .student-cbt-results-screen {
+        padding-top: 22px;
+    }
+
+    .student-cbt-overall-card {
+        border-radius: 20px;
+    }
+
+    .student-cbt-result-details {
+        gap: 11px;
+    }
+
+}
+
+
+/* =========================================================
+   19. MOBILE RESPONSIVENESS
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .student-cbt-question-card {
+        padding: 17px 14px;
+        border-radius: 15px;
+    }
+
+    .student-cbt-question-header {
+        align-items: flex-start;
+        gap: 9px;
+    }
+
+    .student-cbt-question-number {
+        min-height: 31px;
+        padding: 6px 9px;
+        font-size: 0.76rem;
+    }
+
+    .student-cbt-question-progress {
+        font-size: 0.7rem;
+    }
+
+    .student-cbt-progress {
+        margin-bottom: 21px;
+    }
+
+    #studentCbtQuestionText {
+        margin-bottom: 21px;
+        font-size: 0.94rem;
+        line-height: 1.8;
+    }
+
+    #studentCbtOptions {
+        gap: 10px;
+    }
+
+    .student-cbt-option label {
+        min-height: 54px;
+        gap: 10px;
+        padding: 12px 11px;
+        border-radius: 11px;
+        font-size: 0.85rem;
+        line-height: 1.7;
+    }
+
+    .student-cbt-option-key {
+        width: 29px;
+        height: 29px;
+        flex-basis: 29px;
+        border-radius: 8px;
+    }
+
+    .student-cbt-navigation {
+        gap: 9px;
+        margin-top: 22px;
+        padding-top: 17px;
+    }
+
+    .student-cbt-navigation button {
+        min-width: 0;
+        min-height: 44px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        font-size: 0.79rem;
+    }
+
+    .student-cbt-timer {
+        gap: 12px;
+        padding: 13px 14px;
+        border-radius: 12px;
+    }
+
+    .student-cbt-timer-label {
+        font-size: 0.75rem;
+    }
+
+    .student-cbt-timer-value {
+        font-size: 21px;
+        letter-spacing: 1px;
+    }
+
+    .student-cbt-results-screen {
+        padding: 18px 0 32px;
+    }
+
+    .student-cbt-results-header {
+        margin-bottom: 24px;
+    }
+
+    .student-cbt-results-icon {
+        width: 68px;
+        height: 68px;
+        border-radius: 21px;
+        font-size: 27px;
+    }
+
+    .student-cbt-overall-card {
+        padding: 27px 14px 18px;
+        border-radius: 18px;
+    }
+
+    .student-cbt-results-label {
+        font-size: 0.66rem;
+        letter-spacing: 1px;
+    }
+
+    .student-cbt-overall-percentage {
+        margin: 17px 0 12px;
+        font-size: clamp(48px, 13vw, 68px);
+    }
+
+    .student-cbt-overall-card > p {
+        margin-bottom: 22px;
+        font-size: 0.85rem;
+        line-height: 1.75;
+    }
+
+    .student-cbt-overall-stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+        padding-top: 17px;
+    }
+
+    .student-cbt-overall-stats > div {
+        gap: 5px;
+        padding: 13px 5px;
+        border-radius: 11px;
+    }
+
+    .student-cbt-overall-stats strong {
+        font-size: clamp(18px, 5vw, 23px);
+    }
+
+    .student-cbt-overall-stats span {
+        font-size: 0.66rem;
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+    }
+
+    .student-cbt-subject-results-card {
+        padding: 19px 14px;
+        border-radius: 17px;
+    }
+
+    .student-cbt-results-section-heading {
+        gap: 10px;
+        margin-bottom: 13px;
+        padding-bottom: 15px;
+    }
+
+    .student-cbt-results-section-heading h3 {
+        font-size: 1.05rem;
+    }
+
+    .student-cbt-results-section-heading > i {
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+        font-size: 18px;
+    }
+
+    .student-cbt-subject-result {
+        padding: 18px 0;
+    }
+
+    .student-cbt-subject-result-name {
+        font-size: 0.88rem;
+    }
+
+    .student-cbt-subject-result-percentage {
+        font-size: 21px;
+    }
+
+    .student-cbt-subject-result-track {
+        height: 8px;
+    }
+
+    .student-cbt-subject-result-meta {
+        gap: 8px;
+        font-size: 0.7rem;
+    }
+
+    .student-cbt-result-details {
+        gap: 9px;
+    }
+
+    .student-cbt-result-details > div {
+        padding: 13px;
+        border-radius: 12px;
+    }
+
+    .student-cbt-result-details i {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        font-size: 15px;
+    }
+
+    .student-cbt-result-details span {
+        font-size: 0.7rem;
+    }
+
+    .student-cbt-result-details strong {
+        font-size: 0.9rem;
+    }
+
+    .student-cbt-results-actions {
+        gap: 10px;
+        margin-top: 5px;
+    }
+
+    .student-cbt-results-actions button {
+        min-height: 46px;
+        padding: 11px 14px;
+        border-radius: 10px;
+        font-size: 0.82rem;
+    }
+
+}
+
+
+/* =========================================================
+   20. REDUCED MOTION ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .student-cbt-page *,
+    .student-cbt-results-screen *,
+    .student-cbt-question-card,
+    .student-cbt-option label,
+    .student-cbt-navigation button,
+    .student-cbt-results-actions button {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+
+/* ==================================================
+   STUDENT CBT — MATHJAX RESPONSIVE SUPPORT
+================================================== */
+
+/* Prevent mathematical expressions from overflowing. */
+
+#studentCbtQuestionText mjx-container,
+#studentCbtOptions mjx-container,
+.student-cbt-correction-question mjx-container,
+.student-cbt-correction-option mjx-container,
+.student-cbt-correction-explanation mjx-container {
+    max-width: 100%;
+}
+
+/* Keep displayed equations within the available width. */
+
+#studentCbtQuestionText mjx-container[display="true"],
+#studentCbtOptions mjx-container[display="true"],
+.student-cbt-correction-question mjx-container[display="true"],
+.student-cbt-correction-option mjx-container[display="true"],
+.student-cbt-correction-explanation mjx-container[display="true"] {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Ensure question content does not expand the question card. */
+
+#studentCbtQuestionText,
+#studentCbtOptions,
+.student-cbt-correction-question,
+.student-cbt-correction-option,
+.student-cbt-correction-explanation {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+
+
+/* =========================================================
+   APLUS TUTORS CBT
+   RESULTS AND CORRECTIONS ENHANCEMENT
+   ADD THIS AT THE BOTTOM OF student-cbt.css
+========================================================= */
+
+
+/* =========================================================
+   1. RESULTS SCREEN
+========================================================= */
+
+#studentCbtResultsScreen,
+.student-cbt-results-screen {
+    color: #1f2937;
+}
+
+#studentCbtResultsScreen {
+    padding-bottom: 35px;
+}
+
+
+/* =========================================================
+   2. OVERALL SCORE CARD
+========================================================= */
+
+.student-cbt-overall-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    padding: 38px 26px 30px;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(220, 20, 60, 0.09),
+            transparent 38%
+        ),
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #fff8fa 100%
+        );
+
+    border: 1px solid #f3cbd4;
+    border-radius: 24px;
+
+    box-shadow:
+        0 12px 35px rgba(100, 0, 25, 0.07),
+        0 2px 8px rgba(0, 0, 0, 0.025);
+
+    transition:
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+.student-cbt-overall-card::before {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 6px;
+
+    background: linear-gradient(
+        90deg,
+        #dc143c,
+        #f97316,
+        #eab308
+    );
+}
+
+.student-cbt-overall-card:hover {
+    box-shadow:
+        0 16px 42px rgba(100, 0, 25, 0.11),
+        0 4px 12px rgba(0, 0, 0, 0.035);
+}
+
+.student-cbt-results-label {
+    display: inline-block;
+
+    padding: 7px 13px;
+    margin-bottom: 8px;
+
+    color: #9f1239;
+    background: #ffe4e9;
+
+    border: 1px solid #fecdd6;
+    border-radius: 30px;
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.student-cbt-overall-percentage {
+    display: block;
+
+    margin: 12px 0;
+
+    color: #b00020;
+
+    font-size: clamp(52px, 9vw, 82px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -3px;
+
+    text-shadow: 0 3px 15px rgba(176, 0, 32, 0.08);
+}
+
+.student-cbt-overall-card > p {
+    max-width: 560px;
+
+    margin: 0 auto 28px;
+
+    color: #64748b;
+
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   3. OVERALL STATISTICS
+========================================================= */
+
+.student-cbt-overall-stats {
+    gap: 14px;
+
+    padding-top: 24px;
+    border-top: 1px solid #f0dce1;
+}
+
+.student-cbt-overall-stats > div {
+    position: relative;
+
+    min-width: 0;
+    padding: 17px 10px;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    border: 1px solid #f1e5e9;
+    border-radius: 15px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.025);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.student-cbt-overall-stats > div:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.student-cbt-overall-stats strong {
+    color: #1f2937;
+
+    font-size: clamp(21px, 4vw, 29px);
+    font-weight: 900;
+}
+
+.student-cbt-overall-stats span {
+    color: #64748b;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   4. SUBJECT PERFORMANCE SECTION
+========================================================= */
+
+.student-cbt-subject-results-card {
+    padding: 27px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 22px;
+
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.045);
+}
+
+.student-cbt-results-section-heading {
+    padding-bottom: 17px;
+    margin-bottom: 10px;
+
+    border-bottom: 1px solid #f0f1f4;
+}
+
+.student-cbt-results-section-heading h3 {
+    color: #111827;
+
+    font-size: clamp(19px, 3vw, 23px);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+}
+
+.student-cbt-results-section-heading > i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    color: #ffffff;
+
+    background: linear-gradient(
+        135deg,
+        #dc143c,
+        #a80f2e
+    );
+
+    border-radius: 15px;
+
+    box-shadow: 0 6px 15px rgba(220, 20, 60, 0.2);
+}
+
+
+/* Individual subject cards */
+
+.student-cbt-subject-result {
+    position: relative;
+
+    padding: 22px 18px;
+    margin: 15px 0;
+
+    background: linear-gradient(
+        120deg,
+        #fafbff,
+        #ffffff
+    );
+
+    border: 1px solid #e8ebf2;
+    border-left: 5px solid #64748b;
+    border-radius: 16px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.student-cbt-subject-result:hover {
+    transform: translateY(-2px);
+
+    border-color: #d7dce7;
+
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.055);
+}
+
+.student-cbt-subject-result:last-child {
+    padding-bottom: 22px;
+}
+
+
+/* Subject title */
+
+.student-cbt-subject-result-name {
+    color: #1f2937;
+
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1.5;
+}
+
+.student-cbt-subject-result-count {
+    display: inline-block;
+
+    margin-top: 4px;
+
+    color: #64748b;
+
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* Subject percentage */
+
+.student-cbt-subject-result-percentage {
+    padding: 6px 11px;
+
+    color: #9f1239;
+    background: #ffe4e9;
+
+    border: 1px solid #fecdd6;
+    border-radius: 10px;
+
+    font-size: 21px;
+    font-weight: 900;
+}
+
+
+/* Subject progress bar */
+
+.student-cbt-subject-result-track {
+    height: 12px;
+
+    margin-top: 16px;
+
+    background: #e9edf3;
+    border: 1px solid #e2e8f0;
+    border-radius: 30px;
+}
+
+.student-cbt-subject-result-fill {
+    min-width: 0;
+
+    background: linear-gradient(
+        90deg,
+        #dc143c,
+        #fb7185
+    );
+
+    border-radius: inherit;
+
+    box-shadow: 0 2px 7px rgba(220, 20, 60, 0.18);
+}
+
+
+/* Subject performance details */
+
+.student-cbt-subject-result-meta {
+    margin-top: 12px;
+
+    color: #64748b;
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   5. EXAM DETAILS CARDS
+========================================================= */
+
+.student-cbt-result-details {
+    gap: 15px;
+}
+
+.student-cbt-result-details > div {
+    position: relative;
+
+    min-width: 0;
+    padding: 22px 19px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 17px;
+
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.035);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.student-cbt-result-details > div:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.07);
+}
+
+.student-cbt-result-details i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 43px;
+    height: 43px;
+
+    color: #b00020;
+    background: #ffe7ed;
+
+    border-radius: 13px;
+
+    font-size: 19px;
+}
+
+.student-cbt-result-details span {
+    color: #64748b;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.student-cbt-result-details strong {
+    color: #111827;
+
+    font-size: 19px;
+    font-weight: 900;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   6. RESULTS ACTION BUTTONS
+========================================================= */
+
+.student-cbt-results-actions {
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+.student-cbt-results-actions button {
+    min-height: 48px;
+    padding: 13px 20px;
+
+    border-radius: 13px;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        filter 0.2s ease;
+}
+
+.student-cbt-results-actions button:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(0.97);
+
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.1);
+}
+
+.student-cbt-results-actions button:active {
+    transform: translateY(0);
+}
+
+.student-cbt-results-actions button:focus-visible {
+    outline: 3px solid rgba(220, 20, 60, 0.25);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   7. CORRECTIONS SECTION CONTAINER
+========================================================= */
+
+#studentCbtCorrections {
+    padding: 28px;
+
+    background: linear-gradient(
+        145deg,
+        #ffffff,
+        #fafbff
+    );
+
+    border: 1px solid #e5e7eb;
+    border-radius: 22px;
+
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.045);
+}
+
+#studentCbtCorrections > h3,
+.student-cbt-corrections-heading {
+    color: #111827;
+
+    font-size: clamp(20px, 3vw, 25px);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1.4;
+}
+
+
+/* Correction filter */
+
+#studentCbtCorrectionFilter {
+    min-height: 45px;
+    max-width: 100%;
+
+    padding: 10px 14px;
+
+    color: #334155;
+    background-color: #ffffff;
+
+    border: 1px solid #dbe1ea;
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#studentCbtCorrectionFilter:focus {
+    border-color: #dc143c;
+
+    box-shadow: 0 0 0 4px rgba(220, 20, 60, 0.09);
+}
+
+
+/* =========================================================
+   8. QUESTION CORRECTION CARDS
+========================================================= */
+
+#studentCbtCorrectionList {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    min-width: 0;
+}
+
+.student-cbt-correction-card {
+    position: relative;
+
+    min-width: 0;
+
+    padding: clamp(18px, 3vw, 28px);
+
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-left: 6px solid #94a3b8;
+    border-radius: 19px;
+
+    box-shadow: 0 7px 22px rgba(15, 23, 42, 0.045);
+
+    overflow-wrap: anywhere;
+
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease;
+}
+
+.student-cbt-correction-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: 90px;
+    height: 5px;
+
+    background: #cbd5e1;
+
+    border-bottom-left-radius: 10px;
+}
+
+.student-cbt-correction-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.085);
+}
+
+
+/* =========================================================
+   9. CORRECT QUESTION — GREEN
+========================================================= */
+
+.student-cbt-correction-card.correct {
+    background: linear-gradient(
+        135deg,
+        #f0fdf4 0%,
+        #ffffff 75%
+    );
+
+    border-color: #bbf7d0;
+    border-left: 6px solid #16a34a;
+}
+
+.student-cbt-correction-card.correct::before {
+    background: linear-gradient(
+        90deg,
+        #16a34a,
+        #86efac
+    );
+}
+
+.student-cbt-correction-card.correct
+.student-cbt-correction-number {
+    color: #166534;
+}
+
+.student-cbt-correction-card.correct
+.student-cbt-correction-question {
+    color: #14532d;
+}
+
+.student-cbt-correction-card.correct
+.student-cbt-correction-status,
+.student-cbt-correction-card.correct
+.student-cbt-correction-badge {
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+}
+
+
+/* =========================================================
+   10. WRONG QUESTION — RED
+========================================================= */
+
+.student-cbt-correction-card.wrong {
+    background: linear-gradient(
+        135deg,
+        #fff1f3 0%,
+        #ffffff 75%
+    );
+
+    border-color: #fecdd3;
+    border-left: 6px solid #dc143c;
+}
+
+.student-cbt-correction-card.wrong::before {
+    background: linear-gradient(
+        90deg,
+        #dc143c,
+        #fb7185
+    );
+}
+
+.student-cbt-correction-card.wrong
+.student-cbt-correction-number {
+    color: #9f1239;
+}
+
+.student-cbt-correction-card.wrong
+.student-cbt-correction-question {
+    color: #881337;
+}
+
+.student-cbt-correction-card.wrong
+.student-cbt-correction-status,
+.student-cbt-correction-card.wrong
+.student-cbt-correction-badge {
+    color: #9f1239;
+    background: #ffe4e9;
+    border: 1px solid #fecdd3;
+}
+
+
+/* =========================================================
+   11. UNANSWERED QUESTION — AMBER
+========================================================= */
+
+.student-cbt-correction-card.unanswered {
+    background: linear-gradient(
+        135deg,
+        #fffbeb 0%,
+        #ffffff 75%
+    );
+
+    border-color: #fde68a;
+    border-left: 6px solid #d97706;
+}
+
+.student-cbt-correction-card.unanswered::before {
+    background: linear-gradient(
+        90deg,
+        #d97706,
+        #fcd34d
+    );
+}
+
+.student-cbt-correction-card.unanswered
+.student-cbt-correction-number {
+    color: #92400e;
+}
+
+.student-cbt-correction-card.unanswered
+.student-cbt-correction-question {
+    color: #78350f;
+}
+
+.student-cbt-correction-card.unanswered
+.student-cbt-correction-status,
+.student-cbt-correction-card.unanswered
+.student-cbt-correction-badge {
+    color: #92400e;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+}
+
+
+/* =========================================================
+   12. QUESTION NUMBER AND STATUS HEADER
+========================================================= */
+
+.student-cbt-correction-top,
+.student-cbt-correction-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+}
+
+.student-cbt-correction-number {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 35px;
+    padding: 7px 12px;
+
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.student-cbt-correction-status,
+.student-cbt-correction-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 34px;
+    padding: 7px 12px;
+
+    border-radius: 30px;
+
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   13. SUBJECT LABEL ON EACH QUESTION
+========================================================= */
+
+.student-cbt-correction-subject {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    max-width: 100%;
+    padding: 7px 12px;
+    margin-bottom: 13px;
+
+    color: #4338ca;
+    background: #eef2ff;
+
+    border: 1px solid #c7d2fe;
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   14. QUESTION TEXT PANEL
+========================================================= */
+
+.student-cbt-correction-question {
+    min-width: 0;
+
+    padding: 18px;
+
+    color: #1f2937;
+    background: rgba(255, 255, 255, 0.85);
+
+    border: 1px solid #e5e7eb;
+    border-radius: 13px;
+
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.95;
+
+    overflow-wrap: anywhere;
+}
+
+.student-cbt-correction-question p {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.student-cbt-correction-question p:last-child {
+    margin-bottom: 0;
+}
+
+.student-cbt-correction-question img {
+    display: block;
+
+    max-width: 100%;
+    height: auto;
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   15. ANSWER OPTIONS
+========================================================= */
+
+.student-cbt-correction-options {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+
+    margin-top: 19px;
+    margin-bottom: 22px;
+}
+
+.student-cbt-correction-option {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    min-width: 0;
+    padding: 14px;
+
+    color: #334155;
+    background: #ffffff;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+
+    font-size: 14px;
+    line-height: 1.85;
+
+    overflow-wrap: anywhere;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* Option letter */
+
+.student-cbt-correction-option .option-key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 31px;
+
+    min-height: 31px;
+
+    color: #475569;
+    background: #f1f5f9;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+
+/* Correct answer option */
+
+.student-cbt-correction-option.correct-answer {
+    color: #166534;
+    background: #f0fdf4;
+
+    border: 1px solid #86efac;
+    box-shadow: inset 3px 0 0 #16a34a;
+}
+
+.student-cbt-correction-option.correct-answer .option-key {
+    color: #ffffff;
+    background: #16a34a;
+    border-color: #16a34a;
+}
+
+
+/* Student's incorrect option */
+
+.student-cbt-correction-option.student-wrong-answer {
+    color: #9f1239;
+    background: #fff1f3;
+
+    border: 1px solid #fda4af;
+    box-shadow: inset 3px 0 0 #dc143c;
+}
+
+.student-cbt-correction-option.student-wrong-answer .option-key {
+    color: #ffffff;
+    background: #dc143c;
+    border-color: #dc143c;
+}
+
+
+/* =========================================================
+   16. STUDENT ANSWER VS CORRECT ANSWER
+========================================================= */
+
+.student-cbt-answer-summary {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-top: 22px;
+}
+
+.student-cbt-answer-box {
+    position: relative;
+
+    min-width: 0;
+    padding: 19px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+
+    overflow-wrap: anywhere;
+}
+
+.student-cbt-answer-box span {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #64748b;
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.student-cbt-answer-box strong {
+    display: block;
+
+    color: #1f2937;
+
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.8;
+}
+
+
+/* Correct answer summary */
+
+.student-cbt-answer-box.correct-answer {
+    background: linear-gradient(
+        135deg,
+        #dcfce7,
+        #f7fff9
+    );
+
+    border-color: #86efac;
+    border-left: 5px solid #16a34a;
+}
+
+.student-cbt-answer-box.correct-answer span {
+    color: #166534;
+}
+
+.student-cbt-answer-box.correct-answer strong {
+    color: #166534;
+}
+
+
+/* Incorrect student answer summary */
+
+.student-cbt-answer-box.wrong-answer {
+    background: linear-gradient(
+        135deg,
+        #ffe4e9,
+        #fff8f9
+    );
+
+    border-color: #fda4af;
+    border-left: 5px solid #dc143c;
+}
+
+.student-cbt-answer-box.wrong-answer span {
+    color: #9f1239;
+}
+
+.student-cbt-answer-box.wrong-answer strong {
+    color: #9f1239;
+}
+
+
+/* =========================================================
+   17. EXPLANATION CARD
+========================================================= */
+
+.student-cbt-correction-explanation {
+    position: relative;
+
+    margin-top: 22px;
+    padding: 21px;
+
+    color: #1e3a8a;
+
+    background: linear-gradient(
+        135deg,
+        #eff6ff 0%,
+        #f8fbff 100%
+    );
+
+    border: 1px solid #bfdbfe;
+    border-left: 5px solid #3b82f6;
+    border-radius: 15px;
+
+    box-shadow: 0 4px 13px rgba(59, 130, 246, 0.055);
+}
+
+.student-cbt-correction-explanation h5 {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin: 0 0 13px;
+
+    color: #1d4ed8;
+
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1.6;
+}
+
+.student-cbt-correction-explanation .explanation-content {
+    color: #1e3a8a;
+
+    font-size: 14px;
+    line-height: 1.95;
+
+    overflow-wrap: anywhere;
+}
+
+.student-cbt-correction-explanation p {
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.student-cbt-correction-explanation p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   18. MATHJAX AND IMAGES IN CORRECTIONS
+========================================================= */
+
+.student-cbt-correction-question mjx-container,
+.student-cbt-correction-option mjx-container,
+.student-cbt-correction-explanation mjx-container {
+    max-width: 100%;
+}
+
+.student-cbt-correction-question mjx-container[display="true"],
+.student-cbt-correction-option mjx-container[display="true"],
+.student-cbt-correction-explanation mjx-container[display="true"] {
+    max-width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.student-cbt-correction-option img,
+.student-cbt-correction-explanation img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* =========================================================
+   19. EMPTY CORRECTIONS STATE
+========================================================= */
+
+.student-cbt-empty-corrections {
+    padding: 35px 22px;
+
+    color: #64748b;
+    background: linear-gradient(
+        135deg,
+        #f8fafc,
+        #ffffff
+    );
+
+    border: 1px dashed #cbd5e1;
+    border-radius: 17px;
+
+    text-align: center;
+    line-height: 1.9;
+}
+
+
+/* =========================================================
+   20. RESPONSIVE RESULTS AND CORRECTIONS
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .student-cbt-overall-card {
+        padding: 30px 18px 23px;
+        border-radius: 19px;
+    }
+
+    .student-cbt-overall-stats {
+        gap: 9px;
+    }
+
+    .student-cbt-overall-stats > div {
+        padding: 14px 7px;
+    }
+
+    .student-cbt-overall-stats span {
+        font-size: 11px;
+    }
+
+    .student-cbt-subject-results-card {
+        padding: 20px 16px;
+        border-radius: 18px;
+    }
+
+    .student-cbt-subject-result {
+        padding: 18px 13px;
+    }
+
+    .student-cbt-result-details {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #studentCbtCorrections {
+        padding: 21px 16px;
+        border-radius: 18px;
+    }
+
+    .student-cbt-correction-card {
+        padding: 19px 15px;
+        border-radius: 16px;
+    }
+
+    .student-cbt-correction-question {
+        padding: 15px;
+        font-size: 14px;
+    }
+
+    .student-cbt-correction-explanation {
+        padding: 17px 15px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .student-cbt-overall-card {
+        padding: 27px 13px 20px;
+    }
+
+    .student-cbt-overall-percentage {
+        letter-spacing: -2px;
+    }
+
+    .student-cbt-overall-stats {
+        gap: 7px;
+    }
+
+    .student-cbt-overall-stats > div {
+        padding: 12px 5px;
+        border-radius: 11px;
+    }
+
+    .student-cbt-overall-stats strong {
+        font-size: 21px;
+    }
+
+    .student-cbt-overall-stats span {
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .student-cbt-results-section-heading h3 {
+        font-size: 18px;
+    }
+
+    .student-cbt-subject-result-header {
+        gap: 10px;
+    }
+
+    .student-cbt-subject-result-name {
+        font-size: 14px;
+    }
+
+    .student-cbt-subject-result-percentage {
+        padding: 5px 8px;
+        font-size: 17px;
+    }
+
+    .student-cbt-result-details {
+        grid-template-columns: 1fr;
+        gap: 11px;
+    }
+
+    .student-cbt-result-details > div {
+        padding: 16px;
+    }
+
+    .student-cbt-results-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .student-cbt-results-actions button {
+        width: 100%;
+    }
+
+    #studentCbtCorrections {
+        padding: 17px 11px;
+    }
+
+    .student-cbt-correction-card {
+        padding: 16px 11px;
+    }
+
+    .student-cbt-correction-top,
+    .student-cbt-correction-header {
+        align-items: flex-start;
+        gap: 9px;
+    }
+
+    .student-cbt-correction-question {
+        padding: 13px 11px;
+        font-size: 13px;
+        line-height: 1.85;
+    }
+
+    .student-cbt-correction-option {
+        gap: 9px;
+        padding: 11px 9px;
+        font-size: 13px;
+    }
+
+    .student-cbt-correction-option .option-key {
+        flex-basis: 27px;
+        min-height: 27px;
+    }
+
+    .student-cbt-answer-summary {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .student-cbt-answer-box {
+        padding: 15px;
+    }
+
+    .student-cbt-correction-explanation {
+        padding: 15px 12px;
+    }
+
+}
+
+
+/* =========================================================
+   21. ACCESSIBILITY: REDUCE MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .student-cbt-overall-card,
+    .student-cbt-overall-stats > div,
+    .student-cbt-subject-result,
+    .student-cbt-result-details > div,
+    .student-cbt-results-actions button,
+    .student-cbt-correction-card {
+        transition: none;
+    }
+
+    .student-cbt-overall-stats > div:hover,
+    .student-cbt-subject-result:hover,
+    .student-cbt-result-details > div:hover,
+    .student-cbt-results-actions button:hover,
+    .student-cbt-correction-card:hover {
+        transform: none;
+    }
+
+}
