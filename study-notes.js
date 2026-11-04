@@ -667,7 +667,7 @@ try {
             DATABASE_ID,
             SUBJECTS_TABLE_ID,
             [
-                Query.limit(100)
+                Query.limit(500)
             ]
         );
 
@@ -795,7 +795,7 @@ try {
             "study_notes",
             [
                 Query.orderDesc("$createdAt"),
-                Query.limit(100)
+                Query.limit(500)
             ]
         );
 
