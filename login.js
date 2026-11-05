@@ -51,87 +51,41 @@ function hideAuthMessage() {
 // PASSWORD VISIBILITY TOGGLE
 // =========================================================
 
-document
-    .querySelectorAll(
-        ".password-toggle"
-    )
-    .forEach(button => {
+document.addEventListener("DOMContentLoaded", function () {
 
+const toggleButton = document.getElementById("passwordToggle");
+const passwordInput = document.getElementById("password");
 
-        button.addEventListener(
-            "click",
-            () => {
+if (!toggleButton || !passwordInput) {
+    console.error("Password toggle elements not found.");
+    return;
+}
 
+toggleButton.addEventListener("click", function (event) {
 
-                const targetId =
-                    button.dataset.target;
+    event.preventDefault();
 
+    const isPassword =
+        passwordInput.type === "password";
 
-                const input =
-                    document.getElementById(
-                        targetId
-                    );
+    passwordInput.type =
+        isPassword ? "text" : "password";
 
+    const icon = toggleButton.querySelector("i");
 
-                if (!input) return;
+    if (icon) {
+        icon.classList.toggle("fa-eye", !isPassword);
+        icon.classList.toggle("fa-eye-slash", isPassword);
+    }
 
+    toggleButton.setAttribute(
+        "aria-label",
+        isPassword ? "Hide password" : "Show password"
+    );
 
-                const icon =
-                    button.querySelector(
-                        "i"
-                    );
+});
 
-
-                if (
-                    input.type ===
-                    "password"
-                ) {
-
-
-                    input.type =
-                        "text";
-
-
-                    if (icon) {
-
-                        icon.classList.remove(
-                            "fa-eye"
-                        );
-
-                        icon.classList.add(
-                            "fa-eye-slash"
-                        );
-
-                    }
-
-
-                } else {
-
-
-                    input.type =
-                        "password";
-
-
-                    if (icon) {
-
-                        icon.classList.remove(
-                            "fa-eye-slash"
-                        );
-
-                        icon.classList.add(
-                            "fa-eye"
-                        );
-
-                    }
-
-                }
-
-            }
-        );
-
-    });
-
-
+});
 // =========================================================
 // LOGIN FORM
 // =========================================================

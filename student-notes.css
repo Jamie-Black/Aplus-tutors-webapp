@@ -2446,3 +2446,365 @@ code {
     }
 
 }
+
+
+/* ============================================================
+   BROWSE NOTES BY SUBJECT
+============================================================ */
+
+.browse-notes-section {
+    margin: 30px 0;
+    padding: 25px;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.035);
+}
+
+
+/* HEADING */
+
+.browse-notes-heading {
+    margin-bottom: 22px;
+}
+
+.browse-notes-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 8px;
+    color: #dc143c;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.browse-notes-heading h2 {
+    margin: 0 0 8px;
+    color: #171717;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.browse-notes-heading p {
+    margin: 0;
+    color: #777777;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* SUBJECT GRID */
+
+.notes-subject-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+
+/* SUBJECT CARD */
+
+.notes-subject-card {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    padding: 17px;
+    text-align: left;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.notes-subject-card:hover {
+    border-color: #dc143c;
+    background: #fff9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(220, 20, 60, 0.07);
+}
+
+.notes-subject-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 43px;
+    height: 43px;
+    color: #dc143c;
+    background: #fff0f3;
+    border-radius: 11px;
+    font-size: 17px;
+}
+
+.notes-subject-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.notes-subject-card-info h4 {
+    margin: 0 0 5px;
+    color: #222222;
+    font-size: 14px;
+    font-weight: 750;
+    overflow-wrap: anywhere;
+}
+
+.notes-subject-card-info span {
+    color: #888888;
+    font-size: 11px;
+}
+
+.notes-subject-card-arrow {
+    flex-shrink: 0;
+    color: #aaaaaa;
+    font-size: 12px;
+}
+
+
+/* TOPICS PANEL */
+
+.notes-topics-panel {
+    margin-top: 25px;
+    padding-top: 24px;
+    border-top: 1px solid #eeeeee;
+}
+
+.notes-topics-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.notes-topics-header span {
+    color: #dc143c;
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 0.07em;
+}
+
+.notes-topics-header h3 {
+    margin: 5px 0;
+    color: #171717;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.notes-topics-header p {
+    margin: 0;
+    color: #888888;
+    font-size: 12px;
+}
+
+.notes-subject-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    flex-shrink: 0;
+    padding: 9px 13px;
+    color: #333333;
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.notes-subject-back-btn:hover {
+    color: #dc143c;
+    border-color: #dc143c;
+}
+
+
+/* TOPIC GRID */
+
+.notes-topics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+
+/* TOPIC CARD */
+
+.notes-topic-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 11px;
+    transition: border-color 0.2s ease;
+}
+
+.notes-topic-card:hover {
+    border-color: #e6a0ae;
+}
+
+.notes-topic-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    color: #dc143c;
+    background: #fff0f3;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.notes-topic-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notes-topic-content h4 {
+    margin: 0 0 6px;
+    color: #222222;
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.notes-topic-status {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.notes-topic-status.unread {
+    color: #b45309;
+}
+
+.notes-topic-status.in_progress {
+    color: #2563eb;
+}
+
+.notes-topic-status.completed {
+    color: #15803d;
+}
+
+.notes-topic-open-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-shrink: 0;
+    padding: 8px 11px;
+    color: #ffffff;
+    background: #dc143c;
+    border: none;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.notes-topic-open-btn:hover {
+    background: #a80f2e;
+}
+
+
+/* EMPTY STATE */
+
+.notes-browse-empty {
+    grid-column: 1 / -1;
+    padding: 30px 15px;
+    text-align: center;
+    color: #888888;
+}
+
+.notes-browse-empty > i {
+    margin-bottom: 12px;
+    color: #dc143c;
+    font-size: 28px;
+}
+
+.notes-browse-empty h4 {
+    margin-bottom: 7px;
+    color: #222222;
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.notes-browse-empty p {
+    margin: 0;
+    font-size: 12px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .notes-subject-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .browse-notes-section {
+        padding: 17px;
+        border-radius: 12px;
+    }
+
+    .browse-notes-heading h2 {
+        font-size: 18px;
+    }
+
+    .notes-subject-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .notes-topics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .notes-topics-header {
+        align-items: flex-start;
+    }
+
+    .notes-topics-header h3 {
+        font-size: 16px;
+    }
+
+    .notes-topic-card {
+        padding: 12px;
+    }
+
+    .notes-topic-open-btn {
+        padding: 8px 9px;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .notes-topic-card {
+        flex-wrap: wrap;
+    }
+
+    .notes-topic-content {
+        flex-basis: calc(100% - 55px);
+    }
+
+    .notes-topic-open-btn {
+        width: 100%;
+    }
+
+}

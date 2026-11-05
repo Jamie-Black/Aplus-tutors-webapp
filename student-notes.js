@@ -43,12 +43,15 @@ let isRestoringReadingPosition = false;
 // Current reading position.
 let currentReadingPercent = 0;
 
+// Tracks whether the student has actually reached
+// the bottom of the current note.
+let hasReachedNoteEnd = false;
+
 
 
 // ============================================================
 // FLUSH PENDING READING PROGRESS
-// Saves the latest reading position before switching notes
-// or closing the reader.
+// SAVE POSITION AND ONLY COMPLETE AT THE ACTUAL END
 // ============================================================
 
 async function flushPendingNoteProgress() {
@@ -67,16 +70,27 @@ async function flushPendingNoteProgress() {
         "viewNoteContent"
     );
 
-    if (!content) {
+    if (!content || isRestoringReadingPosition) {
         return;
     }
 
-    // Do not save while another note is being restored.
-    if (isRestoringReadingPosition) {
-        return;
+    // Check whether the student has actually reached the bottom.
+    const scrollableHeight =
+        content.scrollHeight - content.clientHeight;
+
+    const reachedBottom = (
+        scrollableHeight > 0 &&
+        content.scrollTop + content.clientHeight >=
+        content.scrollHeight - 5
+    );
+
+    if (reachedBottom) {
+        hasReachedNoteEnd = true;
     }
 
-    const percentage = calculateNoteReadingProgress();
+    const percentage = hasReachedNoteEnd
+        ? 100
+        : calculateNoteReadingProgress();
 
     const position = content.scrollTop;
 
@@ -84,16 +98,10 @@ async function flushPendingNoteProgress() {
 
     const status = (
         existingStatus === "completed" ||
-        percentage >= 100
+        hasReachedNoteEnd
     )
         ? "completed"
-        : (
-            percentage > 0
-                ? "in_progress"
-                : existingStatus === "unread"
-                    ? "in_progress"
-                    : existingStatus
-        );
+        : "in_progress";
 
     currentReadingPercent = percentage;
 
@@ -284,6 +292,11 @@ document.addEventListener(
             ------------------------------------------ */
 
             await loadPublishedNotes();
+            
+            // Initialize subject-based note browsing.
+renderNotesBySubject();
+
+attachNotesBrowseEvents();
 
             console.log(
                 "Published notes available:",
@@ -584,8 +597,8 @@ async function loadPublishedNotes() {
                         "published"
                     ),
 
-                    Query.orderDesc(
-                        "$updatedAt"
+                    Query.orderAsc(           "$createdAt"
+                        
                     ),
 
                     Query.limit(100)
@@ -1361,6 +1374,9 @@ async function openViewNote(id) {
         currentReadingProgress?.status === "completed" ||
         Number(currentReadingProgress?.progressPercent) >= 100
     );
+    
+    // Preserve completion when reopening an already completed note.
+hasReachedNoteEnd = wasCompleted;
 
     // Update the reader heading.
     if (viewTitle) {
@@ -1478,7 +1494,7 @@ async function openViewNote(id) {
         );
 
     }
-}w
+}
 
 
 /* ==================================================
@@ -1870,7 +1886,10 @@ async function saveStudentNoteProgress(
         updateStudyNotesDashboard();
 
         applyNoteFilters();
-
+        
+        renderNotesBySubject();
+        
+        
         console.log("Study progress saved:", {
             noteId: noteId,
             status: savedRecord.status,
@@ -1896,10 +1915,14 @@ async function saveStudentNoteProgress(
 
 // ============================================================
 // CALCULATE READING PROGRESS
+// 100% IS RESERVED FOR THE ACTUAL BOTTOM
 // ============================================================
 
 function calculateNoteReadingProgress() {
-    const content = document.getElementById("viewNoteContent");
+
+    const content = document.getElementById(
+        "viewNoteContent"
+    );
 
     if (!content) {
         return 0;
@@ -1908,17 +1931,29 @@ function calculateNoteReadingProgress() {
     const scrollableHeight =
         content.scrollHeight - content.clientHeight;
 
-    // A short note may not require scrolling.
+    // A note that does not require scrolling
+    // must not automatically become completed.
     if (scrollableHeight <= 0) {
+        return 0;
+    }
+
+    const reachedBottom = (
+        content.scrollTop + content.clientHeight >=
+        content.scrollHeight - 5
+    );
+
+    if (reachedBottom || hasReachedNoteEnd) {
         return 100;
     }
 
-    const percentage =
-        (content.scrollTop / scrollableHeight) * 100;
+    const percentage = Math.floor(
+        (content.scrollTop / scrollableHeight) * 100
+    );
 
+    // Never display 100% before reaching the bottom.
     return Math.max(
         0,
-        Math.min(100, Math.round(percentage))
+        Math.min(99, percentage)
     );
 }
 
@@ -1963,7 +1998,7 @@ function updateNoteReadingProgress() {
 
 // ============================================================
 // HANDLE READER SCROLLING
-// PRESERVE COMPLETED STATUS
+// COMPLETE ONLY AFTER REACHING THE BOTTOM
 // ============================================================
 
 function handleNoteReaderScroll() {
@@ -1984,31 +2019,43 @@ function handleNoteReaderScroll() {
         return;
     }
 
+    const scrollableHeight =
+        content.scrollHeight - content.clientHeight;
+
+    // Detect the actual end of the note.
+    if (
+        scrollableHeight > 0 &&
+        content.scrollTop + content.clientHeight >=
+        content.scrollHeight - 5
+    ) {
+
+        hasReachedNoteEnd = true;
+
+    }
+
     updateNoteReadingProgress();
 
     const noteId = currentReadingNoteId;
 
-    const percentage = currentReadingPercent;
+    const percentage = hasReachedNoteEnd
+        ? 100
+        : currentReadingPercent;
 
     const position = content.scrollTop;
 
     const existingStatus = getNoteStudyStatus(noteId);
 
-    // Keep completed notes completed when revisiting them.
     const status = (
         existingStatus === "completed" ||
-        percentage >= 100
+        hasReachedNoteEnd
     )
         ? "completed"
         : "in_progress";
 
-    // Debounce database updates while scrolling.
     clearTimeout(progressSaveTimer);
 
     progressSaveTimer = setTimeout(async () => {
 
-        // Avoid saving stale progress if the student
-        // has already opened another note.
         if (currentReadingNoteId !== noteId) {
             return;
         }
@@ -2087,3 +2134,309 @@ function escapeHtml(value) {
 
 
 
+
+
+// ============================================================
+// BROWSE STUDY NOTES BY SUBJECT
+// SUBJECT → TOPIC → STUDY NOTE
+// ============================================================
+
+let selectedBrowseSubjectId = "";
+
+
+// ============================================================
+// RENDER SUBJECTS WITH AVAILABLE NOTES
+// ============================================================
+
+function renderNotesBySubject() {
+
+    const subjectGrid = document.getElementById(
+        "notesSubjectGrid"
+    );
+
+    const topicsPanel = document.getElementById(
+        "notesTopicsPanel"
+    );
+
+    if (!subjectGrid) {
+        return;
+    }
+
+    subjectGrid.innerHTML = "";
+
+    // Only display subjects with published notes.
+    const subjectsWithNotes = currentSubjects.filter(
+        subject => currentNotes.some(
+            note => note.subjectId === subject.$id
+        )
+    );
+
+    if (!subjectsWithNotes.length) {
+
+        subjectGrid.innerHTML = `
+            <div class="notes-browse-empty">
+
+                <i class="fas fa-book-open"></i>
+
+                <h4>No subjects available</h4>
+
+                <p>
+                    Published study topics will appear here.
+                </p>
+
+            </div>
+        `;
+
+        if (topicsPanel) {
+            topicsPanel.classList.add("d-none");
+        }
+
+        return;
+    }
+
+    subjectsWithNotes.forEach(subject => {
+
+        const subjectNotes = currentNotes.filter(
+            note => note.subjectId === subject.$id
+        );
+
+        const card = document.createElement("button");
+
+        card.type = "button";
+
+        card.className = "notes-subject-card";
+
+        card.dataset.subjectId = subject.$id;
+
+        card.innerHTML = `
+
+            <div class="notes-subject-card-icon">
+
+                <i class="fas fa-book"></i>
+
+            </div>
+
+            <div class="notes-subject-card-info">
+
+                <h4>
+                    ${escapeHtml(getSubjectName(subject))}
+                </h4>
+
+                <span>
+                    ${subjectNotes.length}
+                    ${subjectNotes.length === 1 ? "Topic" : "Topics"}
+                    available
+                </span>
+
+            </div>
+
+            <div class="notes-subject-card-arrow">
+
+                <i class="fas fa-chevron-right"></i>
+
+            </div>
+
+        `;
+
+        card.addEventListener("click", () => {
+
+            selectNotesBrowseSubject(subject.$id);
+
+        });
+
+        subjectGrid.appendChild(card);
+
+    });
+
+    // Restore the previously selected subject when refreshing.
+    if (
+        selectedBrowseSubjectId &&
+        subjectsWithNotes.some(
+            subject => subject.$id === selectedBrowseSubjectId
+        )
+    ) {
+
+        renderNotesForSubject(selectedBrowseSubjectId);
+
+    } else if (topicsPanel) {
+
+        topicsPanel.classList.add("d-none");
+
+    }
+}
+
+
+// ============================================================
+// SELECT SUBJECT
+// ============================================================
+
+function selectNotesBrowseSubject(subjectId) {
+
+    selectedBrowseSubjectId = subjectId;
+
+    renderNotesForSubject(subjectId);
+
+}
+
+
+// ============================================================
+// DISPLAY AVAILABLE TOPICS
+// ============================================================
+
+function renderNotesForSubject(subjectId) {
+
+    const subject = currentSubjects.find(
+        item => item.$id === subjectId
+    );
+
+    const topicsPanel = document.getElementById(
+        "notesTopicsPanel"
+    );
+
+    const topicsGrid = document.getElementById(
+        "notesTopicsGrid"
+    );
+
+    const topicsHeading = document.getElementById(
+        "notesTopicsHeading"
+    );
+
+    if (!subject || !topicsPanel || !topicsGrid) {
+        return;
+    }
+
+    const subjectNotes = currentNotes.filter(
+        note => note.subjectId === subjectId
+    );
+
+    topicsHeading.textContent =
+        getSubjectName(subject);
+
+    topicsGrid.innerHTML = "";
+
+    if (!subjectNotes.length) {
+
+        topicsGrid.innerHTML = `
+            <div class="notes-browse-empty">
+
+                <i class="fas fa-book"></i>
+
+                <h4>No topics available</h4>
+
+                <p>
+                    There are currently no published notes
+                    for this subject.
+                </p>
+
+            </div>
+        `;
+
+    } else {
+
+        subjectNotes.forEach((note, index) => {
+
+            const status = getNoteStudyStatus(note.$id);
+
+            let statusLabel = "Unread";
+
+            if (status === "in_progress") {
+                statusLabel = "In Progress";
+            }
+
+            if (status === "completed") {
+                statusLabel = "Completed";
+            }
+
+            const topicCard = document.createElement("article");
+
+            topicCard.className = "notes-topic-card";
+
+            topicCard.innerHTML = `
+
+                <div class="notes-topic-number">
+                    ${String(index + 1).padStart(2, "0")}
+                </div>
+
+                <div class="notes-topic-content">
+
+                    <h4>
+                        ${escapeHtml(note.title || "Untitled Topic")}
+                    </h4>
+
+                    <span class="notes-topic-status ${status}">
+                        ${statusLabel}
+                    </span>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="notes-topic-open-btn"
+                >
+
+                    <i class="fas fa-book-open"></i>
+
+                    Read
+
+                </button>
+
+            `;
+
+            topicCard.querySelector(
+                ".notes-topic-open-btn"
+            ).addEventListener("click", () => {
+
+                openViewNote(note.$id);
+
+            });
+
+            topicsGrid.appendChild(topicCard);
+
+        });
+
+    }
+
+    topicsPanel.classList.remove("d-none");
+
+    topicsPanel.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+
+}
+
+
+// ============================================================
+// INITIALIZE SUBJECT BROWSING
+// ============================================================
+
+function attachNotesBrowseEvents() {
+
+    const backButton = document.getElementById(
+        "backToNotesSubjects"
+    );
+
+    if (!backButton) {
+        return;
+    }
+
+    backButton.addEventListener("click", () => {
+
+        selectedBrowseSubjectId = "";
+
+        const topicsPanel = document.getElementById(
+            "notesTopicsPanel"
+        );
+
+        topicsPanel?.classList.add("d-none");
+
+        document.getElementById(
+            "notesSubjectGrid"
+        )?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
+
+    });
+
+}
