@@ -2811,3 +2811,37 @@ MOBILE
 }
 
 }
+
+
+
+/* =====================================================
+   VIEW TOPIC ACTION BUTTON
+===================================================== */
+
+.quiz-view-topic-btn {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #0d6efd;
+    border-radius: 6px;
+    background: #fff;
+    color: #0d6efd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quiz-view-topic-btn:hover {
+    background: #0d6efd;
+    color: #fff;
+}
+
+#viewTopicModal code {
+    display: block;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    font-size: 12px;
+}
+
+#viewTopicModal .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}

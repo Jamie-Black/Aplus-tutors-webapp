@@ -1450,6 +1450,17 @@ function renderQuizTopics(topics) {
 
 
             <td class="text-end">
+            
+        <button
+    type="button"
+    class="quiz-view-topic-btn"
+    data-topic-id="${topic.$id}"
+    title="View Topic"
+>
+    <i class="fas fa-eye"></i>
+</button>
+        
+        
 
                 <button
                     type="button"
@@ -1517,7 +1528,21 @@ function attachTopicRowActions() {
         document.querySelectorAll(
             ".quiz-toggle-topic-btn"
         );
+        
+        
+    // VIEW TOPIC INFORMATION
+document.querySelectorAll(".quiz-view-topic-btn")
+    .forEach(button => {
 
+        button.addEventListener("click", function () {
+
+            const topicId = this.dataset.topicId;
+
+            viewQuizTopic(topicId);
+
+        });
+
+    });
 
     /*
         EDIT BUTTONS
@@ -1569,6 +1594,64 @@ function attachTopicRowActions() {
 }
 
 
+
+
+// =========================================================
+// VIEW QUIZ TOPIC INFORMATION
+// =========================================================
+
+function viewQuizTopic(topicId) {
+
+    // Find selected topic
+    const topic = quizTopics.find(
+        item => item.$id === topicId
+    );
+
+    if (!topic) {
+        showQuizMessage(
+            "Unable to find the selected topic.",
+            "danger"
+        );
+        return;
+    }
+
+    // Find subject information
+    const subject = quizSubjects.find(
+        item => item.$id === topic.subjectId
+    );
+
+    // Display topic information
+    document.getElementById("viewTopicName").textContent =
+        topic.name || "Not available";
+
+    document.getElementById("viewTopicSubject").textContent =
+        subject ? subject.name : "Subject not found";
+
+    document.getElementById("viewTopicSubjectId").textContent =
+        topic.subjectId || "Not available";
+
+    document.getElementById("viewTopicDocumentId").textContent =
+        topic.$id || "Not available";
+
+    document.getElementById("viewTopicDescription").textContent =
+        topic.description || "No description provided.";
+
+    document.getElementById("viewTopicStatus").textContent =
+        topic.status || "Not available";
+
+    document.getElementById("viewTopicCreatedBy").textContent =
+        topic.createdBy || "Not available";
+
+    // Open modal
+    const modalElement =
+        document.getElementById("viewTopicModal");
+
+    const modal = bootstrap.Modal.getOrCreateInstance(
+        modalElement
+    );
+
+    modal.show();
+}
 /* ==================================================
    OPEN EDIT TOPIC MODAL
 ================================================== */
